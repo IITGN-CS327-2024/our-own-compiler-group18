@@ -41,7 +41,7 @@ Compound Types :
              array  <Identifier>< <type> > = {data}; @same data type elements are only stored
               list <Identifier>=[];      @ all the three have 0 based indexing
 !!!
-             For both tuple and array same basic operations are applied
+             For both list and array same basic operations are applied
              <Identifier>.add(data); @adds data to the compound type
              <Identifier>.delete(); @removes the last data of the compound type
              size=<Identifier>.size();
