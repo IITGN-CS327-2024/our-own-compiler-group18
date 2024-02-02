@@ -2,17 +2,20 @@
 
 Syntax of the language:
 
-Basic Types (numbers, booleans, strings):     Declaration format: var: <type> 
- var: <type>  x= <data>; @ we have to always end a statement with a semicolon(;)
+Basic Types (numbers, booleans, strings):    
+
+Declaration format: var: <type> 
+var: <type>  x= <data>; @ we have to always end a statement with a semicolon(;)
 <type> :=int @integer (1,2)
- |str @string (“compiler”)
- |bool @boolean (true,false)
- var: str s;
+|str @string (“compiler”)
+|bool @boolean (true,false)
+var: str s;
 s.substring(start,length)  @we have to give the starting index and the length of the sub string we require
 var: str c;
 s.con(c); @for concatenating two strings we have to give as string_1.con(string2)
 
-          	 zout (x);	 @prints x;
+zout (x);	 @prints x;
+
 <unary-operator> ::= ++ @increment by 1
                    | — @ decrement by 1
 
@@ -117,7 +120,7 @@ Closures :
              begin 
                    var: x=5;
                    var: y= 6;
-                   <type>|tuple|list|array myFunction(int a)
+                   func myFunction(int a)
                    begin
                          var: a=7;
                         @function body
