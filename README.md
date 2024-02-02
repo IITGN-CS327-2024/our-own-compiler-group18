@@ -15,10 +15,6 @@ s.con(c); @for concatenating two strings we have to give as string_1.con(string2
           	 zout (x);	 @prints x;
 <unary-operator> ::= ++ @increment by 1
                    | — @ decrement by 1
-                   | & @address of an operator
-                   | - @unary minus operator
-                   | ~ @compliment
-                   | ! @logical not operator
 
 <binary-operator> ::= + @addition
 		        | - @subtraction
@@ -98,8 +94,6 @@ Loops :
 
           end
 Branching statements : 
-             break; @breaks the loops
-             continue; @ continue to the next step of the loop
              return; @ returns the element given there
             Example : 
              Var: int i=0;
@@ -110,7 +104,7 @@ Branching statements :
                  if(i==3)begin break  end; 
              end              @here it breaks the loop when i=3
 Functions : 
-           <type>|tuple|list|array myfunction(arguments) @example myfunction(int x,int y)
+           func myfunction(arguments) @example myfunction(int x,int y)
            begin
                  @function body
              return data;
@@ -119,7 +113,7 @@ Functions :
 
 
 Closures : 
-              <type>|tuple|list|array myfunction(int x,int y)
+             func myfunction(int x,int y)
              begin 
                    var: x=5;
                    var: y= 6;
