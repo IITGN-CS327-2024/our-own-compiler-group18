@@ -4,7 +4,7 @@ Basic Types (numbers, booleans, strings):
 
 	Declaration format: var: <type> 
 	
-	var: <type>  x= <data>; @ we have to always end a statement with a semicolon(;)
+	var <type>  x= <data>; @ we have to always end a statement with a semicolon(;)
 	
 	<type> :=int @integer (1,2)
 	
@@ -122,20 +122,10 @@ Loops :
 
           end
 	  
-Branching statements : 
 
-             return; @ returns the element given there
-            Example : 
-             Var: int i=0;
-              var : int n=5;
-             while(i<n)
-             begin
-                 i++;
-                 if(i==3)begin break  end; 
-             end         @here it breaks the loop when i=3
 	     
 Functions : 
-
+           return; @ returns the element given there
            func myfunction(arguments) @example myfunction(int x,int y)
            begin
                  @function body
