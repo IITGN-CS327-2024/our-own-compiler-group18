@@ -1,4 +1,4 @@
-        				                                **ZEVA Syntax**
+        				                	 **ZEVA Syntax**
 
 Basic Types (numbers, booleans, strings):    
 
