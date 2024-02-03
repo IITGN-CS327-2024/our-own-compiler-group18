@@ -12,11 +12,11 @@ Basic Types (numbers, booleans, strings):
 	
 	|bool @boolean (true,false)
 	
-	var: str s;
+	var str s;
 	
 	s[i, i+5] for string slicing 
 	
-	var: str c;
+	var str c;
 
 	s.con(c); @for concatenating two strings we have to give as string_1.con(string2)
 
@@ -60,7 +60,7 @@ Compound Types :
 	     
              size=<Identifier>.size();
 	     
-             var: <type>a=<identifier>[1]; @ for accessing the second element in the array or tuple here type is the type
+             var <type>a=<identifier>[1]; @ for accessing the second element in the array or tuple here type is the type
 	     
              <Identifier>.front(); @ gives the first element of the compound type
 	     
@@ -138,13 +138,13 @@ Closures :
 
              func myfunction(int x,int y)
              begin 
-                   var: x=5;
-                   var: y= 6;
+                   var x=5;
+                   var y= 6;
                    func myFunction(int a)
                    begin
-                         var: a=7;
+                         var a=7;
                         @function body
-                        var: int output=x=y+a;
+                        var int output=x=y+a;
                         return output;
                    end
                    return myFunction;
