@@ -1,35 +1,33 @@
-        				                                **ZEVA**
-
-Syntax of the language:
+        				                                **ZEVA Syntax**
 
 Basic Types (numbers, booleans, strings):    
 
-Declaration format: var: <type> 
+	Declaration format: var: <type> 
+	
+	var: <type>  x= <data>; @ we have to always end a statement with a semicolon(;)
+	
+	<type> :=int @integer (1,2)
+	
+	|str @string (“compiler”)
+	
+	|bool @boolean (true,false)
+	
+	var: str s;
+	
+	s[i, i+5] for string slicing 
+	
+	var: str c;
 
-var: <type>  x= <data>; @ we have to always end a statement with a semicolon(;)
+	s.con(c); @for concatenating two strings we have to give as string_1.con(string2)
 
-<type> :=int @integer (1,2)
+	zout (x);	 @prints x;
 
-|str @string (“compiler”)
-
-|bool @boolean (true,false)
-
-var: str s;
-
-s.substring(start,length)  @we have to give the starting index and the length of the sub string we require
-
-var: str c;
-
-s.con(c); @for concatenating two strings we have to give as string_1.con(string2)
-
-zout (x);	 @prints x;
-
-<unary-operator> ::= 
+unary-operator ::= 
 
 		   ++ @increment by 1
                    | — @ decrement by 1
 
-<binary-operator> ::= 	
+binary-operator ::= 	
 			
    			+ @addition
 		        | - @subtraction	  
