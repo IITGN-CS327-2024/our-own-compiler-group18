@@ -2,7 +2,7 @@
 
 Basic Types (numbers, booleans, strings):    
 
-	Declaration format: var: <type> 
+	Declaration format: var <type> 
 	
 	var <type>  x= <data>; @ we have to always end a statement with a semicolon(;)
 	
@@ -152,7 +152,7 @@ Closures :
 	      
 Mutable variables : 
 
-             var: <type> | lists @ these are mutable variables
+             var <type> | lists @ these are mutable variables
 	     
 Exceptions : 
 
