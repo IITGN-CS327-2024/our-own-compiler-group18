@@ -2,7 +2,7 @@ from lexer import *
 
 def main():
 
-    text = open("lexer_input.txt","r").read()
+    text = open("test_cases/test1.zeva","r").read()
     # text = "2 + 3 "
     
     lexer = Lexer(text)
