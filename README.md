@@ -34,6 +34,7 @@ binary-operator ::=
 		        | * @multiplication
 		        | / @division
 		        | % @remainder
+	  		| @ power
 		        |== @comparision of identifier with the required  value
 		        |<  @less than symbol
 		        |>  @greater than symbol
@@ -41,8 +42,7 @@ binary-operator ::=
 	                |>= @greater than symbol
 		        |!= @not equal
 
-@ single line comment 
-!!! multiple comments !!!
+@ single line comment @
 Identifiers: alphanumeric
              
 Compound Types :
