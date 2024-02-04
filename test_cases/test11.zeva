@@ -1,0 +1,7 @@
+func add(int a, int b)
+begin
+    return a + b;
+end
+
+var int result = add(3, 5);
+zout(result);  @ Expected output: 8 @
