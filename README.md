@@ -39,6 +39,7 @@ binary-operator ::=
 		        |>  @greater than symbol
 		        |<= @less than equal symbol
 	                |>= @greater than symbol
+		        |!= @not equal
 
 @ single line comment 
 !!! multiple comments !!!
