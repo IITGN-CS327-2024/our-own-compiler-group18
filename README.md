@@ -211,32 +211,35 @@ Exceptions :
 		        |<=
 	                     |>=
 
-<term> ::= <factor> { <binary_operator>  <factor> }*
-
-<factor> ::= <number> | <boolean> | <string> | <identifier> | "(" <expression> ")"
-
-<identifier-list> ::= <identifier> { "," <identifier> }*
-
-<list_operation> ::=< identifier> '.' ('add' '(' expression ')' | 'size' '(' ')' | '[' expression ‘]’ | 'head' '(' ')' | 'tail' '(' ')') 
-
-<array_operation> ::= <identifier> '.' ('add' '(' expression ')' | 'size' '(' ')' |'[' expression ‘]’ | 'head' '(' ')' | 'tail' '(' ')') 
-
-<member_access> ::= <identifier> '.' <identifier>
-
-<identifier> ::= <letter> { <letter> | <digit> }*
-
-<number> ::= <digit>+
-
-<boolean> ::= "true" | "false"
-
-<string> ::= '"' { <character> }* '"'
-
-<letter> ::= "a" | "b" | "c" | ... | "z" | "A" | "B" | "C" | ... | "Z"
-
-<digit> ::= "0" | "1" | "2" | ... | "9"
-
-<character> ::= <letter> | <digit> | <special-character>
-
-<special-character> ::= " " | "!" | "#" | "$" | "%" | "&" | "'" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "\\" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~"
+BNF
 
 
+	<term> ::= <factor> { <binary_operator>  <factor> }*
+	
+	<factor> ::= <number> | <boolean> | <string> | <identifier> | "(" <expression> ")"
+	
+	<identifier-list> ::= <identifier> { "," <identifier> }*
+	
+	<list_operation> ::=< identifier> '.' ('add' '(' expression ')' | 'size' '(' ')' | '[' expression ‘]’ | 'head' '(' ')' | 'tail' '(' ')') 
+	
+	<array_operation> ::= <identifier> '.' ('add' '(' expression ')' | 'size' '(' ')' |'[' expression ‘]’ | 'head' '(' ')' | 'tail' '(' ')') 
+	
+	<member_access> ::= <identifier> '.' <identifier>
+	
+	<identifier> ::= <letter> { <letter> | <digit> }*
+	
+	<number> ::= <digit>+
+	
+	<boolean> ::= "true" | "false"
+	
+	<string> ::= '"' { <character> }* '"'
+	
+	<letter> ::= "a" | "b" | "c" | ... | "z" | "A" | "B" | "C" | ... | "Z"
+	
+	<digit> ::= "0" | "1" | "2" | ... | "9"
+	
+	<character> ::= <letter> | <digit> | <special-character>
+	
+	<special-character> ::= " " | "!" | "#" | "$" | "%" | "&" | "'" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "\\" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~"
+	
+	
