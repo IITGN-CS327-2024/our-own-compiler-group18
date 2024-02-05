@@ -126,7 +126,8 @@ Loops :
 
 	     
 Functions : 
-           return; @ returns the element given there
+           
+	   return; @ returns the element given there
            func myfunction(arguments) @example myfunction(int x,int y)
            begin
                  @function body
