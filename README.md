@@ -169,51 +169,50 @@ Exceptions :
                end
              
 
-<program> ::= <statement>*
-
-<statement> ::= <variable_declaration>| <assignment> | <conditional> | <loop> | <function> | <try-catch>|<print_statement>|<mutable_variable_declaration>
-
- <variable_declaration> ::= {‘var:’ <type> <identifier> ‘=’ <expression> ‘;’} +  {‘tuple’ <identifier> ‘=’ <expression> ‘;’} + {‘array’ <identifier> ‘=’ <expression> ‘;’} + {‘tuple’ <identifier> ‘=’ <expression> ‘;’}
-
-<assignment> ::= <identifier> "=" <expression> ‘;’
-
-<conditional> ::= {{"if" <expression> "begin" <statement> “end”}* "else" “begin” <statement> “end”} +
-		{"if" <expression> "begin" <statement> “end” {"elif" “begin” <statement> “end”}* "else" “begin” <statement> “end”}
-
-<loop> ::= "while" <expression> “begin” <statement> “end”
- 
-<function> ::= <type>|tuple|list|array|void  <identifier> "(" <identifier-list>? ")" "begin" <statement>* “return” <expression> “;” "end" | <function>
-
-<try-except> ::= "try" "begin" <statement>* "end" "except" "(" <identifier> ")" "begin" <statement>* "end"
-
-<print_statement> ::= 'zout' '(' expression ');'
-
-<mutable_variable_declaration> ::= “var:”  <type>| “list” <identifier> '=' <expression> ';' 
-
-<expression> ::= <number> | <boolean> | <string> |unary_operation| <identifier> | "(" <expression> ")"
-|< function_call> | <list_operation> | <array_operation> |< member_access>|<term> { <binary_operator> <term> }*
-
-<unary-operator> ::= ++ 
-                   | — 
-                   | & 
-                   | - r
-                   | ~ 
-                   | ! 
-
-<binary-operator> ::= +
-		        | -
-		        | *
-		        | /
-		        | %
-		        |==
-		        |<
-		        |>
-		        |<=
-	                     |>=
-
 BNF
 
+   <program> ::= <statement>*
 
+	<statement> ::= <variable_declaration>| <assignment> | <conditional> | <loop> | <function> | <try-catch>|<print_statement>|<mutable_variable_declaration>
+	
+	 <variable_declaration> ::= {‘var:’ <type> <identifier> ‘=’ <expression> ‘;’} +  {‘tuple’ <identifier> ‘=’ <expression> ‘;’} + {‘array’ <identifier> ‘=’ <expression> ‘;’} + {‘tuple’ <identifier> ‘=’ <expression> ‘;’}
+	
+	<assignment> ::= <identifier> "=" <expression> ‘;’
+	
+	<conditional> ::= {{"if" <expression> "begin" <statement> “end”}* "else" “begin” <statement> “end”} +
+			{"if" <expression> "begin" <statement> “end” {"elif" “begin” <statement> “end”}* "else" “begin” <statement> “end”}
+	
+	<loop> ::= "while" <expression> “begin” <statement> “end”
+	 
+	<function> ::= <type>|tuple|list|array|void  <identifier> "(" <identifier-list>? ")" "begin" <statement>* “return” <expression> “;” "end" | <function>
+	
+	<try-except> ::= "try" "begin" <statement>* "end" "except" "(" <identifier> ")" "begin" <statement>* "end"
+	
+	<print_statement> ::= 'zout' '(' expression ');'
+	
+	<mutable_variable_declaration> ::= “var:”  <type>| “list” <identifier> '=' <expression> ';' 
+	
+	<expression> ::= <number> | <boolean> | <string> |unary_operation| <identifier> | "(" <expression> ")"
+	|< function_call> | <list_operation> | <array_operation> |< member_access>|<term> { <binary_operator> <term> }*
+	
+	<unary-operator> ::= ++ 
+	                   | — 
+	                   | & 
+	                   | - r
+	                   | ~ 
+	                   | ! 
+	
+	<binary-operator> ::= +
+			        | -
+			        | *
+			        | /
+			        | %
+			        |==
+			        |<
+			        |>
+			        |<=
+		                     |>=
+	
 	<term> ::= <factor> { <binary_operator>  <factor> }*
 	
 	<factor> ::= <number> | <boolean> | <string> | <identifier> | "(" <expression> ")"
@@ -241,5 +240,3 @@ BNF
 	<character> ::= <letter> | <digit> | <special-character>
 	
 	<special-character> ::= " " | "!" | "#" | "$" | "%" | "&" | "'" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "\\" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~"
-	
-	
