@@ -14,7 +14,7 @@ Basic Types (numbers, booleans, strings):
 	
 	var str s;
 	
-	s[i, i+5] for string slicing 
+	s.substr(start,length); for string slicing 
 	
 	var str c;
 
@@ -42,7 +42,8 @@ binary-operator ::=
 	                |>= @greater than symbol
 		        |!= @not equal
 
-@ single line comment @
+@ single line comment 
+@* multiple  comments *@
 Identifiers: alphanumeric
              
 Compound Types :
@@ -241,3 +242,22 @@ BNF
 	<character> ::= <letter> | <digit> | <special-character>
 	
 	<special-character> ::= " " | "!" | "#" | "$" | "%" | "&" | "'" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "\\" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~"
+
+
+
+
+
+
+
+unary operator:
+ S -> I++ | I--;
+ I ->[a-z]+
+
+
+ Binary Operator :
+ S ->I O I
+ I ->[a-z]+
+ O -> +|-|*|/|%|==|<|>|>=|<=|!=
+ 
+ Compound types :
+ S -> 
