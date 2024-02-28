@@ -246,39 +246,48 @@ Context Free Grammar
 
 	Basic Types:
 
-  	S -> D=K
-   	D -> varI|id
-    	I ->int|bool|string|char|T.F
-    	K -> [a-z]*|true|false|[0-9]*|id.T
-     	id ->[a-z]+[_|[0-9]|[a-z]]*
-     	T -> con(id)|substring([0-9]+, [0-9]*)
-      	int ->[0-9]+
-	bool ->true|false
-	string ->[a-z]+[[0-9]|[a-z]]*
-	char ->a|b|....|z
+	  	S -> D=K
+	   	D -> varI|id
+	    	I ->int|bool|string|char|T.F
+	    	K -> [a-z]*|true|false|[0-9]*|id.T
+	     	id ->[a-z]+[_|[0-9]|[a-z]]*
+	     	T -> con(id)|substring([0-9]+, [0-9]*)
+	      	int ->[0-9]+
+		bool ->true|false
+		string ->[a-z]+[[0-9]|[a-z]]*
+		char ->a|b|....|z
 
 	unary operator:
 	 
-  	S -> I++ | I--;
- 	I ->[a-z]+[_|[0-9]|[a-z]]*
+	  	S -> I++ | I--;
+	 	I ->[a-z]+[_|[0-9]|[a-z]]*
  
 
  	Binary Operator :
  
-	 S ->IOI
-	 I ->[a-z]+[_|[0-9]|[a-z]]*
-	 O -> +|-|*|/|%|==|<|>|>=|<=|!=
+		 S ->IOI
+		 I ->[a-z]+[_|[0-9]|[a-z]]*
+		 O -> +|-|*|/|%|==|<|>|>=|<=|!=
  
  	Compound types :
- 
-	 S -> TI=(D)
-	 T ->tuple|list
-	 I ->[a-z]+[_|[0-9]|[a-z]]*
-	 D -> [K [,K]*]*
-	 K ->int|bool|string|char|T.F
-  	 F -> add(I)|delete()| size()| front()| rear()
-	 int ->[0-9]+
-	 bool ->true|false
-	 string ->[a-z]+[[0-9]|[a-z]]*
-	 char ->a|b|....|z
- 
+  
+		 S -> TI=(D)
+		 T ->tuple|list
+		 I ->[a-z]+[_|[0-9]|[a-z]]*
+		 D -> [K [,K]]
+		 K ->int|bool|string|char
+		 int ->[0-9]+
+		 bool ->true|false
+		 string ->[a-z]+[[0-9]|[a-z]]*
+		 char ->a|b|....|z
+   
+ 	Compound type Operations : 
+  
+		  S ->IL|M
+		  M ->I=S
+		  L ->.add(K)|.T()
+		  T ->size|delete|front|rear
+		  I ->[a-z]+[_|[0-9]|[a-z]]*
+		  K ->int|bool|string|char
+		  int ->[0-9]+
+		  bool ->true|false
