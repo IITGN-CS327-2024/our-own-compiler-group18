@@ -49,8 +49,6 @@ Identifiers: alphanumeric
 Compound Types :
 
               tuple  <Identifier>=(data); @they are immutable
-		
-  	      array  <Identifier>< <type> > = {data}; @same data type elements are only stored
 	 
               list <Identifier>=[];      @ all the three have 0 based indexing
 !!!
@@ -251,13 +249,23 @@ BNF
 
 unary operator:
  S -> I++ | I--;
- I ->[a-z]+
+ I ->[a-z]+[_|[0-9]|[a-z]]*
+ 
 
 
  Binary Operator :
- S ->I O I
- I ->[a-z]+
+ S ->IOI
+ I ->[a-z]+[_|[0-9]|[a-z]]*
  O -> +|-|*|/|%|==|<|>|>=|<=|!=
  
  Compound types :
- S -> 
+ S -> TI=(D)
+ T ->tuple|list
+ I ->[a-z]+[_|[0-9]|[a-z]]*
+ D -> [K [,K]*]*
+ K ->int|bool|string|char
+ int ->[0-9]+
+ bool ->true|false
+ string ->[a-z]+[[0-9]|[a-z]]*
+ char ->a|b|....|z
+ 
