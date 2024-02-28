@@ -13,11 +13,12 @@ SEMI          = '<end_of_stmt>'
 COMMA         = '<comma>'
 LSPAREN       = '<parenthesis>'
 RSPAREN       = '<parenthesis>'
-DOT           =  '<dot>'
+DOT           = '<DOT>'
 
 # operators
 Assign        = '<operator>'
 Plus          = '<operator>'
+PlusPlus      = '<operator>'
 Minus         = '<operator>'
 Mul           = '<operator>'
 Div           = '<operator>'
@@ -31,7 +32,6 @@ Lteq          = '<operator>'
 Modulo        = '<operator>'
 And           = '<operator>'
 Or            = '<operator>'
-Power         = '<operator>' # add 
 
 # keywords
 Var           = 'var'
