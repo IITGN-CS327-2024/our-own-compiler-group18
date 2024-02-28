@@ -1,2 +1,2 @@
 var str s = "compiler";
-zout(s[1, 4]);  @Expected output: ompil@
+zout(s[1, 4]);  @Expected output: ompil
