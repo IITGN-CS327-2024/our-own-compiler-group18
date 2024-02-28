@@ -248,8 +248,14 @@ Context Free Grammar
 
   	S -> D=K
    	D -> varI|id
+    	I ->int|bool|string|char|T.F
     	K -> [a-z]*|true|false|[0-9]*|id.T
+     	id ->[a-z]+[_|[0-9]|[a-z]]*
      	T -> con(id)|substring([0-9]+, [0-9]*)
+      	int ->[0-9]+
+	bool ->true|false
+	string ->[a-z]+[[0-9]|[a-z]]*
+	char ->a|b|....|z
 
 	unary operator:
 	 
@@ -269,7 +275,8 @@ Context Free Grammar
 	 T ->tuple|list
 	 I ->[a-z]+[_|[0-9]|[a-z]]*
 	 D -> [K [,K]*]*
-	 K ->int|bool|string|char
+	 K ->int|bool|string|char|T.F
+  	 F -> add(I)|delete()| size()| front()| rear()
 	 int ->[0-9]+
 	 bool ->true|false
 	 string ->[a-z]+[[0-9]|[a-z]]*
