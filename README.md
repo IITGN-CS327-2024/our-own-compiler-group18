@@ -295,7 +295,7 @@ Context Free Grammar
     	Conditionals :
 
 	 	  stmt -> matched_stmt | open_stmt
-     		  matched_stmt -> if expr begin matched_stmt end else begin matched_stmt end
+  		  matched_stmt -> if expr begin matched_stmt end else begin matched_stmt end
 	 	  open_stmt -> if expr begin stmt end | if expr begin open_smt else begin open_stmt end 
      		  expr -> ( bool | id == K )
 	 	  id ->[a-z]+[_|[0-9]|[a-z]]*
