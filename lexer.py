@@ -163,16 +163,20 @@ class Lexer(object):
             self.nextChar()
 
     def skipComments(self):
-        # while self.curChar != '}':
-        #     self.nextChar()
-        # self.nextChar()                         # to skip the closing curly brace as well
-        noOf = 1
-        while noOf != 0 :
-
-            if self.curChar == '@':
-                noOf-=1
-            self.nextChar()                       # to skip the closing @ as well
-            # self.skipSpaces()
+        
+        if self.curChar == '@':
+            self.nextChar()
+            if self.curChar == '*':
+                # Multi-line comment
+                self.nextChar()  # Skip '*'
+                while self.curChar is not None and not (self.curChar == '*' and self.text[self.pos + 1] == '@'):
+                    self.nextChar()
+                self.nextChar()  # Skip '*'
+                self.nextChar()  # Skip '@'
+            else:
+                # Single-line comment
+                while self.curChar is not None and self.curChar != '\n':
+                    self.nextChar()
 
     def number(self):                           
         # Consume all the consecutive digits and decimal if present.
@@ -205,6 +209,10 @@ class Lexer(object):
             result += self.curChar
             self.nextChar()
 
+        if (result == 'add') or  (result == 'size') or (result == 'con') :
+            if self.curChar != '(':
+                self.error()
+            
         token = KEYWORDS.get(result, Token(ID, result))
         return token
     
@@ -228,7 +236,6 @@ class Lexer(object):
                 continue
 
             if self.curChar == '@':
-                self.nextChar()
                 self.skipComments()
                 continue
 
@@ -240,8 +247,13 @@ class Lexer(object):
 
             
             if self.curChar == '=':
-                self.nextChar()
-                return Token(Assign, '=') 
+                if self.peek() == '=':
+                    self.nextChar()
+                    self.nextChar()
+                    return Token(Eqeq, '==')
+                else:
+                    self.nextChar()
+                    return Token(Assign, '=') 
 
             if self.curChar == "|":
                 if self.peek() == "|":
@@ -291,13 +303,13 @@ class Lexer(object):
                 self.nextChar()
                 return Token(Rem, '%')
 
-            if self.curChar == '=':
-                self.nextChar()
-                return Token(Eqeq, '==') # =
-
             if self.curChar == '+':
-                self.nextChar()
-                return Token(Plus, '+')
+                if self.peek() == '+':
+                    self.nextChar()
+                    self.nextChar()
+                    return Token(PlusPlus, '++')
+                else:
+                    return Token(Plus, '+')
 
             if self.curChar == '-':
                 self.nextChar()
@@ -347,7 +359,7 @@ class Lexer(object):
             if self.curChar == '.':
                 self.nextChar()
                 return Token(DOT, '.')
-                             
+            
             self.error()
 
         return Token(EOF, None)
