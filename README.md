@@ -291,3 +291,21 @@ Context Free Grammar
 		  K ->int|bool|string|char
 		  int ->[0-9]+
 		  bool ->true|false
+    
+    	Conditionals :
+
+	 	  stmt -> matched_stmt | open_stmt
+     		  matched_stmt -> if expr begin matched_stmt end else begin matched_stmt end
+	 	  open_stmt -> if expr begin stmt end | if expr begin open_smt else begin open_stmt end 
+     		  expr -> ( bool | id == K )
+	 	  id ->[a-z]+[_|[0-9]|[a-z]]*
+	 	  K ->int|bool|string|char
+		  int ->[0-9]+
+		  bool ->true|false
+    		  string ->[a-z]+[[0-9]|[a-z]]*
+		  char ->a|b|....|z
+    
+         Exceptions:
+
+	  	  S -> try begin main end excpet begin main end
+     
