@@ -146,7 +146,8 @@ Closures :
                    begin
                          var a=7;
                         @function body
-                        var int output=x=y+a;
+                        var int output=x;
+			x=y+a;
                         return output;
                    end
                    return myFunction;
