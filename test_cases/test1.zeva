@@ -2,6 +2,6 @@ var int x = 5;
 var str s = "hello";
 var bool b = true;
 
-zout(x);  @ Expected output: 5 @
-zout(s);  @ Expected output: hello @
-zout(b);  @ Expected output: true @
+zout(x);  @ Expected output: 5
+zout(s);  @ Expected output: hello
+zout(b);  @ Expected output: true
