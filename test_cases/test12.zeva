@@ -13,4 +13,4 @@ end
 
 var func closure = outer();
 var int result = closure(10);
-zout(result);  @ Expected output: 21 @
+zout(result);  @ Expected output: 21
