@@ -242,30 +242,36 @@ BNF
 	<special-character> ::= " " | "!" | "#" | "$" | "%" | "&" | "'" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "\\" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~"
 
 
+Context Free Grammar
 
+	Basic Types:
 
+  	S -> D=K
+   	D -> varI|id
+    	K -> [a-z]*|true|false|[0-9]*|id.T
+     	T -> con(id)|substring([0-9]+, [0-9]*)
 
-
-
-unary operator:
- S -> I++ | I--;
- I ->[a-z]+[_|[0-9]|[a-z]]*
+	unary operator:
+	 
+  	S -> I++ | I--;
+ 	I ->[a-z]+[_|[0-9]|[a-z]]*
  
 
-
- Binary Operator :
- S ->IOI
- I ->[a-z]+[_|[0-9]|[a-z]]*
- O -> +|-|*|/|%|==|<|>|>=|<=|!=
+ 	Binary Operator :
  
- Compound types :
- S -> TI=(D)
- T ->tuple|list
- I ->[a-z]+[_|[0-9]|[a-z]]*
- D -> [K [,K]*]*
- K ->int|bool|string|char
- int ->[0-9]+
- bool ->true|false
- string ->[a-z]+[[0-9]|[a-z]]*
- char ->a|b|....|z
+	 S ->IOI
+	 I ->[a-z]+[_|[0-9]|[a-z]]*
+	 O -> +|-|*|/|%|==|<|>|>=|<=|!=
+ 
+ 	Compound types :
+ 
+	 S -> TI=(D)
+	 T ->tuple|list
+	 I ->[a-z]+[_|[0-9]|[a-z]]*
+	 D -> [K [,K]*]*
+	 K ->int|bool|string|char
+	 int ->[0-9]+
+	 bool ->true|false
+	 string ->[a-z]+[[0-9]|[a-z]]*
+	 char ->a|b|....|z
  
