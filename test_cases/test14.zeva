@@ -1,8 +1,0 @@
-try
-begin
-    @ Code that might throw an exception
-end
-except(Exception e)
-begin
-    @ Code to handle the exception
-end

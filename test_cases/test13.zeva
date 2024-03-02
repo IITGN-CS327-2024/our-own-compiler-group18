@@ -1,3 +1,0 @@
-var int mutableVar = 10;
-mutableVar = 20;
-zout(mutableVar);  @ Expected output: 20

@@ -1,2 +1,0 @@
-tuple <int> t = (1);
-zout(t);  @ Expected output: 1

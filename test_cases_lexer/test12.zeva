@@ -1,0 +1,16 @@
+func outer()
+begin
+    var int x = 5;
+    var int y = 6;
+    
+    func inner(int a)
+    begin
+        return x + y + a;
+    end
+    
+    return inner;
+end
+
+var func closure = outer();
+var int result = closure(10);
+zout(result);  @ Expected output: 21

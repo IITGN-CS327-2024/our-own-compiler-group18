@@ -1,0 +1,4 @@
+var int a = 10;
+var int b = 5;
+var int result = a * b;
+zout(result);  @ Expected output: 50

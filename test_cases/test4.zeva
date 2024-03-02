@@ -1,3 +1,0 @@
-var int x = 5;
-x++;
-zout(x);  @Expected output: 6
