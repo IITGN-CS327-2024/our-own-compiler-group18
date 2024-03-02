@@ -11,7 +11,7 @@ Basic Types (numbers, booleans, strings):
 	|str @string (“compiler”)
 	
 	|bool @boolean (true,false)
-	
+
 	var str s;
 	
 	s.substr(start,length); for string slicing 
