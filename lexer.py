@@ -6,14 +6,15 @@ import sys
 # punctuators
 EOF           = 'EOF'
 ID            = '<identifier>'
-INTEGER_CONST = '<integer>'
+INTEGER_CONST = '<Number>'
 LPAREN        = '<parenthesis>'
 RPAREN        = '<parenthesis>'
 SEMI          = '<end_of_stmt>'
 COMMA         = '<comma>'
 LSPAREN       = '<parenthesis>'
 RSPAREN       = '<parenthesis>'
-DOT           = '<DOT>'
+DOT           = '<Dot>'
+Quotation     = '<quotation>'
 
 # operators
 Assign        = '<operator>'
@@ -60,10 +61,6 @@ Delete        = 'delete'
 Size          = 'size'
 Try           = 'try'
 Except        = 'except'
-
-# literals
-TRUE          = "true"
-FALSE         = "false"
 
 @dataclass
 # class to store the token types and values
@@ -198,7 +195,7 @@ class Lexer(object):
 
             token = Token('REAL_CONST', float(result))
         else:
-            token = Token('INTEGER_CONST', int(result))
+            token = Token(INTEGER_CONST, int(result))
 
         return token
 
@@ -220,7 +217,7 @@ class Lexer(object):
             result += self.curChar
             self.nextChar()
 
-        token = Token('String', result)
+        token = Token(String, result)
         return token
 
     def get_token(self):
@@ -286,12 +283,7 @@ class Lexer(object):
                     self.nextChar()
                     return Token(Lt, '<')
 
-            if self.curChar == '*':
-                if self.peek() == '*':
-                  self.nextChar()
-                  self.nextChar()
-                  return Token(Power, "**")
-                  
+            if self.curChar == '*':                 
                 self.nextChar()
                 return Token(Mul, '*')
 
@@ -337,7 +329,7 @@ class Lexer(object):
                 if(self.indicator == 3): 
                     self.nextChar()
                     self.indicator = 0
-                return Token('<quotation>', ' /" ')
+                return Token(Quotation, ' /" ')
             
             if self.curChar == '"':
                 self.nextChar()

@@ -2,14 +2,18 @@ import ply.yacc as yacc
 
 # Get the token map from the lexer (you'll need to create your own lexer)
 tokens = [
-    'NUMBER',
-    'PLUS',
-    'MINUS',
-    'TIMES',
-    'DIVIDE',
-    'LPAREN',
-    'RPAREN',
- ]
+    'EOF'
+    '<identifier>'
+    '<Number>'
+    '<parenthesis>'
+    '<end_of_stmt>'
+    '<comma>'
+    '<Dot>'
+    '<quotation>'
+    '<operator>'
+    '<keyword>'
+    
+]
 
 # Define the start symbol
 start = 'start'
