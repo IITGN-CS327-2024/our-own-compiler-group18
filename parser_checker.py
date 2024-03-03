@@ -1,10 +1,10 @@
 import ply.yacc as yacc
 
-# Get the token map from the lexer (you'll need to create your own lexer)
+# Get the token map from the lexer
 tokens = [
     'EOF'
-    '<identifier>'
-    '<Number>'
+    'identifier'
+    'Number'
     '<parenthesis>'
     '<end_of_stmt>'
     '<comma>'
@@ -12,7 +12,6 @@ tokens = [
     '<quotation>'
     '<operator>'
     '<keyword>'
-    
 ]
 
 # Define the start symbol
@@ -40,7 +39,21 @@ def p_statement(p):
     # Handle individual statements here
     pass
 
-# Add other grammar rules here...
+def p_declaration(p):
+    '''declaration  : var type identifier = expression'''
+
+def p_declaration(p):
+    '''assignment  : identifier = expression'''
+
+def p_type(p):
+    '''type  -> int|bool|st'''
+def p_compound_types(p):
+    '''Compound_type  : A identifier = K'''
+def p_A(p):
+    '''A  : tuple | list'''
+def p_K(p):
+    '''K  -> (data) | [data]'''
+def 
 
 # Error rule for syntax errors
 def p_error(p):
@@ -49,13 +62,9 @@ def p_error(p):
 # Build the parser
 parser = yacc.yacc()
 
-# Input loop
-while True:
-    try:
-        s = input('calc > ')
-    except EOFError:
-        break
-    if not s:
-        continue
-    result = parser.parse(s)
-    print(result)
+# Read content from a text file (example.txt)
+with open('example.txt', 'r') as file:
+    s = file.read()
+
+result = parser.parse(s)
+print(result)
