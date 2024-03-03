@@ -208,10 +208,6 @@ class Lexer(object):
         while self.curChar is not None and self.curChar.isalnum():
             result += self.curChar
             self.nextChar()
-
-        if (result == 'add') or  (result == 'size') or (result == 'con') :
-            if self.curChar != '(':
-                self.error()
             
         token = KEYWORDS.get(result, Token(ID, result))
         return token
