@@ -1,10 +1,10 @@
 import ply.yacc as yacc
 
-# Get the token map from the lexer
+# Get the token map from the lexer (you'll need to create your own lexer)
 tokens = [
     'EOF'
-    'identifier'
-    'Number'
+    '<identifier>'
+    '<Number>'
     '<parenthesis>'
     '<end_of_stmt>'
     '<comma>'
@@ -12,6 +12,7 @@ tokens = [
     '<quotation>'
     '<operator>'
     '<keyword>'
+    
 ]
 
 # Define the start symbol
@@ -85,8 +86,247 @@ def p_T(p):
     '''T : 'elif' '(' condition ')' 'begin' statement_list 'end' K
          | epsilon '''
     pass
+def p_K(p):
+    '''K : 'else' 'begin' statement_list 'end' 
+         | epsilon'''
+    pass
+def p_while(p):
+    '''while :  'while' '(' condition ')' 'begin' statement_list 'end' '''
+    pass
+def p_function_call(p):
+    '''function_call : 'func' identifier '(' parameter_list ')' 'begin' statement_list  'return' L';' 'end' '''
+    pass
+def p_L(p):
+    '''L :  identifier
+         | function_call'''
+    pass
+def p_parameter_list(p):
+    '''parameter_list :  type identifier M '''
+    pass
+def p_M(p):
+    '''M : ',' parameter_list 
+         | epsilon '''
+    pass
+def p_condition(p):
+    '''condition : expression comparison_operator expression '''
+    pass
+def p_comparison_operator(p):
+    '''comparison_operator : == 
+                           | != 
+                           | < 
+                           | > 
+                           | <= 
+                           | >= '''
+    pass
+def p_expression(p):
+    '''expression : term 
+                  | expression binary_operator term '''
+    pass
+def p_binary_operator(p):
+    '''binary_operator : + 
+                       | - 
+                       | * 
+                       | / 
+                       | % 
+                       | ^ '''
+    pass
+def p_term(p):
+    '''term :  factor 
+            | term unary_operator factor '''
+    pass
+def p_unary_operator(p):
+    ''' unary_operator : ++ 
+                       | -- '''
+    pass
+def p_factor(p):
+    ''' factor :  identifier 
+               |  literal 
+               |  ( expression ) '''
+    pass
+def p_literal(p):
+    ''' literal :  integer_literal 
+                | string_literal 
+                | boolean_literal '''
+    pass
+def p_integer_literal(p):
+    '''integer_literal : digit_sequence '''
+    pass
+def p_digit_sequence(p):
+    '''digit_sequence : digit 
+                      | digit_sequence digit'''
+    pass
+def p_digit(p):
+    '''digit : 0 
+             | 1 
+             | 2 
+             | 3 
+             | 4 
+             | 5 
+             | 6 
+             | 7 
+             | 8 
+             | 9 '''
+    pass
+def p_string_literal(p):
+    '''string_literal : character_sequence '''
+    pass
+def p_character_sequence(p):
+    '''character_sequence : character 
+                          | character_sequence character '''
+    pass
+def p_boolean_literal(p):
+    '''boolean_literal :  true 
+                       | false '''
+    pass
+def p_identifier(p):
+    '''identifier : letter_sequence P 
+                  | identifier letter_or_digit '''
+    pass
+def p_P(p):
+    '''P :  _ 
+         | epsilon '''
+    pass
+def p_letter(p):
+    '''letter : a 
+              | b 
+              | c 
+              |d 
+              |d
+              |e
+              |f
+              |g
+              |h
+              |i
+              |j
+              |k
+              |l
+              |m
+              |n
+              |o
+              |p
+              |q
+              |r
+              |s
+              |t
+              |u
+              |v
+              |w
+              |x
+              |y
+              |z 
+              | A 
+              | B 
+              | C 
+              |D 
+              |E
+              |F
+              |G
+              |H
+              |I
+              |J
+              |K
+              |L
+              |M
+              |N
+              |O
+              |P
+              |Q
+              |R
+              |S
+              |T
+              |U
+              |V
+              |W
+              |X
+              |Y
+              | Z  '''
+    pass
+def p_letter_sequence(p):
+    '''letter_sequence : letter 
+                       | letter_sequence letter '''
+    pass
+def p_character(p):
+    '''character :a 
+              | b 
+              | c 
+              |d 
+              |d
+              |e
+              |f
+              |g
+              |h
+              |i
+              |j
+              |k
+              |l
+              |m
+              |n
+              |o
+              |p
+              |q
+              |r
+              |s
+              |t
+              |u
+              |v
+              |w
+              |x
+              |y
+              |z 
+              | A 
+              | B 
+              | C 
+              |D 
+              |E
+              |F
+              |G
+              |H
+              |I
+              |J
+              |K
+              |L
+              |M
+              |N
+              |O
+              |P
+              |Q
+              |R
+              |S
+              |T
+              |U
+              |V
+              |W
+              |X
+              |Y
+              | Z
+              |@
+              |#
+              |$
+              |%
+              |^
+              |&
+              |*
+              |(
+              |)
+              |-
+              |+
+              |\
+              |/*
+              |/
+              |<
+              |>
+              |.
+              |, '''
+    pass
+def p_letter_or_digit(p):
+    '''letter_or_digit : charecter_sequence | digit_sequence '''
+    pass
+    
+
+
 
     
+
 # Error rule for syntax errors
 def p_error(p):
     print("Syntax error in input:", p)
@@ -94,9 +334,13 @@ def p_error(p):
 # Build the parser
 parser = yacc.yacc()
 
-# Read content from a text file (example.txt)
-with open('example.txt', 'r') as file:
-    s = file.read()
-
-result = parser.parse(s)
-print(result)
+# Input loop
+while True:
+    try:
+        s = input('calc > ')
+    except EOFError:
+        break
+    if not s:
+        continue
+    result = parser.parse(s)
+    print(result)
