@@ -324,9 +324,6 @@ def p_letter_or_digit(p):
     
 
 
-
-    
-
 # Error rule for syntax errors
 def p_error(p):
     print("Syntax error in input:", p)
