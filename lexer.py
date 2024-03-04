@@ -3,64 +3,64 @@
 from dataclasses import dataclass
 import sys
 
-# punctuators
 EOF           = 'EOF'
-ID            = '<identifier>'
-INTEGER_CONST = '<Number>'
-LPAREN        = '<parenthesis>'
-RPAREN        = '<parenthesis>'
-SEMI          = '<end_of_stmt>'
-COMMA         = '<comma>'
-LSPAREN       = '<parenthesis>'
-RSPAREN       = '<parenthesis>'
-DOT           = '<Dot>'
-Quotation     = '<quotation>'
+ID            = 'ID'
+NUMBER        = 'NUMBER'
+LPAREN        = 'LPAREN'
+RPAREN        = 'RPAREN'
+SEMI          = 'SEMI'
+COMMA         = 'COMMA'
+LSPAREN       = 'LSPAREN'
+RSPAREN       = 'RSPAREN'
+DOT           = 'DOT'
+QUOTATION     = 'QUOTATION'
 
 # operators
-Assign        = '<operator>'
-Plus          = '<operator>'
-PlusPlus      = '<operator>'
-Minus         = '<operator>'
-Mul           = '<operator>'
-Div           = '<operator>'
-Rem           = '<operator>'
-Eqeq          = '<operator>'
-Noteq         = '<operator>'
-Gt            = '<operator>'
-Lt            = '<operator>'
-Gteq          = '<operator>'
-Lteq          = '<operator>'
-Modulo        = '<operator>'
-And           = '<operator>'
-Or            = '<operator>'
+ASSIGN        = 'ASSIGN'
+PLUS          = 'PLUS'
+PLUSPLUS      = 'PLUSPLUS'
+MINUS         = 'Minus'
+MINUSMINUS    = 'MINUSMINUS'
+MUL           = 'MUL'
+DIV           = 'DIV'
+REM           = 'REM'
+EQEQ          = 'EQEQ'
+NOTEQ         = 'NOTEQ'
+GT            = 'GT'
+LT            = 'LT'
+GTEQ          = 'GTEQ'
+LTEQ          = 'LTEQ'
+AND           = 'AND'
+OR            = 'OR'
+
 
 # keywords
-Var           = 'var'
-Integer       = 'int'
-Boolean       = 'bool'
-Begin         = 'begin'
-End           = 'end'
-If            = 'if'
-Eif           = 'elif'
-Else          = 'else'
-While         = 'while'
-Print         = 'zout'
-String        = 'str'
-Function      = 'func'
-Return        = 'return'
-For           = 'for'
-Con           = 'con'
-Tuple         = 'tuple'
-List          = 'list'
-Add           = 'add'
-size          = 'size'
-List          = "list"
-Front         = "front"
-Rear          = "rear"
-Delete        = 'delete'
-Size          = 'size'
-Try           = 'try'
-Except        = 'except'
+VAR           = 'VAR'
+INTEGER       = 'INT'
+BOOLEAN       = 'BOOL'
+BEGIN         = 'BEGIN'
+END           = 'END'
+IF            = 'IF'
+EIF           = 'ELIF'
+ELSE          = 'ELSE'
+WHILE         = 'WHILE'
+PRINT         = 'ZOUT'
+STRING        = 'STR'
+FUNCTION      = 'FUNC'
+RETURN        = 'RETURN'
+FOR           = 'FOR'
+CON           = 'CON'
+TUPLE         = 'TUPLE'
+LIST          = 'LIST'
+ADD           = 'ADD'
+SIZE          = 'SIZE'
+LIST          = 'LIST'
+FRONT         = 'FRONT'
+REAR          = 'REAR'
+DELETE        = 'DELETE'
+SIZE          = 'SIZE'
+TRY           = 'TRY'
+EXCEPT        = 'EXCEPT'
 
 @dataclass
 # class to store the token types and values
@@ -78,33 +78,33 @@ class Token:
         return self.__str__()
 
 KEYWORDS = {
-    'PROGRAM': Token('<key_word>', 'PROGRAM'),
-    'var': Token('<key_word>', 'var'),
-    'int': Token('<key_word>', 'int'),
-    'bool': Token('<key_word>', 'bool'),
-    'begin': Token('<key_word>', 'begin'),
-    'end': Token('<key_word>', 'end'),
-    'for': Token('<key_word>', 'for'),
-    'true': Token('<key_word>', 'true'),
-    'false': Token('<key_word>', 'false'),
-    'if': Token('<key_word>', 'if'),
-    'elif': Token('<key_word>', 'elif'),
-    'else': Token('<key_word>', 'else'),
-    'zout': Token('<key_word>', 'zout'),
-    'while': Token('<key_word>', 'while'),
-    'str': Token('<key_word>', 'str'),
-    'func': Token('<key_word>', 'func'),
-    'return': Token('<key_word>', 'return'),
-    'try': Token('<key_word>', 'try'),
-    'except': Token('<key_word>', 'except'),
-    'add': Token('<key_word>', 'add'),
-    'size': Token('<key_word>', 'size'),
-    'list': Token('<key_word>', 'list'),
-    'delete': Token('<key_word>', 'delete'),
-    'front': Token('<key_word>', 'front'),
-    'rear': Token('<key_word>', 'rear'),
-    'con': Token('<key_word>', 'con'),
-    'tuple': Token('<key_word>', 'tuple')
+    'PROGRAM': Token('PROGRAM', 'PROGRAM'),
+    'var': Token('VAR', 'var'),
+    'int': Token('INT', 'int'),
+    'bool': Token('BOOL', 'bool'),
+    'begin': Token('BEGIN', 'begin'),
+    'end': Token('END', 'end'),
+    'for': Token('FOR', 'for'),
+    'true': Token('TRUE', 'true'),
+    'false': Token('FALSE', 'false'),
+    'if': Token('IF', 'if'),
+    'elif': Token('ELIF', 'elif'),
+    'else': Token('ELSE', 'else'),
+    'zout': Token('ZOUT', 'zout'),
+    'while': Token('WHILE', 'while'),
+    'str': Token('STR', 'str'),
+    'func': Token('FUNC', 'func'),
+    'return': Token('RETURN', 'return'),
+    'try': Token('TRY', 'try'),
+    'except': Token('EXCEPT', 'except'),
+    'add': Token('ADD', 'add'),
+    'size': Token('SIZE', 'size'),
+    'list': Token('LIST', 'list'),
+    'delete': Token('DELETE', 'delete'),
+    'front': Token('FRONT', 'front'),
+    'rear': Token('REAR', 'rear'),
+    'con': Token('CON', 'con'),
+    'tuple': Token('TUPLE', 'tuple')
 
 }
 
@@ -195,7 +195,7 @@ class Lexer(object):
 
             token = Token('REAL_CONST', float(result))
         else:
-            token = Token(INTEGER_CONST, int(result))
+            token = Token(NUMBER, int(result))
 
         return token
 
@@ -217,7 +217,7 @@ class Lexer(object):
             result += self.curChar
             self.nextChar()
 
-        token = Token(String, result)
+        token = Token(STRING, result)
         return token
 
     def get_token(self):
@@ -243,69 +243,69 @@ class Lexer(object):
                 if self.peek() == '=':
                     self.nextChar()
                     self.nextChar()
-                    return Token(Eqeq, '==')
+                    return Token(EQEQ, '==')
                 else:
                     self.nextChar()
-                    return Token(Assign, '=') 
+                    return Token(ASSIGN, '=') 
 
             if self.curChar == "|":
                 if self.peek() == "|":
                     self.nextChar()
                     self.nextChar()
-                    return Token(Or, "||")
+                    return Token(OR, "||")
 
 
             if self.curChar == "&":
                 if self.peek() == "&":
                     self.nextChar()
                     self.nextChar()
-                    return Token(And, "&&")
+                    return Token(AND, "&&")
 
             if self.curChar == '>':
                 if self.peek() == '=':
                     self.nextChar()
                     self.nextChar()
-                    return Token(Gteq, '>=')
+                    return Token(GTEQ, '>=')
                 else:
                     self.nextChar()
-                    return Token(Gt, '>')
+                    return Token(GT, '>')
 
             if self.curChar == '<':
                 if self.peek() == '=':
                     self.nextChar()
                     self.nextChar()
-                    return Token(Lteq, '<=')
+                    return Token(LTEQ, '<=')
                 elif self.peek() == '>':
                     self.nextChar()
                     self.nextChar()
-                    return Token(Noteq, '!=') # <>
+                    return Token(NOTEQ, '!=') # <>
                 else:
                     self.nextChar()
-                    return Token(Lt, '<')
+                    return Token(LT, '<')
 
             if self.curChar == '*':                 
                 self.nextChar()
-                return Token(Mul, '*')
+                return Token(MUL, '*')
 
             if self.curChar == "%":
                 self.nextChar()
-                return Token(Rem, '%')
+                return Token(REM, '%')
 
             if self.curChar == '+':
                 if self.peek() == '+':
                     self.nextChar()
                     self.nextChar()
-                    return Token(PlusPlus, '++')
+                    return Token(PLUSPLUS, '++')
                 else:
-                    return Token(Plus, '+')
+                    return Token(PLUS, '+')
 
             if self.curChar == '-':
                 self.nextChar()
-                return Token(Minus, '-')
+                return Token(MINUS, '-')
 
             if self.curChar == '/':  
               self.nextChar()
-              return Token(Div, '/')
+              return Token(DIV, '/')
 
             if self.curChar == '(':
                 self.nextChar()
@@ -329,7 +329,7 @@ class Lexer(object):
                 if(self.indicator == 3): 
                     self.nextChar()
                     self.indicator = 0
-                return Token(Quotation, ' /" ')
+                return Token(QUOTATION, ' /" ')
             
             if self.curChar == '"':
                 self.nextChar()
