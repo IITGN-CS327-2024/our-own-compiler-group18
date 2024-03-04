@@ -27,12 +27,38 @@ tokens = [
     'GTEQ',
     'LTEQ',
     'AND',
-    'OR'
+    'OR',
+    'STRING',
+    'VAR',
+    'INT',
+    'BOOL',
+    'BEGIN',
+    'END',
+    'IF',
+    'ELIF',
+    'ELSE',
+    'WHILE',
+    'ZOUT',
+    'STR',
+    'FUNC',
+    'RETURN',
+    'FOR',
+    'CON',
+    'TUPLE',
+    'LIST',
+    'ADD',
+    'SIZE',
+    'DELETE',
+    'FRONT',
+    'REAR',
+    'TRY',
+    'EXCEPT',
+    'TRUE',
+    'FALSE'
 ]
 
 # Define keywords and reserved words
 keywords = {
-    'program': 'PROGRAM',
     'var': 'VAR',
     'int': 'INT',
     'bool': 'BOOL',
@@ -72,6 +98,8 @@ t_LSPAREN = r'\['
 t_RSPAREN = r'\]'
 t_DOT = r'\.'
 t_QUOTATION = r'\"'
+t_STRING = r'\".*?\"'
+
 
 t_ASSIGN = r'='
 t_PLUS = r'\+'
@@ -87,7 +115,7 @@ t_LT = r'<'
 t_GTEQ = r'>='
 t_LTEQ = r'<='
 t_AND = r'&&'
-t_OR = r'\|\|'
+
 
 def t_NUMBER(t):
     r'\d+'
@@ -99,8 +127,9 @@ def t_ID(t):
     t.type = keywords.get(t.value.lower(), 'ID')
     return t
 
+
 def t_COMMENT(t):
-    r'\/\/.*'
+    r'@.*|\@*.*\*@'
     pass
 
 def t_newline(t):
@@ -117,11 +146,13 @@ lexer = lex.lex()
 # Example usage:
 if __name__ == "__main__":
     text = """
-    program
-    var x = 10
-    for i in range(5):
-        zout "Hello, World!"
-    end
+    var int x = 5;
+var str s = "hello";
+var bool b = true;
+
+zout(x);  @ Expected output: 5
+zout(s);  @ Expected output: hello
+zout(b);  @ Expected output: true
     """
     lexer.input(text)
 
