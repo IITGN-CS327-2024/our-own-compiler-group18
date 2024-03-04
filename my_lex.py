@@ -145,15 +145,7 @@ lexer = lex.lex()
 
 # Example usage:
 if __name__ == "__main__":
-    text = """
-    var int x = 5;
-var str s = "hello";
-var bool b = true;
-
-zout(x);  @ Expected output: 5
-zout(s);  @ Expected output: hello
-zout(b);  @ Expected output: true
-    """
+    text = text = open("test_cases_lexer/test1.zeva","r").read()
     lexer.input(text)
 
     while True:
