@@ -43,35 +43,38 @@ def p_statement(p):
 
 # Add other grammar rules here...
 def p_declaration(p):
-    '''declaration : 'var' type identifier '=' expression '''
+    '''declaration : var type identifier ASSIGN expression'''
     pass
 def p_assignment(p):
-    '''assignment : identifier '=' expression'''
+    '''assignment :  identifier ASSIGN expression'''
     pass
 def p_type(p):
-    '''type : int
-            | bool
-            | str'''
+    '''type : INT
+            | BOOL
+            | STR'''
 
     pass
 def p_compound_types(p):
-    '''compound_types : A identifier P'''
+    '''compound_types :  A identifier ASSIGN K'''
     pass
 def p_A(p):
     '''A : tuple
          | list'''
     pass
+
 def p_K(p):
-    '''K : (data)
-         | [data]'''
+    '''K : LPAREN data RPAREN | LSPAREN data RSPAREN'''
     pass
+
 def p_compounnd_type_access(p):
-    '''compounnd_type_access : Z F 
-                             | identifier expression'''
+    '''compound_type_access : Z F 
+                            | identifier LSPAREN expression RSPAREN'''
     pass
+
 def p_Z(p):
-    '''Z : identifier '.' '''
+    '''Z : identifier DOT '''
     pass
+
 def p_F(p):
     '''F : add()
          | front

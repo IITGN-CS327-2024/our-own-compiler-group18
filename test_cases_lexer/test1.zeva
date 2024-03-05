@@ -1,6 +1,8 @@
 var int x = 5;
-var str s = "hello";
+var str s = "hello@hello";
 var bool b = true;
+
+s.add(s);
 
 zout(x);  @ Expected output: 5
 zout(s);  @ Expected output: hello

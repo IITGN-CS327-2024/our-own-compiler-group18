@@ -1,4 +1,5 @@
 from ply import lex
+import sys
 
 # Define tokens
 tokens = [
@@ -12,7 +13,6 @@ tokens = [
     'LSPAREN',
     'RSPAREN',
     'DOT',
-    'QUOTATION',
     'ASSIGN',
     'PLUS',
     'PLUSPLUS',
@@ -97,7 +97,7 @@ t_COMMA = r','
 t_LSPAREN = r'\['
 t_RSPAREN = r'\]'
 t_DOT = r'\.'
-t_QUOTATION = r'\"'
+#t_QUOTATION = r'\"'
 t_STRING = r'\".*?\"'
 
 
@@ -124,13 +124,16 @@ def t_NUMBER(t):
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = keywords.get(t.value.lower(), 'ID')
+    if t.value.lower() == 'true' or t.value.lower() == 'false':
+        t.type = 'BOOL'
+    else:
+        t.type = keywords.get(t.value.lower(), 'ID')
     return t
-
 
 def t_COMMENT(t):
     r'@.*|\@*.*\*@'
     pass
+
 
 def t_newline(t):
     r'\n+'
@@ -143,13 +146,203 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
-# Example usage:
-if __name__ == "__main__":
-    text = text = open("test_cases_lexer/test1.zeva","r").read()
-    lexer.input(text)
+precedence = (
+	('left','AND','OR'),
+	('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
+    ('left','PLUS','MINUS'),
+    ('left','MUL','DIV','MOD'),
+    #('right','UMINUS'),
+    )
 
-    while True:
-        tok = lexer.token()
-        if not tok:
-            break
-        print(tok)
+#Grammar rules
+def p_start(p):
+    'start : statement_list'
+    # Handle the start symbol here
+    pass
+
+def p_statement_list(p):
+    '''statement_list : statement SEMICOLON statement_list
+                      | '''
+    # Handle the list of statements here
+    pass
+
+def p_statement(p):
+    '''statement : declaration
+                 | assignment
+                 | if_stmnt
+                 | while_stmt
+                 | function_call
+                 | compound_types
+                 | compound_type_access
+                 | try_except'''
+
+    pass
+
+def p_declaration(p):
+    '''declaration : VAR type ID ASSIGN expression '''
+    pass
+
+def p_assignment(p):
+    '''assignment :  ID ASSIGN expression'''
+    pass
+
+def p_type(p):
+    '''type : INT
+            | BOOL
+            | STR'''
+
+    pass
+
+def p_compound_types(p):
+    '''compound_types: A ID ASSIGN K'''
+
+    pass
+
+def p_A(p):
+    '''A : TUPLE
+         | LIST'''
+    pass
+
+def p_K(p):
+    '''K : LPAREN data RPAREN | LSPAREN data RSPAREN'''
+    pass
+
+def p_data(p):
+    '''factor p'''
+
+def p_compounnd_type_access(p):
+    '''compound_type_access : Z F 
+                            | ID LSPAREN expression RSPAREN'''
+    pass
+
+def p_Z(p):
+    '''Z : ID DOT '''
+    pass
+
+def p_F(p):
+    '''F : CON LPAREN factor RPAREN
+            |FRONT
+            |REAR
+            |SIZE
+            |DELETE
+            |SUBSTR LPAREN ID COMMA int RPAREN'''
+    pass
+
+def p_if_stmnt(p):
+    '''if_stmnt :   IF LPAREN condition RPAREN  BEGIN  statement_list END T'''
+    pass
+
+def p_T(p):
+    '''T :  ELIF PAREN condition RPAREN BEGIN  statement_list END K
+         |'''
+    pass
+
+def p_K(p):
+    '''K : ELSE BEGIN statement_list END 
+         | '''
+    pass
+
+def p_while_stmt(p):
+    ''' while_stmt : WHILE LPAREN condition RPAREN BEGIN statement_list END '''
+    pass
+
+def p_function_call(p):
+    '''function_call : FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN ID SEMICOLON END'''
+    pass
+
+def p_parameter_list(p):
+    '''parameter_list : type ID M '''
+    pass
+
+def p_M(p):
+    '''M : COMMA parameter_list 
+         | '''
+    pass
+
+def p_condition(p):
+    '''condition : expression  comparison_operator  expression'''
+    pass
+
+def p_comparison_operator(p):
+    '''comparison_operator : EQEQ 
+                           | NOTEQ 
+                           | LT 
+                           | GT 
+                           | LTEQ 
+                           | GTEQ '''
+    pass
+
+def p_expression(p):
+    '''expression :  term 
+                  | expression binary_operator term '''
+    pass
+
+def p_binary_operator(p):
+    '''binary_operator :  PLUS 
+                       | MINUS 
+                       | MUL 
+                       | DIV 
+                       | REM '''
+    pass
+
+def p_term(p):
+    '''term :  factor 
+            | term unary_operator factor '''
+    pass
+
+def p_unary_operator(p):
+    ''' unary_operator : PLUSPLUS 
+                       | MINUSMINUS '''
+    pass
+
+def p_factor(p):
+    ''' factor :  ID 
+               |NUMBER 
+               |STRING
+               |TRUE
+               |FALSE 
+               |LPAREN expression RPAREN '''
+    pass
+
+def p_try_except(p):
+    '''try_except -> TRY x EXCEPT x'''
+    pass
+
+def p_x(p):
+    '''x : BEGIN statement_list END'''
+    pass
+
+def p_print(p):
+    '''print -> ZOUT LPAREN y RPAREN'''
+    pass
+
+def p_y(p):
+    '''y -> NUMBER | STRING |ID'''
+    pass
+
+def find_column(input, t):
+	line_start = input.rfind('\n', 0, t.lexpos) + 1
+	return (t.lexpos - line_start) + 1
+
+def p_error(t):
+	if t is not None:
+		column = find_column(code, t)		
+		print("Found unexpected character '%s' at line '%s' and column '%s'" % (t.value, t.lineno, column))
+	else:
+		print("Unexpected end of input!Empty file or syntax error at EOF!")
+
+
+import ply.yacc as yacc
+
+parser = yacc.yacc()
+
+try:
+	if len(sys.argv) < 2:
+		print("No file was given as a first argument!")
+		print("Use command -> 'bash run.sh 'filename''")
+	else:
+		file = open(sys.argv[1])
+		code = file.read()
+		p = parser.parse(code)
+except EOFError:
+    print("File could not be opened!")
