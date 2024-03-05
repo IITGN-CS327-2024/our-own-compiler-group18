@@ -1,9 +1,9 @@
 var int x = 5;
 var str s = "hello@hello";
-var bool b = true;
+var bool b = false;
 
 s.con(s);
 
-zout(x);  @helloworld jdbfafbjafb   ''''''
+zout(x);  @hello:wasjhdbfhlfdorld jdbfafbjafb   ''''''
 zout(s);  
 zout(b);  

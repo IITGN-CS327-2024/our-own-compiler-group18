@@ -164,7 +164,8 @@ def p_statement(p):
                  | compound_types
                  | compound_type_access
                  | try_except
-                 | print'''
+                 | print
+                 | ID unary_operator'''
 
     pass
 
@@ -174,7 +175,8 @@ def p_declaration(p):
 
 def p_L(p):
     '''L : expression
-         | compound_type_access'''
+         | compound_type_access
+         | ID unary_operator'''
     
 def p_assignment(p):
     '''assignment :  ID ASSIGN expression'''
@@ -293,7 +295,7 @@ def p_binary_operator(p):
 
 def p_term(p):
     '''term :  factor 
-            | term unary_operator factor '''
+            |  term unary_operator factor '''
     pass
 
 def p_unary_operator(p):
@@ -349,7 +351,7 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 try:
-        text = open("test_cases_lexer/test4.zeva","r").read()
+        text = open("test_cases_lexer/test1.zeva","r").read()
         p = parser.parse(text)
         
 except EOFError:

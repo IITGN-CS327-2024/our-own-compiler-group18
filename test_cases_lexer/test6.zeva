@@ -1,2 +1,2 @@
-tuple <int> t = (1);
+tuple t = (1);
 zout(t);  @ Expected output: 1
