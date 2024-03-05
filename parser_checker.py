@@ -8,7 +8,6 @@ tokens = [
     'LPAREN',
     'RPAREN',
     'SEMICOLON',
-    'COLON',
     'COMMA',
     'LSPAREN',
     'RSPAREN',
@@ -184,7 +183,6 @@ def p_L(p):
   '''L : statement
        | ID LPAREN data RPAREN'''
   pass
-
 def p_assignment(p):
     '''assignment :  ID ASSIGN L'''
     pass
@@ -207,18 +205,16 @@ def p_A(p):
     pass
 
 def p_data(p):
-    '''data : expression data
+    '''data : factor data
             | COMMA data
             | empty'''
     pass
 def p_compound_type_access(p):
-    '''compound_type_access : Z F 
+    '''compound_type_access : ID DOT F 
                             | ID LSPAREN expression RSPAREN'''
     pass
 
-def p_Z(p):
-    '''Z : ID DOT '''
-    pass
+
 
 def p_F(p):
     '''F : CON LPAREN factor RPAREN
@@ -303,7 +299,7 @@ def p_factor(p):
     pass
 
 def p_try_except(p):
-    '''try_except : TRY COLON x EXCEPT COLON x'''
+    '''try_except : TRY x EXCEPT x'''
     pass
 
 def p_x(p):
@@ -339,7 +335,7 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 try:
-        text = open("test_cases_lexer/test1.zeva","r").read()
+        text = open("keerthi.txt","r").read()
         p = parser.parse(text)
 
 except EOFError:
