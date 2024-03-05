@@ -1,15 +1,9 @@
-<<<<<<< HEAD
-func subtract(int a, int b)
-=======
+
 func a(int a, int b)
->>>>>>> 96968772cf9e43c1d325cb0e7e7fa27eab4b6a5b
 begin
     return a + b;
 end
 
-<<<<<<< HEAD
-var int result = subtract(3, 5);
-=======
 var int result = a(3, 5);
->>>>>>> 96968772cf9e43c1d325cb0e7e7fa27eab4b6a5b
+
 zout(result);  @ Expected output: 8
