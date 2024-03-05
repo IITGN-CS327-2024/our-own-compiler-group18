@@ -72,7 +72,8 @@ keywords = {
     'con': 'CON',
     'tuple': 'TUPLE',
     'list': 'LIST',
-    'CON': 'CON',
+    'con': 'CON',
+    'substr':'SUBSTR',
     'size': 'SIZE',
     'delete': 'DELETE',
     'front': 'FRONT',
@@ -221,7 +222,7 @@ def p_F(p):
          | REAR
          | SIZE
          | DELETE
-         | SUBSTR LPAREN ID COMMA INT RPAREN
+         | SUBSTR LPAREN factor COMMA factor RPAREN
          | empty'''
     pass
 
@@ -320,7 +321,8 @@ def p_print(p):
 def p_y(p):
     '''y : NUMBER 
          | STRING 
-         | ID'''
+         | ID
+         | compound_type_access'''
     pass
 
 def p_empty(p):
@@ -343,7 +345,7 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 try:
-        text = open("test_cases_lexer/test1.zeva","r").read()
+        text = open("test_cases_lexer/test2.zeva","r").read()
         p = parser.parse(text)
         
 except EOFError:

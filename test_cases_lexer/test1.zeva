@@ -4,6 +4,6 @@ var bool b = true;
 
 s.con(s);
 
-zout(x);  
+zout(x);  @helloworld jdbfafbjafb   ''''''
 zout(s);  
 zout(b);  
