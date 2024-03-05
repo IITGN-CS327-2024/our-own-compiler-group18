@@ -1,9 +1,10 @@
-try
 begin
+try
+
     @ Code that might throw an exception
-end
+
 
 except
-begin
+
     @ Code to handle the exception
-end
+end;
