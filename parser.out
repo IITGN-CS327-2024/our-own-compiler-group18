@@ -1,1 +1,186 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ADD
+    AND
+    EOF
+    FOR
+    OR
+    SEMI
+
+Grammar
+
+Rule 0     S' -> start
+Rule 1     start -> statement_list
+Rule 2     statement_list -> statement SEMICOLON statement_list
+Rule 3     statement_list -> empty
+Rule 4     statement -> declaration
+Rule 5     statement -> assignment
+Rule 6     statement -> if_stmnt
+Rule 7     statement -> while_stmt
+Rule 8     statement -> function_call
+Rule 9     statement -> compound_types
+Rule 10    statement -> compound_type_access
+Rule 11    statement -> try_except
+Rule 12    declaration -> VAR type ID ASSIGN expression
+Rule 13    assignment -> ID ASSIGN expression
+Rule 14    type -> INT
+Rule 15    type -> BOOL
+Rule 16    type -> STR
+Rule 17    compound_types -> A ID ASSIGN N
+Rule 18    A -> TUPLE
+Rule 19    A -> LIST
+Rule 20    N -> LPAREN data RPAREN
+Rule 21    N -> LSPAREN data RSPAREN
+Rule 22    data -> factor I
+Rule 23    I -> COMMA data
+Rule 24    I -> empty
+Rule 25    compound_type_access -> Z F
+Rule 26    compound_type_access -> ID LSPAREN expression RSPAREN
+Rule 27    Z -> ID DOT
+Rule 28    F -> CON LPAREN factor RPAREN
+Rule 29    F -> FRONT
+Rule 30    F -> REAR
+Rule 31    F -> SIZE
+Rule 32    F -> DELETE
+Rule 33    F -> SUBSTR LPAREN ID COMMA int RPAREN
+Rule 34    if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list END T
+Rule 35    T -> ELIF PAREN condition RPAREN BEGIN statement_list END K
+Rule 36    T -> empty
+Rule 37    K -> ELSE BEGIN statement_list END
+Rule 38    K -> empty
+Rule 39    while_stmt -> WHILE LPAREN condition RPAREN BEGIN statement_list END
+Rule 40    function_call -> FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN ID SEMICOLON END
+Rule 41    parameter_list -> type ID M
+Rule 42    M -> COMMA parameter_list
+Rule 43    M -> empty
+Rule 44    condition -> expression comparison_operator expression
+Rule 45    comparison_operator -> EQEQ
+Rule 46    comparison_operator -> NOTEQ
+Rule 47    comparison_operator -> LT
+Rule 48    comparison_operator -> GT
+Rule 49    comparison_operator -> LTEQ
+Rule 50    comparison_operator -> GTEQ
+Rule 51    expression -> term
+Rule 52    expression -> expression binary_operator term
+Rule 53    binary_operator -> PLUS
+Rule 54    binary_operator -> MINUS
+Rule 55    binary_operator -> MUL
+Rule 56    binary_operator -> DIV
+Rule 57    binary_operator -> REM
+Rule 58    term -> factor
+Rule 59    term -> term unary_operator factor
+Rule 60    unary_operator -> PLUSPLUS
+Rule 61    unary_operator -> MINUSMINUS
+Rule 62    factor -> ID
+Rule 63    factor -> NUMBER
+Rule 64    factor -> STRING
+Rule 65    factor -> TRUE
+Rule 66    factor -> FALSE
+Rule 67    factor -> LPAREN expression RPAREN
+Rule 68    try_except -> TRY x EXCEPT x
+Rule 69    x -> BEGIN statement_list END
+Rule 70    print -> ZOUT LPAREN y RPAREN
+Rule 71    y -> NUMBER
+Rule 72    y -> STRING
+Rule 73    y -> ID
+Rule 74    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ADD                  : 
+AND                  : 
+ASSIGN               : 12 13 17
+BEGIN                : 34 35 37 39 40 69
+BOOL                 : 15
+COMMA                : 23 33 42
+CON                  : 28
+DELETE               : 32
+DIV                  : 56
+DOT                  : 27
+ELIF                 : 35
+ELSE                 : 37
+END                  : 34 35 37 39 40 69
+EOF                  : 
+EQEQ                 : 45
+EXCEPT               : 68
+FALSE                : 66
+FOR                  : 
+FRONT                : 29
+FUNC                 : 40
+GT                   : 48
+GTEQ                 : 50
+ID                   : 12 13 17 26 27 33 40 40 41 62 73
+IF                   : 34
+INT                  : 14
+LIST                 : 19
+LPAREN               : 20 28 33 34 39 40 67 70
+LSPAREN              : 21 26
+LT                   : 47
+LTEQ                 : 49
+MINUS                : 54
+MUL                  : 55
+NOTEQ                : 46
+NUMBER               : 63 71
+OR                   : 
+PLUS                 : 53
+PLUSPLUS             : 60
+REAR                 : 30
+REM                  : 57
+RETURN               : 40
+RPAREN               : 20 28 33 34 35 39 40 67 70
+RSPAREN              : 21 26
+SEMI                 : 
+SIZE                 : 31
+STR                  : 16
+STRING               : 64 72
+TRUE                 : 65
+TRY                  : 68
+TUPLE                : 18
+VAR                  : 12
+WHILE                : 39
+ZOUT                 : 70
+error                : 
+
+Nonterminals, with rules where they appear
+
+A                    : 17
+F                    : 25
+I                    : 22
+K                    : 35
+M                    : 41
+MINUSMINUS           : 61
+N                    : 17
+PAREN                : 35
+SEMICOLON            : 2 40
+SUBSTR               : 33
+T                    : 34
+Z                    : 25
+assignment           : 5
+binary_operator      : 52
+comparison_operator  : 44
+compound_type_access : 10
+compound_types       : 9
+condition            : 34 35 39
+data                 : 20 21 23
+declaration          : 4
+empty                : 3 24 36 38 43
+expression           : 12 13 26 44 44 52 67
+factor               : 22 28 58 59
+function_call        : 8
+if_stmnt             : 6
+int                  : 33
+parameter_list       : 40 42
+print                : 
+start                : 0
+statement            : 2
+statement_list       : 1 2 34 35 37 39 40 69
+term                 : 51 52 59
+try_except           : 11
+type                 : 12 41
+unary_operator       : 59
+while_stmt           : 7
+x                    : 68 68
+y                    : 70
+

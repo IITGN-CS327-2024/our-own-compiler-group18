@@ -162,7 +162,7 @@ def p_start(p):
 
 def p_statement_list(p):
     '''statement_list : statement SEMICOLON statement_list
-                      | '''
+                      | empty'''
     # Handle the list of statements here
     pass
 
@@ -194,8 +194,7 @@ def p_type(p):
     pass
 
 def p_compound_types(p):
-    '''compound_types: A ID ASSIGN K'''
-
+    '''compound_types : A ID ASSIGN N'''
     pass
 
 def p_A(p):
@@ -203,12 +202,20 @@ def p_A(p):
          | LIST'''
     pass
 
-def p_K(p):
-    '''K : LPAREN data RPAREN | LSPAREN data RSPAREN'''
+def p_N(p):
+    '''N : LPAREN data RPAREN 
+         | LSPAREN data RSPAREN'''
     pass
 
+
 def p_data(p):
-    '''factor p'''
+    '''data : factor I'''
+    pass
+
+def p_I(p):
+    '''I : COMMA data 
+        | empty'''
+    pass
 
 def p_compounnd_type_access(p):
     '''compound_type_access : Z F 
@@ -221,11 +228,11 @@ def p_Z(p):
 
 def p_F(p):
     '''F : CON LPAREN factor RPAREN
-            |FRONT
-            |REAR
-            |SIZE
-            |DELETE
-            |SUBSTR LPAREN ID COMMA int RPAREN'''
+         | FRONT
+         | REAR
+         | SIZE
+         | DELETE
+         | SUBSTR LPAREN ID COMMA int RPAREN'''
     pass
 
 def p_if_stmnt(p):
@@ -233,13 +240,13 @@ def p_if_stmnt(p):
     pass
 
 def p_T(p):
-    '''T :  ELIF PAREN condition RPAREN BEGIN  statement_list END K
-         |'''
+    '''T : ELIF PAREN condition RPAREN BEGIN  statement_list END K
+         | empty'''
     pass
 
 def p_K(p):
     '''K : ELSE BEGIN statement_list END 
-         | '''
+         | empty'''
     pass
 
 def p_while_stmt(p):
@@ -256,7 +263,7 @@ def p_parameter_list(p):
 
 def p_M(p):
     '''M : COMMA parameter_list 
-         | '''
+         | empty'''
     pass
 
 def p_condition(p):
@@ -273,12 +280,12 @@ def p_comparison_operator(p):
     pass
 
 def p_expression(p):
-    '''expression :  term 
+    '''expression : term 
                   | expression binary_operator term '''
     pass
 
 def p_binary_operator(p):
-    '''binary_operator :  PLUS 
+    '''binary_operator : PLUS 
                        | MINUS 
                        | MUL 
                        | DIV 
@@ -296,16 +303,16 @@ def p_unary_operator(p):
     pass
 
 def p_factor(p):
-    ''' factor :  ID 
-               |NUMBER 
-               |STRING
-               |TRUE
-               |FALSE 
-               |LPAREN expression RPAREN '''
+    ''' factor : ID 
+               | NUMBER 
+               | STRING
+               | TRUE
+               | FALSE 
+               | LPAREN expression RPAREN '''
     pass
 
 def p_try_except(p):
-    '''try_except -> TRY x EXCEPT x'''
+    '''try_except : TRY x EXCEPT x'''
     pass
 
 def p_x(p):
@@ -313,19 +320,24 @@ def p_x(p):
     pass
 
 def p_print(p):
-    '''print -> ZOUT LPAREN y RPAREN'''
+    '''print : ZOUT LPAREN y RPAREN'''
     pass
 
 def p_y(p):
-    '''y -> NUMBER | STRING |ID'''
+    '''y : NUMBER 
+         | STRING 
+         | ID'''
     pass
 
-def find_column(input, t):
-	line_start = input.rfind('\n', 0, t.lexpos) + 1
-	return (t.lexpos - line_start) + 1
+def p_empty(p):
+	'''empty : '''
 
-def p_error(t):
-	if t is not None:
+def find_column(input, p):
+	line_start = input.rfind('\n', 0, p.lexpos) + 1
+	return (p.lexpos - line_start) + 1
+
+def p_error(p):
+	if p is not None:
 		column = find_column(code, t)		
 		print("Found unexpected character '%s' at line '%s' and column '%s'" % (t.value, t.lineno, column))
 	else:
