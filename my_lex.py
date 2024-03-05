@@ -69,7 +69,6 @@ keywords = {
     'str': 'STR',
     'func': 'FUNC',
     'return': 'RETURN',
-    'con': 'CON',
     'tuple': 'TUPLE',
     'list': 'LIST',
     'con': 'CON',
@@ -99,6 +98,7 @@ t_STRING = r'\".*?\"'
 t_ASSIGN = r'='
 t_PLUS = r'\+'
 t_PLUSPLUS = r'\+\+'
+t_MINUSMINUS = r'--'
 t_MINUS = r'-'
 t_MUL = r'\*'
 t_DIV = r'/'
@@ -169,9 +169,13 @@ def p_statement(p):
     pass
 
 def p_declaration(p):
-    '''declaration : VAR type ID ASSIGN expression '''
+    '''declaration : VAR type ID ASSIGN L'''
     pass
 
+def p_L(p):
+    '''L : expression
+         | compound_type_access'''
+    
 def p_assignment(p):
     '''assignment :  ID ASSIGN expression'''
     pass
@@ -345,7 +349,7 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 try:
-        text = open("test_cases_lexer/test2.zeva","r").read()
+        text = open("test_cases_lexer/test4.zeva","r").read()
         p = parser.parse(text)
         
 except EOFError:

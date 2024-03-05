@@ -2,3 +2,5 @@ var str s1 = "Hello";
 var str s2 = "World";
 var str result = s1.con(s2);
 zout(result);  @Expected output: HelloWorld
+@* asjgbjabgajgj 
+    *@
