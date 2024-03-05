@@ -338,7 +338,7 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 try:
-        text = open("test_cases/test8.zeva","r").read()
+        text = open("test_cases/test7.zeva","r").read()
         p = parser.parse(text)
 
 except EOFError:

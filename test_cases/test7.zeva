@@ -2,5 +2,6 @@ list l = ();
 l.add(1);
 l.add(2);
 l_size = l.size;
+var int k=l[0];
 zout(l_size);  @ Expected output: 2
 
