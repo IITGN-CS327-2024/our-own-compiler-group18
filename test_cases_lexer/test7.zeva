@@ -1,5 +1,5 @@
-list l = [];
+list l = ();
 l.add(1);
 l.add(2);
-size = l.size();
-zout(size);  @ Expected output: 2
+s = l.size;
+zout(s);  @ Expected output: 2
