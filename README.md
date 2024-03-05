@@ -39,32 +39,32 @@ binary-operator ::=
 		        |<  @less than symbol
 		        |>  @greater than symbol
 		        |<= @less than equal symbol
-	                |>= @greater than symbol
+	            |>= @greater than symbol
 		        |!= @not equal
 
 @ single line comment 
-@* multiple  comments *@
+
 Identifiers: alphanumeric
              
 Compound Types :
 
               tuple  <Identifier>=(data); @they are immutable
 	 
-              list <Identifier>=();      @ all the three have 0 based indexing
+              list   <Identifier>=();      @ all the three have 0 based indexing
 !!!
-             For both list and array same basic operations are applied
+             For both list some basic operations are applied
 	     
              <Identifier>.add(data); @adds data to the compound type
 	     
-             <Identifier>.delete(); @removes the last data of the compound type
+             <Identifier>.delete; @removes the last data of the compound type
 	     
-             size=<Identifier>.size();
+             l_size=<Identifier>.size;
 	     
-             var <type>a=<identifier>[1]; @ for accessing the second element in the array or tuple here type is the type
+             var <type> a=<identifier>[1]; @ for accessing the second element in the array or tuple here type is the type
 	     
-             <Identifier>.front(); @ gives the first element of the compound type
+             <Identifier>.front; @ gives the first element of the compound type
 	     
-             <Identifier>.rear(); @giving the last element of the compound type
+             <Identifier>.rear; @giving the last element of the compound type
 	     
 !!!
           
@@ -81,7 +81,7 @@ Conditionals :
             else
             begin
                  @code
-            end
+            end;
 	    
 @nested if statements
 
@@ -101,14 +101,14 @@ Conditionals :
                  @code
             end
 
-        end
+        end;
 
 Loops : 
 
            while(condition)
-          begin
+          	begin
                  @code
-            end
+            end;
 	    
   @ we can also use nested loops
   
@@ -120,7 +120,7 @@ Loops :
                          @code
                   end
 
-          end
+          end;
 	  
 
 	     
@@ -131,7 +131,7 @@ Functions :
            begin
                  @function body
              return data;
-            end
+            end;
             myfunction(x,y); @ for calling function again anywhere after the function declaration
 
 
@@ -146,11 +146,11 @@ Closures :
                          var a=7;
                         @function body
                         var int output=x;
-			x=y+a;
+						x=y+a;
                         return output;
-                   end
+                   end;
                    return myFunction;
-              end
+              end;
 	      
 Mutable variables : 
 
@@ -158,15 +158,15 @@ Mutable variables :
 	     
 Exceptions : 
 
-             try
-               begin
-                 @ try the case 
-                 @if fails throw the exception
-               end
+            begin 
+			  try  
+                @ try the case 
+                @if fails throw the exception
+
               except(exception)
-               begin
-                   @do the code given here
-               end
+               
+                @do the code given here
+            end;
              
 
 BNF
