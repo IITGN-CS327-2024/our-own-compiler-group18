@@ -205,7 +205,7 @@ def p_A(p):
     pass
 
 def p_data(p):
-    '''data : factor data
+    '''data : expression data
             | COMMA data
             | empty'''
     pass
