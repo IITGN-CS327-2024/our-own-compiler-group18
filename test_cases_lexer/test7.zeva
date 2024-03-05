@@ -1,5 +1,10 @@
 list l = ();
 l.add(1);
 l.add(2);
+<<<<<<< HEAD
 l_size = l.size;
 zout(l_size);  @ Expected output: 2
+=======
+s = l.size;
+zout(s);  @ Expected output: 2
+>>>>>>> 96968772cf9e43c1d325cb0e7e7fa27eab4b6a5b

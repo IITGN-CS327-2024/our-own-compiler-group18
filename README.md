@@ -50,7 +50,7 @@ Compound Types :
 
               tuple  <Identifier>=(data); @they are immutable
 	 
-              list <Identifier>=[];      @ all the three have 0 based indexing
+              list <Identifier>=();      @ all the three have 0 based indexing
 !!!
              For both list and array same basic operations are applied
 	     
