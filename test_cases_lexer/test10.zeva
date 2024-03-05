@@ -4,7 +4,7 @@ begin
     var int j = 0;
     while (j < 3)
     begin
-        zout(i * 10 + j);
+        zout(i * 10 );
         j++;
     end;
     i++;
