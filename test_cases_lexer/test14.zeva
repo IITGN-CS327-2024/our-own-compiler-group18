@@ -1,9 +1,9 @@
-try:
+try
 begin
     @ Code that might throw an exception
 end
 
-except:
+except
 begin
     @ Code to handle the exception
 end
