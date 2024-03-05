@@ -6,10 +6,10 @@ begin
     func inner(int a)
     begin
         return x + y + a;
-    end
+    end;
     
     return inner;
-end
+end;
 
 var int closure = outer();
 var int result = closure(10);
