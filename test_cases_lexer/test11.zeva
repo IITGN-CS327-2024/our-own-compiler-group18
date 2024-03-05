@@ -1,7 +1,7 @@
-func add(int a, int b)
+func a(int a, int b)
 begin
     return a + b;
 end
 
-var int result = add(3, 5);
+var int result = a(3, 5);
 zout(result);  @ Expected output: 8
