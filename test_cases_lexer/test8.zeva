@@ -2,12 +2,12 @@ var int x = 10;
 if (x == 10)
 begin
     zout("x is 10");
-end
+end;
 elif (x < 10)
 begin
     zout("x is less than 10");
-end
+end;
 else
 begin
     zout("x is greater than 10");
-end
+end;
