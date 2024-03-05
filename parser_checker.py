@@ -1,24 +1,155 @@
-import ply.yacc as yacc
+from ply import lex
+import sys
 
-# Get the token map from the lexer (you'll need to create your own lexer)
+# Define tokens
 tokens = [
-    'EOF'
-    '<identifier>'
-    '<Number>'
-    '<parenthesis>'
-    '<end_of_stmt>'
-    '<comma>'
-    '<Dot>'
-    '<quotation>'
-    '<operator>'
-    '<keyword>'
-    
+    'ID',
+    'NUMBER',
+    'LPAREN',
+    'RPAREN',
+    'SEMICOLON',
+    'COMMA',
+    'LSPAREN',
+    'RSPAREN',
+    'DOT',
+    'ASSIGN',
+    'PLUS',
+    'PLUSPLUS',
+    'MINUS',
+    'MUL',
+    'DIV',
+    'REM',
+    'EQEQ',
+    'NOTEQ',
+    'GT',
+    'LT',
+    'SUBSTR',
+    'GTEQ',
+    'MINUSMINUS',
+    'LTEQ',
+    'STRING',
+    'VAR',
+    'INT',
+    'BOOL',
+    'BEGIN',
+    'END',
+    'IF',
+    'ELIF',
+    'ELSE',
+    'WHILE',
+    'ZOUT',
+    'STR',
+    'FUNC',
+    'RETURN',
+    'CON',
+    'TUPLE',
+    'LIST',
+    'SIZE',
+    'DELETE',
+    'FRONT',
+    'REAR',
+    'TRY',
+    'EXCEPT',
+    'TRUE',
+    'FALSE'
 ]
 
-# Define the start symbol
-start = 'start'
+# Define keywords and reserved words
+keywords = {
+    'var': 'VAR',
+    'int': 'INT',
+    'bool': 'BOOL',
+    'begin': 'BEGIN',
+    'end': 'END',
+    'if': 'IF',
+    'elif': 'ELIF',
+    'else': 'ELSE',
+    'while': 'WHILE',
+    'zout': 'ZOUT',
+    'str': 'STR',
+    'func': 'FUNC',
+    'return': 'RETURN',
+    'con': 'CON',
+    'tuple': 'TUPLE',
+    'list': 'LIST',
+    'add': 'ADD',
+    'size': 'SIZE',
+    'delete': 'DELETE',
+    'front': 'FRONT',
+    'rear': 'REAR',
+    'try': 'TRY',
+    'except': 'EXCEPT',
+    'true': 'TRUE',
+    'false': 'FALSE'
+}
 
-# Grammar rules
+# Tokens with associated regular expressions
+t_ignore = ' \t'
+
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_SEMICOLON = r';'
+t_COMMA = r','
+t_LSPAREN = r'\['
+t_RSPAREN = r'\]'
+t_DOT = r'\.'
+#t_QUOTATION = r'\"'
+t_STRING = r'\".*?\"'
+
+
+t_ASSIGN = r'='
+t_PLUS = r'\+'
+t_PLUSPLUS = r'\+\+'
+t_MINUS = r'-'
+t_MUL = r'\*'
+t_DIV = r'/'
+t_REM = r'%'
+t_EQEQ = r'=='
+t_NOTEQ = r'!='
+t_GT = r'>'
+t_LT = r'<'
+t_GTEQ = r'>='
+t_LTEQ = r'<='
+
+
+def t_NUMBER(t):
+    r'\d+'
+    t.value = int(t.value)
+    return t
+
+def t_ID(t):
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
+    if t.value.lower() == 'true' or t.value.lower() == 'false':
+        t.type = 'BOOL'
+    else:
+        t.type = keywords.get(t.value.lower(), 'ID')
+    return t
+
+def t_COMMENT(t):
+    r'@.*|\@*.*\*@'
+    pass
+
+
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
+def t_error(t):
+    print(f"Illegal character '{t.value[0]}' at line {t.lexer.lineno}")
+    t.lexer.skip(1)
+
+# Build the lexer
+lexer = lex.lex()
+
+precedence = (
+  ('left' , 'PLUSPLUS'),
+  ('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
+    ('left','PLUS','MINUS'),
+    ('left','MUL','DIV' ,'REM'),
+    #('right','UMINUS'),
+    )
+
+#Grammar rules
 def p_start(p):
     'start : statement_list'
     # Handle the start symbol here
@@ -34,313 +165,189 @@ def p_statement(p):
     '''statement : declaration
                  | assignment
                  | if_stmnt
-                 | while
+                 | while_stmt
                  | function_call
                  | compound_types
-                 | compound_type_access'''
-    # Handle individual statements here
+                 | compound_type_access
+                 | try_except
+                 | print'''
+
     pass
 
-# Add other grammar rules here...
 def p_declaration(p):
-    '''declaration : var type identifier ASSIGN expression'''
+    '''declaration : VAR type ID ASSIGN expression '''
     pass
+
 def p_assignment(p):
-    '''assignment :  identifier ASSIGN expression'''
+    '''assignment :  ID ASSIGN expression'''
     pass
+
 def p_type(p):
     '''type : INT
             | BOOL
             | STR'''
 
     pass
+
 def p_compound_types(p):
-    '''compound_types :  A identifier ASSIGN K'''
+    '''compound_types : A ID ASSIGN N'''
+
     pass
+
 def p_A(p):
-    '''A : tuple
-         | list'''
+    '''A : TUPLE
+         | LIST'''
     pass
 
-def p_K(p):
-    '''K : LPAREN data RPAREN | LSPAREN data RSPAREN'''
+def p_N(p):
+    '''N : LPAREN data RPAREN
+         | LSPAREN data RSPAREN'''
     pass
 
-def p_compounnd_type_access(p):
+def p_data(p):
+    '''data : factor P'''
+    pass
+
+def p_P(p):
+    '''P : COMMA data P
+         | '''
+    pass
+
+def p_compound_type_access(p):
     '''compound_type_access : Z F 
-                            | identifier LSPAREN expression RSPAREN'''
+                            | ID LSPAREN expression RSPAREN'''
     pass
 
 def p_Z(p):
-    '''Z : identifier DOT '''
+    '''Z : ID DOT '''
     pass
 
 def p_F(p):
-    '''F : add()
-         | front
-         |rear
-         |size()
-         |delete()'''
+    '''F : CON LPAREN factor RPAREN
+         | FRONT
+         | REAR
+         | SIZE
+         | DELETE
+         | SUBSTR LPAREN ID COMMA INT RPAREN
+         |'''
     pass
+
 def p_if_stmnt(p):
-    '''if_stmnt :  'if' '(' condition ')' 'begin' statement_list 'end' T'''
+    '''if_stmnt : IF LPAREN condition RPAREN  BEGIN  statement_list END T'''
     pass
+
 def p_T(p):
-    '''T : 'elif' '(' condition ')' 'begin' statement_list 'end' K
-         | epsilon '''
+    '''T :  ELIF LPAREN condition RPAREN BEGIN  statement_list END K
+         |'''
     pass
+
 def p_K(p):
-    '''K : 'else' 'begin' statement_list 'end' 
-         | epsilon'''
+    '''K : ELSE BEGIN statement_list END 
+         | '''
     pass
-def p_while(p):
-    '''while :  'while' '(' condition ')' 'begin' statement_list 'end' '''
+
+def p_while_stmt(p):
+    '''while_stmt : WHILE LPAREN condition RPAREN BEGIN statement_list END'''
     pass
+
 def p_function_call(p):
-    '''function_call : 'func' identifier '(' parameter_list ')' 'begin' statement_list  'return' L';' 'end' '''
+    '''function_call : FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN ID SEMICOLON END'''
     pass
-def p_L(p):
-    '''L :  identifier
-         | function_call'''
-    pass
+
 def p_parameter_list(p):
-    '''parameter_list :  type identifier M '''
+    '''parameter_list : type ID M '''
     pass
+
 def p_M(p):
-    '''M : ',' parameter_list 
-         | epsilon '''
+    '''M : COMMA parameter_list 
+         | '''
     pass
+
 def p_condition(p):
-    '''condition : expression comparison_operator expression '''
+    '''condition : expression  comparison_operator  expression'''
     pass
+
 def p_comparison_operator(p):
-    '''comparison_operator : == 
-                           | != 
-                           | < 
-                           | > 
-                           | <= 
-                           | >= '''
+    '''comparison_operator : EQEQ 
+                           | NOTEQ 
+                           | LT 
+                           | GT 
+                           | LTEQ 
+                           | GTEQ '''
     pass
+
 def p_expression(p):
-    '''expression : term 
+    '''expression :  term 
                   | expression binary_operator term '''
     pass
+
 def p_binary_operator(p):
-    '''binary_operator : + 
-                       | - 
-                       | * 
-                       | / 
-                       | % 
-                       | ^ '''
+    '''binary_operator :  PLUS 
+                       | MINUS 
+                       | MUL 
+                       | DIV 
+                       | REM '''
     pass
+
 def p_term(p):
     '''term :  factor 
             | term unary_operator factor '''
     pass
+
 def p_unary_operator(p):
-    ''' unary_operator : ++ 
-                       | -- '''
+    ''' unary_operator : PLUSPLUS 
+                       | MINUSMINUS '''
     pass
+
 def p_factor(p):
-    ''' factor :  identifier 
-               |  literal 
-               |  ( expression ) '''
+    ''' factor :  ID 
+               | NUMBER 
+               | STRING
+               | TRUE
+               | FALSE 
+               | LPAREN expression RPAREN '''
     pass
-def p_literal(p):
-    ''' literal :  integer_literal 
-                | string_literal 
-                | boolean_literal '''
-    pass
-def p_integer_literal(p):
-    '''integer_literal : digit_sequence '''
-    pass
-def p_digit_sequence(p):
-    '''digit_sequence : digit 
-                      | digit_sequence digit'''
-    pass
-def p_digit(p):
-    '''digit : 0 
-             | 1 
-             | 2 
-             | 3 
-             | 4 
-             | 5 
-             | 6 
-             | 7 
-             | 8 
-             | 9 '''
-    pass
-def p_string_literal(p):
-    '''string_literal : character_sequence '''
-    pass
-def p_character_sequence(p):
-    '''character_sequence : character 
-                          | character_sequence character '''
-    pass
-def p_boolean_literal(p):
-    '''boolean_literal :  true 
-                       | false '''
-    pass
-def p_identifier(p):
-    '''identifier : letter_sequence P 
-                  | identifier letter_or_digit '''
-    pass
-def p_P(p):
-    '''P :  _ 
-         | epsilon '''
-    pass
-def p_letter(p):
-    '''letter : a 
-              | b 
-              | c 
-              |d 
-              |d
-              |e
-              |f
-              |g
-              |h
-              |i
-              |j
-              |k
-              |l
-              |m
-              |n
-              |o
-              |p
-              |q
-              |r
-              |s
-              |t
-              |u
-              |v
-              |w
-              |x
-              |y
-              |z 
-              | A 
-              | B 
-              | C 
-              |D 
-              |E
-              |F
-              |G
-              |H
-              |I
-              |J
-              |K
-              |L
-              |M
-              |N
-              |O
-              |P
-              |Q
-              |R
-              |S
-              |T
-              |U
-              |V
-              |W
-              |X
-              |Y
-              | Z  '''
-    pass
-def p_letter_sequence(p):
-    '''letter_sequence : letter 
-                       | letter_sequence letter '''
-    pass
-def p_character(p):
-    '''character :a 
-              | b 
-              | c 
-              |d 
-              |d
-              |e
-              |f
-              |g
-              |h
-              |i
-              |j
-              |k
-              |l
-              |m
-              |n
-              |o
-              |p
-              |q
-              |r
-              |s
-              |t
-              |u
-              |v
-              |w
-              |x
-              |y
-              |z 
-              | A 
-              | B 
-              | C 
-              |D 
-              |E
-              |F
-              |G
-              |H
-              |I
-              |J
-              |K
-              |L
-              |M
-              |N
-              |O
-              |P
-              |Q
-              |R
-              |S
-              |T
-              |U
-              |V
-              |W
-              |X
-              |Y
-              | Z
-              |@
-              |#
-              |$
-              |%
-              |^
-              |&
-              |*
-              |(
-              |)
-              |-
-              |+
-              |\
-              |/*
-              |/
-              |<
-              |>
-              |.
-              |, '''
-    pass
-def p_letter_or_digit(p):
-    '''letter_or_digit : charecter_sequence | digit_sequence '''
-    pass
-    
 
+def p_try_except(p):
+    '''try_except : TRY x EXCEPT x'''
+    pass
 
-# Error rule for syntax errors
-def p_error(p):
-    print("Syntax error in input:", p)
+def p_x(p):
+    '''x : BEGIN statement_list END'''
+    pass
 
-# Build the parser
+def p_print(p):
+    '''print : ZOUT LPAREN y RPAREN'''
+    pass
+
+def p_y(p):
+    '''y : NUMBER 
+         | STRING 
+         | ID'''
+    pass
+
+def find_column(input, t):
+    line_start = input.rfind('\n', 0, t.lexpos) + 1
+    return (t.lexpos - line_start) + 1
+
+def p_error(t):
+    if t is not None:
+        column = find_column(code, t)        
+        print("Found unexpected character '%s' at line '%s' and column '%s'" % (t.value, t.lineno, column))
+    else:
+        print("Unexpected end of input!Empty file or syntax error at EOF!")
+
+import ply.yacc as yacc
+
 parser = yacc.yacc()
 
-# Input loop
-while True:
-    try:
-        s = input('calc > ')
-    except EOFError:
-        break
-    if not s:
-        continue
-    result = parser.parse(s)
-    print(result)
+try:
+    if len(sys.argv) < 2:
+        print("No file was given as a first argument!")
+        print("Use command -> 'bash run.sh 'filename''")
+    else:
+        file = open(sys.argv[1])
+        code = file.read()
+        p = parser.parse(code)
+except EOFError:
+    print("File could not be opened!")
