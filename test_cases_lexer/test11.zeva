@@ -2,7 +2,7 @@
 func a(int a, int b)
 begin
     return a + b;
-end
+end;
 
 var int result = a(3, 5);
 
