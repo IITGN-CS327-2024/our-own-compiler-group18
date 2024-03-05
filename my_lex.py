@@ -93,9 +93,7 @@ t_COMMA = r','
 t_LSPAREN = r'\['
 t_RSPAREN = r'\]'
 t_DOT = r'\.'
-#t_QUOTATION = r'\"'
 t_STRING = r'\".*?\"'
-
 
 t_ASSIGN = r'='
 t_PLUS = r'\+'
@@ -119,20 +117,16 @@ def t_NUMBER(t):
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
-    if t.value.lower() == 'true' or t.value.lower() == 'false':
-        t.type = 'BOOL'
-    else:
-        t.type = keywords.get(t.value.lower(), 'ID')
+    t.type = keywords.get(t.value.lower(), 'ID')
     return t
 
 def t_COMMENT(t):
-    r'@.|\@.\@'
+    r'@.*|\@*.*\*@'
     pass
-
 
 def t_newline(t):
     r'\n+'
-    t.lexer.lineno += len(t.value)
+    t.lexer.lineno += t.value.count("\n")
 
 def t_error(t):
     print(f"Illegal character '{t.value[0]}' at line {t.lexer.lineno}")
@@ -145,8 +139,7 @@ precedence = (
     ('left','PLUSPLUS','MINUSMINUS'),
     ('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
     ('left','PLUS','MINUS'),
-    ('left','MUL','DIV' ,'REM'),
-    #('right','UMINUS'),
+    ('left','MUL','DIV' ,'REM')
     )
 
 #Grammar rules

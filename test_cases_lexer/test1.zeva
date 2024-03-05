@@ -2,8 +2,8 @@ var int x = 5;
 var str s = "hello@hello";
 var bool b = true;
 
-s.add(s);
+s.con(s);
 
-zout(x);  @ Expected output: 5
-zout(s);  @ Expected output: hello
-zout(b);  @ Expected output: true
+zout(x);  
+zout(s);  
+zout(b);  

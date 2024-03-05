@@ -141,7 +141,7 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
-precedence = (
+'''precedence = (
   ('left' , 'PLUSPLUS'),
   ('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
     ('left','PLUS','MINUS'),
@@ -350,4 +350,4 @@ try:
         code = file.read()
         p = parser.parse(code)
 except EOFError:
-    print("File could not be opened!")
+    print("File could not be opened!")'''
