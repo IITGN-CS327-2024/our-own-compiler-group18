@@ -124,7 +124,7 @@ def t_ID(t):
     return t
 
 def t_COMMENT(t):
-    r'@.*|\@*.*\*@'
+    r'@.*'
     pass
 
 def t_newline(t):
@@ -148,18 +148,14 @@ precedence = (
 #Grammar rules
 def p_start(p):
     'start : statement_list'
-    # Handle the start symbol here
     pass
 
 def p_statement_list(p):
-    '''statement_list : statement KA statement_list
+    '''statement_list : statement SEMICOLON statement_list
                       | empty'''
     # Handle the list of statements here
     pass
-def p_KA(p):
-   '''KA : SEMICOLON
-         | empty '''
-pass
+
 
 def p_statement(p):
     '''statement : declaration
@@ -170,7 +166,7 @@ def p_statement(p):
                  | expression
                  | compound_types
                  | compound_type_access
-                 | try_except
+                 | BEGIN TRY statement_list EXCEPT statement_list END
                  | print'''
 
     pass
@@ -249,10 +245,14 @@ def p_function_call(p):
     '''function_call : FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN data SEMICOLON END'''
     pass
 def p_parameter_list(p):
-    '''parameter_list : type ID parameter_list
-                      | COMMA parameter_list
-                      | empty'''
-    pass
+  '''parameter_list : type ID optional_parameter_list'''
+  pass
+
+def p_optional_parameter_list(p):
+  '''optional_parameter_list : COMMA type ID optional_parameter_list
+                              | empty'''
+  pass
+
 def p_condition(p):
     '''condition : expression  comparison_operator  expression'''
     pass
@@ -267,9 +267,13 @@ def p_comparison_operator(p):
     pass
 
 def p_expression(p):
-    '''expression : expression binary_operator expression
-                  | term'''
-    pass
+  '''expression : term expression_tail'''
+  pass
+
+def p_expression_tail(p):
+  '''expression_tail : binary_operator term expression_tail
+                     | empty'''
+  pass
 
 def p_binary_operator(p):
     '''binary_operator : PLUS 
@@ -298,11 +302,11 @@ def p_factor(p):
                | LPAREN expression RPAREN'''
     pass
 
-def p_try_except(p):
+#def p_try_except(p):
     '''try_except : TRY x EXCEPT x'''
     pass
 
-def p_x(p):
+#def p_x(p):
     '''x : BEGIN statement_list END'''
     pass
 
@@ -335,7 +339,7 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 try:
-        text = open("keerthi.txt","r").read()
+        text = open("test_cases_lexer/test3.zeva","r").read()
         p = parser.parse(text)
 
 except EOFError:

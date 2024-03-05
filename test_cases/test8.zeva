@@ -10,4 +10,4 @@ end
 else
 begin
     zout("x is greater than 10");
-end
+end;
