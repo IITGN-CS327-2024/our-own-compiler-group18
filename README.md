@@ -68,7 +68,7 @@ Compound Types :
 	     
 !!!
           
-Conditionals :
+Conditionals : (for every individual block of conditional statement it ends with a semi colon)
 
             if (@condition)
             begin
@@ -83,27 +83,27 @@ Conditionals :
                  @code
             end;
 	    
-@nested if statements
+@nested if statements 
 
-            if(@condition) 
+        if(@condition) 
             begin
                  @code 
                   if(@condition2)
                   begin
                         @code
-                   end
-                 elif(@condition)
-            begin
-                 @code
-            end
+                   end;
+            elif(@condition)
+				begin
+					@code
+				end
             else
-            begin
-                 @code
-            end
+				begin
+					@code
+				end
 
         end;
 
-Loops : 
+Loops : (For every individual block of while ends with a semi colon)
 
            while(condition)
           	begin
@@ -124,7 +124,7 @@ Loops :
 	  
 
 	     
-Functions : 
+Functions : (For everyindividual loack function ends with a semi colon)
            
 	   return; @ returns the element given there
            func myfunction(arguments) @example myfunction(int x,int y)
@@ -156,7 +156,7 @@ Mutable variables :
 
              var <type> | lists @ these are mutable variables
 	     
-Exceptions : 
+Exceptions : (Each exception statement itself is in a block and ends with a Semicolon)
 
             begin 
 			  try  

@@ -11,3 +11,11 @@ else
 begin
     zout("x is greater than 10");
 end;
+
+if(x==5)
+begin
+    if (x%5 == 0)
+    begin
+        zout("x is 5");
+    end;
+end;
