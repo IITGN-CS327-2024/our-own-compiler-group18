@@ -3,4 +3,4 @@ while (i < 5)
 begin
     zout(i);
     i++;
-end
+end;
