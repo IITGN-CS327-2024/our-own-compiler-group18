@@ -3,12 +3,11 @@ import sys
 
 # Define tokens
 tokens = [
-    'EOF',
     'ID',
     'NUMBER',
     'LPAREN',
     'RPAREN',
-    'SEMI',
+    'SEMICOLON',
     'COMMA',
     'LSPAREN',
     'RSPAREN',
@@ -24,10 +23,10 @@ tokens = [
     'NOTEQ',
     'GT',
     'LT',
+    'SUBSTR',
     'GTEQ',
+    'MINUSMINUS',
     'LTEQ',
-    'AND',
-    'OR',
     'STRING',
     'VAR',
     'INT',
@@ -42,11 +41,9 @@ tokens = [
     'STR',
     'FUNC',
     'RETURN',
-    'FOR',
     'CON',
     'TUPLE',
     'LIST',
-    'ADD',
     'SIZE',
     'DELETE',
     'FRONT',
@@ -72,11 +69,10 @@ keywords = {
     'str': 'STR',
     'func': 'FUNC',
     'return': 'RETURN',
-    'for': 'FOR',
     'con': 'CON',
     'tuple': 'TUPLE',
     'list': 'LIST',
-    'add': 'ADD',
+    'CON': 'CON',
     'size': 'SIZE',
     'delete': 'DELETE',
     'front': 'FRONT',
@@ -92,7 +88,7 @@ t_ignore = ' \t'
 
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
-t_SEMI = r';'
+t_SEMICOLON = r';'
 t_COMMA = r','
 t_LSPAREN = r'\['
 t_RSPAREN = r'\]'
@@ -114,7 +110,6 @@ t_GT = r'>'
 t_LT = r'<'
 t_GTEQ = r'>='
 t_LTEQ = r'<='
-t_AND = r'&&'
 
 
 def t_NUMBER(t):
@@ -131,7 +126,7 @@ def t_ID(t):
     return t
 
 def t_COMMENT(t):
-    r'@.*|\@*.*\*@'
+    r'@.|\@.\@'
     pass
 
 
@@ -147,10 +142,10 @@ def t_error(t):
 lexer = lex.lex()
 
 precedence = (
-	('left','AND','OR'),
-	('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
+    ('left','PLUSPLUS','MINUSMINUS'),
+    ('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
     ('left','PLUS','MINUS'),
-    ('left','MUL','DIV','MOD'),
+    ('left','MUL','DIV' ,'REM'),
     #('right','UMINUS'),
     )
 
@@ -174,7 +169,8 @@ def p_statement(p):
                  | function_call
                  | compound_types
                  | compound_type_access
-                 | try_except'''
+                 | try_except
+                 | print'''
 
     pass
 
@@ -195,6 +191,7 @@ def p_type(p):
 
 def p_compound_types(p):
     '''compound_types : A ID ASSIGN N'''
+
     pass
 
 def p_A(p):
@@ -203,21 +200,20 @@ def p_A(p):
     pass
 
 def p_N(p):
-    '''N : LPAREN data RPAREN 
+    '''N : LPAREN data RPAREN
          | LSPAREN data RSPAREN'''
     pass
 
-
 def p_data(p):
-    '''data : factor I'''
+    '''data : factor P'''
     pass
 
-def p_I(p):
-    '''I : COMMA data 
-        | empty'''
+def p_P(p):
+    '''P : COMMA data P
+         | empty'''
     pass
 
-def p_compounnd_type_access(p):
+def p_compound_type_access(p):
     '''compound_type_access : Z F 
                             | ID LSPAREN expression RSPAREN'''
     pass
@@ -232,16 +228,17 @@ def p_F(p):
          | REAR
          | SIZE
          | DELETE
-         | SUBSTR LPAREN ID COMMA int RPAREN'''
+         | SUBSTR LPAREN ID COMMA INT RPAREN
+         | empty'''
     pass
 
 def p_if_stmnt(p):
-    '''if_stmnt :   IF LPAREN condition RPAREN  BEGIN  statement_list END T'''
+    '''if_stmnt : IF LPAREN condition RPAREN  BEGIN  statement_list END T'''
     pass
 
 def p_T(p):
-    '''T : ELIF PAREN condition RPAREN BEGIN  statement_list END K
-         | empty'''
+    '''T :  ELIF LPAREN condition RPAREN BEGIN  statement_list END K
+         |  empty'''
     pass
 
 def p_K(p):
@@ -250,7 +247,7 @@ def p_K(p):
     pass
 
 def p_while_stmt(p):
-    ''' while_stmt : WHILE LPAREN condition RPAREN BEGIN statement_list END '''
+    '''while_stmt : WHILE LPAREN condition RPAREN BEGIN statement_list END'''
     pass
 
 def p_function_call(p):
@@ -280,8 +277,12 @@ def p_comparison_operator(p):
     pass
 
 def p_expression(p):
-    '''expression : term 
-                  | expression binary_operator term '''
+    '''expression :  D term  '''
+    pass
+
+def p_D(p):
+    '''D : expression binary_operator 
+         | empty'''
     pass
 
 def p_binary_operator(p):
@@ -303,7 +304,7 @@ def p_unary_operator(p):
     pass
 
 def p_factor(p):
-    ''' factor : ID 
+    ''' factor :  ID 
                | NUMBER 
                | STRING
                | TRUE
@@ -330,31 +331,27 @@ def p_y(p):
     pass
 
 def p_empty(p):
-	'''empty : '''
+    '''empty : '''
+    pass
 
 def find_column(input, p):
-	line_start = input.rfind('\n', 0, p.lexpos) + 1
-	return (p.lexpos - line_start) + 1
+    line_start = input.rfind('\n', 0, p.lexpos) + 1
+    return (p.lexpos - line_start) + 1
 
 def p_error(p):
-	if p is not None:
-		column = find_column(code, t)		
-		print("Found unexpected character '%s' at line '%s' and column '%s'" % (t.value, t.lineno, column))
-	else:
-		print("Unexpected end of input!Empty file or syntax error at EOF!")
-
+    if p is not None:
+        column = find_column(text, p)        
+        print("Found unexpected character '%s' at line '%s' and column '%s'" % (p.value, p.lineno, column))
+    else:
+        print("Unexpected end of input!Empty file or syntax error at EOF!")
 
 import ply.yacc as yacc
 
 parser = yacc.yacc()
 
 try:
-	if len(sys.argv) < 2:
-		print("No file was given as a first argument!")
-		print("Use command -> 'bash run.sh 'filename''")
-	else:
-		file = open(sys.argv[1])
-		code = file.read()
-		p = parser.parse(code)
+        text = open("test_cases_lexer/test1.zeva","r").read()
+        p = parser.parse(text)
+        
 except EOFError:
     print("File could not be opened!")
