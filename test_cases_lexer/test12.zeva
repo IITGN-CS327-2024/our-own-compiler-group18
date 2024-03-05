@@ -11,6 +11,6 @@ begin
     return inner;
 end
 
-var func closure = outer();
+var int closure = outer();
 var int result = closure(10);
 zout(result);  @ Expected output: 21
