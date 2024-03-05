@@ -51,7 +51,8 @@ tokens = [
     'TRY',
     'EXCEPT',
     'TRUE',
-    'FALSE'
+    'FALSE',
+    'ADD',
 ]
 
 # Define keywords and reserved words
@@ -69,6 +70,7 @@ keywords = {
     'str': 'STR',
     'func': 'FUNC',
     'return': 'RETURN',
+    'con': 'CON',
     'tuple': 'TUPLE',
     'list': 'LIST',
     'con': 'CON',
@@ -76,6 +78,7 @@ keywords = {
     'size': 'SIZE',
     'delete': 'DELETE',
     'front': 'FRONT',
+    'add'  : 'ADD',
     'rear': 'REAR',
     'try': 'TRY',
     'except': 'EXCEPT',
@@ -97,8 +100,7 @@ t_STRING = r'\".*?\"'
 
 t_ASSIGN = r'='
 t_PLUS = r'\+'
-t_PLUSPLUS = r'\+\+'
-t_MINUSMINUS = r'--'
+t_PLUSPLUS = r'\++'
 t_MINUS = r'-'
 t_MUL = r'\*'
 t_DIV = r'/'
@@ -150,7 +152,7 @@ def p_start(p):
     pass
 
 def p_statement_list(p):
-    '''statement_list : statement SEMICOLON statement_list
+    '''statement_list : statement_list statement SEMICOLON
                       | empty'''
     # Handle the list of statements here
     pass
@@ -161,25 +163,24 @@ def p_statement(p):
                  | if_stmnt
                  | while_stmt
                  | function_call
+                 | expression
                  | compound_types
                  | compound_type_access
                  | try_except
-                 | print
-                 | ID unary_operator'''
+                 | print'''
 
     pass
 
 def p_declaration(p):
-    '''declaration : VAR type ID ASSIGN L'''
+    '''declaration : VAR type assignment'''
     pass
 
 def p_L(p):
-    '''L : expression
-         | compound_type_access
-         | ID unary_operator'''
-    
+  '''L : statement
+       | ID LPAREN data RPAREN'''
+  pass
 def p_assignment(p):
-    '''assignment :  ID ASSIGN expression'''
+    '''assignment :  ID ASSIGN L'''
     pass
 
 def p_type(p):
@@ -190,7 +191,7 @@ def p_type(p):
     pass
 
 def p_compound_types(p):
-    '''compound_types : A ID ASSIGN N'''
+    '''compound_types : A ID ASSIGN LPAREN data RPAREN'''
 
     pass
 
@@ -199,32 +200,22 @@ def p_A(p):
          | LIST'''
     pass
 
-def p_N(p):
-    '''N : LPAREN data RPAREN
-         | LSPAREN data RSPAREN'''
-    pass
-
 def p_data(p):
-    '''data : factor P'''
+    '''data : expression data
+            | COMMA data
+            | empty'''
     pass
-
-def p_P(p):
-    '''P : COMMA data P
-         | empty'''
-    pass
-
 def p_compound_type_access(p):
-    '''compound_type_access : Z F 
+    '''compound_type_access : ID DOT F 
                             | ID LSPAREN expression RSPAREN'''
     pass
 
-def p_Z(p):
-    '''Z : ID DOT '''
-    pass
+
 
 def p_F(p):
     '''F : CON LPAREN factor RPAREN
          | FRONT
+         | ADD LPAREN factor RPAREN
          | REAR
          | SIZE
          | DELETE
@@ -251,17 +242,17 @@ def p_while_stmt(p):
     pass
 
 def p_function_call(p):
-    '''function_call : FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN ID SEMICOLON END'''
+    '''function_call : FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN data SEMICOLON END'''
     pass
-
 def p_parameter_list(p):
-    '''parameter_list : type ID M '''
-    pass
+  '''parameter_list : type ID optional_parameter_list
+                    | empty'''
+  pass
 
-def p_M(p):
-    '''M : COMMA parameter_list 
-         | empty'''
-    pass
+def p_optional_parameter_list(p):
+  '''optional_parameter_list : COMMA type ID optional_parameter_list
+                              | empty'''
+  pass
 
 def p_condition(p):
     '''condition : expression  comparison_operator  expression'''
@@ -277,13 +268,13 @@ def p_comparison_operator(p):
     pass
 
 def p_expression(p):
-    '''expression :  D term  '''
-    pass
+  '''expression : term expression_tail'''
+  pass
 
-def p_D(p):
-    '''D : expression binary_operator 
-         | empty'''
-    pass
+def p_expression_tail(p):
+  '''expression_tail : binary_operator term expression_tail
+                     | empty'''
+  pass
 
 def p_binary_operator(p):
     '''binary_operator : PLUS 
@@ -295,7 +286,7 @@ def p_binary_operator(p):
 
 def p_term(p):
     '''term :  factor 
-            |  term unary_operator factor '''
+            | term unary_operator '''
     pass
 
 def p_unary_operator(p):
@@ -309,25 +300,21 @@ def p_factor(p):
                | STRING
                | TRUE
                | FALSE 
-               | LPAREN expression RPAREN '''
+               | LPAREN expression RPAREN'''
     pass
 
 def p_try_except(p):
-    '''try_except : TRY x EXCEPT x'''
+    '''try_except : BEGIN TRY statement_list EXCEPT statement_list END'''
     pass
 
-def p_x(p):
-    '''x : BEGIN statement_list END'''
-    pass
+
 
 def p_print(p):
     '''print : ZOUT LPAREN y RPAREN'''
     pass
 
 def p_y(p):
-    '''y : NUMBER 
-         | STRING 
-         | ID
+    '''y : expression
          | compound_type_access'''
     pass
 
@@ -351,8 +338,8 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 try:
-        text = open("test_cases_lexer/test1.zeva","r").read()
+        text = open("keerthi.txt","r").read()
         p = parser.parse(text)
-        
+
 except EOFError:
     print("File could not be opened!")
