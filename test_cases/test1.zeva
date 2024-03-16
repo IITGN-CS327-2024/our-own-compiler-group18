@@ -3,6 +3,8 @@ var str s = "hello@hello";
 var bool b = false;
 
 s.con(s);
+s.size;
+s.front;
 
 zout(x);  @hello: ''''''
 zout(s);  

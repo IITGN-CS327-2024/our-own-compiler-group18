@@ -244,13 +244,13 @@ def p_F(p):
 
 def p_if_stmnt(p):
     '''if_stmnt : IF LPAREN condition RPAREN  BEGIN  statement_list END T'''
-    p[0] = ('if_statement', p[3],p[6],p[8])
+    p[0] = ('if_statement',p[1],p[2], p[3],p[4],p[5],p[6],p[7],p[8])
 
 def p_T(p):
     '''T :  ELIF LPAREN condition RPAREN BEGIN  statement_list END K
          |  empty'''
     if len(p) == 9:
-      p[0] = ('T_elif', p[3],p[6],p[8])
+      p[0] = ('T_elif', p[1],p[2], p[3],p[4],p[5],p[6],p[7],p[8])
     else:
       p[0] = None
 
@@ -258,7 +258,7 @@ def p_K(p):
     '''K : ELSE BEGIN statement_list END 
          | empty'''
     if len(p) == 5:
-      p[0] = ('K_else', p[3])
+      p[0] = ('K_else', p[1],p[2],p[3],p[4])
     else:
       p[0] = None
 
@@ -377,12 +377,15 @@ def p_error(p):
 
 import ply.yacc as yacc
 
+from pprint import pprint
+
 parser = yacc.yacc()
 
 try:
         text = open("test_cases/test1.zeva","r").read()
         p = parser.parse(text)
-        print("Parse Tree:",p)
+        print("Parse Tree:")
+        pprint(p)
   
 
 except EOFError:
