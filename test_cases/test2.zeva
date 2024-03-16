@@ -1,4 +1,4 @@
 var str s = "compiler";
 zout(s.substr(1,2));  @Expected output: ompil
-var int a = 2*3;
+var int a = 2*3    ;
 var int b = 3/5;

@@ -149,13 +149,16 @@ precedence = (
 def p_start(p):
     'start : statement_list'
     # Handle the start symbol here
-    pass
+    p[0] = ('start',p[1])
 
 def p_statement_list(p):
     '''statement_list : statement_list statement SEMICOLON
                       | empty'''
     # Handle the list of statements here
-    pass
+    if len(p) == 4:
+      p[0] = p[1] , [p[2]],p[3]
+    else:
+      p[0] = None
 
 def p_statement(p):
     '''statement : declaration
@@ -169,46 +172,55 @@ def p_statement(p):
                  | try_except
                  | print'''
 
-    pass
+    p[0] = p[1]
 
 def p_declaration(p):
     '''declaration : VAR type assignment'''
-    pass
+    p[0] = ('declaration',p[1],p[2], p[3])
 
 def p_L(p):
   '''L : statement
        | ID LPAREN data RPAREN'''
-  pass
+  if len(p) == 5:
+    p[0] =  (p[1], p[3])
+  else:
+    p[0] = p[1]
 def p_assignment(p):
     '''assignment :  ID ASSIGN L'''
-    pass
+    p[0] = ('assignment', p[1],p[2], p[3])
 
 def p_type(p):
     '''type : INT
             | BOOL
             | STR'''
 
-    pass
+    p[0] = p[1]
 
 def p_compound_types(p):
     '''compound_types : A ID ASSIGN LPAREN data RPAREN'''
 
-    pass
+    p[0] = ('compound_types', p[1], p[2],p[3],p[4], p[5],p[6])
 
 def p_A(p):
     '''A : TUPLE
          | LIST'''
-    pass
+    p[0] = p[1]
 
 def p_data(p):
     '''data : expression data
             | COMMA data
             | empty'''
-    pass
+    if len(p) == 3:
+      p[0] = [p[1]] + p[2]
+    else:
+      p[0] = []
 def p_compound_type_access(p):
     '''compound_type_access : ID DOT F 
                             | ID LSPAREN expression RSPAREN'''
-    pass
+    if p[2] == '.':
+      p[0] = ('compound_type_access_dot', p[1],p[2], p[3])
+    else:
+      p[0] = ('compound_type_access_index', p[1], p[3])
 
 
 
@@ -221,42 +233,62 @@ def p_F(p):
          | DELETE
          | SUBSTR LPAREN factor COMMA factor RPAREN
          | empty'''
-    pass
+    if len(p) == 5:
+      p[0] = ('F_con_add', p[1],p[2],p[3],p[4])
+    elif len(p) == 3:
+      p[0] = ('F_front' if p[1] == 'FRONT' else 'F_rear')
+    elif len(p) == 2:
+      p[0] = ('F_' + p[1].lower())
+    else:
+      p[0] = ('F_substr', p[3], p[5])
 
 def p_if_stmnt(p):
     '''if_stmnt : IF LPAREN condition RPAREN  BEGIN  statement_list END T'''
-    pass
+    p[0] = ('if_statement', p[3],p[6],p[8])
 
 def p_T(p):
     '''T :  ELIF LPAREN condition RPAREN BEGIN  statement_list END K
          |  empty'''
-    pass
+    if len(p) == 9:
+      p[0] = ('T_elif', p[3],p[6],p[8])
+    else:
+      p[0] = None
 
 def p_K(p):
     '''K : ELSE BEGIN statement_list END 
          | empty'''
-    pass
+    if len(p) == 5:
+      p[0] = ('K_else', p[3])
+    else:
+      p[0] = None
 
 def p_while_stmt(p):
     '''while_stmt : WHILE LPAREN condition RPAREN BEGIN statement_list END'''
-    pass
+    p[0] = ('while_statement',p[1], p[2],p[3],p[4],p[5],p[6],p[7])
 
 def p_function_call(p):
     '''function_call : FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN data SEMICOLON END'''
-    pass
+    p[0] = ('function_call', p[1],p[2],p[3], p[4],p[5],p[6], p[7],p[8], p[9],p[10],p[11])
+
 def p_parameter_list(p):
   '''parameter_list : type ID optional_parameter_list
                     | empty'''
-  pass
+  if len(p) == 4:
+    p[0] = [(p[1], p[2])] + p[3]
+  else:
+    p[0] = None
 
 def p_optional_parameter_list(p):
   '''optional_parameter_list : COMMA type ID optional_parameter_list
                               | empty'''
-  pass
+  if len(p) == 5:
+    p[0] = [(p[2], p[3])] + p[4]
+  else:
+    p[0] = []
 
 def p_condition(p):
     '''condition : expression  comparison_operator  expression'''
-    pass
+    p[0] = (p[1],p[2],  p[3])
 
 def p_comparison_operator(p):
     '''comparison_operator : EQEQ 
@@ -265,16 +297,19 @@ def p_comparison_operator(p):
                            | GT 
                            | LTEQ 
                            | GTEQ '''
-    pass
+    p[0] = p[1]
 
 def p_expression(p):
   '''expression : term expression_tail'''
-  pass
+  p[0] = ('expression', p[1], p[2])
 
 def p_expression_tail(p):
   '''expression_tail : binary_operator term expression_tail
                      | empty'''
-  pass
+  if len(p) == 4:
+    p[0] = (p[1], p[2], p[3])
+  else:
+    p[0] = None
 
 def p_binary_operator(p):
     '''binary_operator : PLUS 
@@ -282,17 +317,21 @@ def p_binary_operator(p):
                        | MUL 
                        | DIV 
                        | REM '''
-    pass
+    p[0] = p[1]
 
 def p_term(p):
     '''term :  factor 
             | term unary_operator '''
-    pass
+    if len(p) == 2:
+      p[0] = ('term_factor', p[1])
+    else:
+      p[0] = ('term_unary_operator',p[1], p[2])
+
 
 def p_unary_operator(p):
     ''' unary_operator : PLUSPLUS 
                        | MINUSMINUS '''
-    pass
+    p[0] = p[1]
 
 def p_factor(p):
     ''' factor :  ID 
@@ -301,26 +340,29 @@ def p_factor(p):
                | TRUE
                | FALSE 
                | LPAREN expression RPAREN'''
-    pass
+    if len(p) == 4:
+      p[0] = ('factor_expression', p[2])
+    else:
+      p[0] = p[1]
 
 def p_try_except(p):
     '''try_except : BEGIN TRY statement_list EXCEPT statement_list END'''
-    pass
+    p[0] = ('try_except',p[1],p[2], p[3],p[4], p[5],p[6])
 
 
 
 def p_print(p):
     '''print : ZOUT LPAREN y RPAREN'''
-    pass
+    p[0] = ('print', p[1],p[2], p[3],p[4])
 
 def p_y(p):
     '''y : expression
          | compound_type_access'''
-    pass
+    p[0] = p[1]
 
 def p_empty(p):
     '''empty : '''
-    pass
+    p[0] = None
 
 def find_column(input, p):
     line_start = input.rfind('\n', 0, p.lexpos) + 1
@@ -338,8 +380,10 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 try:
-        text = open("test_cases/test7.zeva","r").read()
+        text = open("test_cases/test1.zeva","r").read()
         p = parser.parse(text)
+        print("Parse Tree:",p)
+  
 
 except EOFError:
     print("File could not be opened!")
