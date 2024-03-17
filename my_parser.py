@@ -165,7 +165,7 @@ def p_statement_list(p):
                       | empty'''
     # Handle the list of statements here
     if len(p) == 4:
-      p[0] = p[1] , [p[2]],p[3]
+      p[0] = (p[1] ,[p[2]],p[3])
     else:
       p[0] = None
 
@@ -311,17 +311,16 @@ def p_comparison_operator(p):
     p[0] = p[1]
 
 def p_expression(p):
-    '''expression : expression operation 
+    '''expression : expression binary_operator expression
+                  | expression unary_operator
                   | factor'''
     if len(p) == 2:
         p[0] = p[1]
+    elif len(p) == 3:
+        p[0] = ('expression_unop',p[1], p[2])
     else:
-        p[0] = ('expression', p[1], p[2])
+        p[0] = ('expression_binop', p[1], p[2], p[3])
 
-def p_operation(p):
-  '''operation : binary_operator factor
-               | unary_operator'''
-  p[0] = p[1]
 
 def p_binary_operator(p):
   '''binary_operator  : MINUS 
@@ -330,9 +329,6 @@ def p_binary_operator(p):
                       | DIV 
                       | REM '''
   p[0] = p[1]
-
-
-
 
 def p_unary_operator(p):
     ''' unary_operator : PLUSPLUS 
@@ -354,8 +350,6 @@ def p_factor(p):
 def p_try_except(p):
     '''try_except : BEGIN TRY statement_list EXCEPT statement_list END'''
     p[0] = ('try_except',p[1],p[2], p[3],p[4], p[5],p[6])
-
-
 
 def p_print(p):
     '''print : ZOUT LPAREN y RPAREN'''
@@ -386,7 +380,7 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 try:
-        text = open("test_cases/test1.zeva","r").read()
+        text = open("test_cases/test3.zeva","r").read()
         p = parser.parse(text)
         pprint(p)
   

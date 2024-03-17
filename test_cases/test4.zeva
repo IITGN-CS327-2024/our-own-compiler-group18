@@ -1,4 +1,7 @@
 var int x = 5;
 var int new= x++;
 new = new + 4;
+if(x > 2) begin
+    x=1;
+end;
 zout(x);  @Expected output: 6
