@@ -1,3 +1,4 @@
 var int x = 5;
 var int new= x++;
+new = new + 4;
 zout(x);  @Expected output: 6

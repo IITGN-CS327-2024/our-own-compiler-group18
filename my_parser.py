@@ -1,5 +1,6 @@
 from ply import lex
 import sys
+from pprint import pprint
 
 # Define tokens
 tokens = [
@@ -16,6 +17,7 @@ tokens = [
     'PLUS',
     'PLUSPLUS',
     'MINUS',
+    'MINUSMINUS',
     'MUL',
     'DIV',
     'REM',
@@ -25,7 +27,6 @@ tokens = [
     'LT',
     'SUBSTR',
     'GTEQ',
-    'MINUSMINUS',
     'LTEQ',
     'STRING',
     'VAR',
@@ -73,7 +74,6 @@ keywords = {
     'con': 'CON',
     'tuple': 'TUPLE',
     'list': 'LIST',
-    'con': 'CON',
     'substr':'SUBSTR',
     'size': 'SIZE',
     'delete': 'DELETE',
@@ -100,8 +100,9 @@ t_STRING = r'\".*?\"'
 
 t_ASSIGN = r'='
 t_PLUS = r'\+'
-t_PLUSPLUS = r'\++'
+t_PLUSPLUS = r'\+\+'
 t_MINUS = r'-'
+t_MINUSMINUS = r'--'
 t_MUL = r'\*'
 t_DIV = r'/'
 t_REM = r'%'
@@ -114,9 +115,10 @@ t_LTEQ = r'<='
 
 
 def t_NUMBER(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
+  r'-?\d+'
+  t.value = int(t.value)
+  return t
+
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
@@ -138,11 +140,18 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
+'''
+text = open("test_cases/test4.zeva","r").read()
+lexer.input(text)
+for token in lexer:
+    print(token)'''
+
+
 precedence = (
-    ('left','PLUSPLUS','MINUSMINUS'),
-    ('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
     ('left','PLUS','MINUS'),
-    ('left','MUL','DIV' ,'REM')
+    ('left','MUL','DIV' ,'REM'),
+    ('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
+    ('right','PLUSPLUS','MINUSMINUS')
     )
 
 #Grammar rules
@@ -178,6 +187,11 @@ def p_declaration(p):
     '''declaration : VAR type assignment'''
     p[0] = ('declaration',p[1],p[2], p[3])
 
+
+def p_assignment(p):
+    '''assignment :  ID ASSIGN L'''
+    p[0] = ('assignment', p[1],p[2], p[3])
+
 def p_L(p):
   '''L : statement
        | ID LPAREN data RPAREN'''
@@ -185,10 +199,7 @@ def p_L(p):
     p[0] =  (p[1], p[3])
   else:
     p[0] = p[1]
-def p_assignment(p):
-    '''assignment :  ID ASSIGN L'''
-    p[0] = ('assignment', p[1],p[2], p[3])
-
+  
 def p_type(p):
     '''type : INT
             | BOOL
@@ -300,32 +311,27 @@ def p_comparison_operator(p):
     p[0] = p[1]
 
 def p_expression(p):
-  '''expression : term expression_tail'''
-  p[0] = ('expression', p[1], p[2])
+    '''expression : expression operation 
+                  | factor'''
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = ('expression', p[1], p[2])
 
-def p_expression_tail(p):
-  '''expression_tail : binary_operator term expression_tail
-                     | empty'''
-  if len(p) == 4:
-    p[0] = (p[1], p[2], p[3])
-  else:
-    p[0] = None
+def p_operation(p):
+  '''operation : binary_operator factor
+               | unary_operator'''
+  p[0] = p[1]
 
 def p_binary_operator(p):
-    '''binary_operator : PLUS 
-                       | MINUS 
-                       | MUL 
-                       | DIV 
-                       | REM '''
-    p[0] = p[1]
+  '''binary_operator  : MINUS 
+                      | MUL 
+                      | PLUS
+                      | DIV 
+                      | REM '''
+  p[0] = p[1]
 
-def p_term(p):
-    '''term :  factor 
-            | term unary_operator '''
-    if len(p) == 2:
-      p[0] = ('term_factor', p[1])
-    else:
-      p[0] = ('term_unary_operator',p[1], p[2])
+
 
 
 def p_unary_operator(p):
@@ -377,14 +383,11 @@ def p_error(p):
 
 import ply.yacc as yacc
 
-from pprint import pprint
-
 parser = yacc.yacc()
 
 try:
         text = open("test_cases/test1.zeva","r").read()
         p = parser.parse(text)
-        print("Parse Tree:")
         pprint(p)
   
 
