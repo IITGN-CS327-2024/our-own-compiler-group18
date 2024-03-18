@@ -100,7 +100,7 @@ t_STRING = r'\".*?\"'
 
 t_ASSIGN = r'='
 t_PLUS = r'\+'
-t_PLUSPLUS = r'\++'
+t_PLUSPLUS = r'\+\+'
 t_MINUS = r'-'
 t_MINUSMINUS = r'\--'
 t_MUL = r'\*'
