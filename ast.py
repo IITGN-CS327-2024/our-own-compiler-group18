@@ -335,14 +335,14 @@ def p_factor(p):
                | LPAREN expression RPAREN'''
     if len(p) == 4:
       p[0] = ('factor_expression', p[2])
-    elif p[1] == 'ID':
-      p[0] = ('identifier', p[1])
-    elif p[1] == 'NUMBER':
-      p[0] =('number',p[1])
-    elif p[1] == 'STRING':
-      p[0] = ('string', p[1])
-    else:
-      p[0] = p[1]
+    elif p.slice[1].type == 'ID':  # Check if it's an identifier
+        p[0] = ('identifier', p[1])
+    elif p.slice[1].type == 'NUMBER':  # Check if it's a number
+        p[0] = ('number', p[1])
+    elif p.slice[1].type == 'STRING':  # Check if it's a string
+        p[0] = ('string', p[1])
+    else:  # TRUE or FALSE
+        p[0] = p[1]
 
 def p_try_except(p):
     '''try_except : BEGIN TRY statement_list EXCEPT statement_list END'''
