@@ -303,7 +303,7 @@ def p_expression(p):
     if len(p) == 2:
         p[0] = p[1]
     else:
-        p[0] = ('expression', p[1], p[2], p[3])
+        p[0] =  p[1], p[2], p[3]
 def p_binary_operator(p):
     '''binary_operator : MINUS 
                        | MUL 
