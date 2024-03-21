@@ -143,7 +143,7 @@ lexer = lex.lex()
 precedence = (
     ('left','PLUS','MINUS'),
     ('left','MUL','DIV' ,'REM'),
-    ('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
+    #('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
     ('right','PLUSPLUS','MINUSMINUS')
     )
 
@@ -158,9 +158,7 @@ def p_statement_list(p):
                       | empty'''
     # Handle the list of statements here
     if len(p) == 4:
-      p[0] = p[1] , [p[2]],p[3]
-    else:
-      p[0] = None
+      p[0] = p[1] , [p[2]] 
 
 def p_statement(p):
     '''statement : declaration
@@ -178,18 +176,18 @@ def p_statement(p):
 
 def p_declaration(p):
     '''declaration : VAR type assignment'''
-    p[0] = ('declaration',p[1],p[2], p[3])
+    p[0] = ('declaration', p[3])
 
 
 def p_assignment(p):
     '''assignment :  ID ASSIGN L'''
-    p[0] = ('assignment', p[1],p[2], p[3])
+    p[0] = ('assignment', ('identifier',p[1]),p[2], p[3])
 
 def p_L(p):
   '''L : statement
        | ID LPAREN data RPAREN'''
   if len(p) == 5:
-    p[0] =  (p[1], p[3])
+    p[0] =  (('identifier',p[1]), p[3])
   else:
     p[0] = p[1]
   
@@ -203,7 +201,7 @@ def p_type(p):
 def p_compound_types(p):
     '''compound_types : A ID ASSIGN LPAREN data RPAREN'''
 
-    p[0] = ('compound_types', p[1], p[2],p[3],p[4], p[5],p[6])
+    p[0] = ( p[1], ('identifier',p[2]),p[3], p[5])
 
 def p_A(p):
     '''A : TUPLE
@@ -211,20 +209,20 @@ def p_A(p):
     p[0] = p[1]
 
 def p_data(p):
-    '''data : expression data
-            | COMMA data
-            | empty'''
-    if len(p) == 3:
-      p[0] = [p[1]] + p[2]
-    else:
-      p[0] = []
+  '''data : expression data
+          | COMMA data
+          | empty'''
+  if  p[1]== ',':
+    p[0] = p[2]
+  elif len(p) == 3:
+    p[0] = p[1] , p[2]
 def p_compound_type_access(p):
     '''compound_type_access : ID DOT F 
                             | ID LSPAREN expression RSPAREN'''
     if p[2] == '.':
-      p[0] = ('compound_type_access_dot', p[1],p[2], p[3])
+      p[0] = (('identifier',p[1]),p[2], p[3])
     else:
-      p[0] = ('compound_type_access_index', p[1], p[3])
+      p[0] = (('identifier', p[1]), p[3])
 
 
 
@@ -237,62 +235,58 @@ def p_F(p):
          | DELETE
          | SUBSTR LPAREN factor COMMA factor RPAREN
          | empty'''
-    if len(p) == 5:
-      p[0] = ('F_con_add', p[1],p[2],p[3],p[4])
+    if p[1] == 'con':
+      p[0] =  p[1],p[3]
+    elif p[1] == 'add':
+      p[0] = p[1],p[3]
     elif len(p) == 3:
-      p[0] = ('F_front' if p[1] == 'FRONT' else 'F_rear')
+      p[0] = ('front' if p[1] == 'FRONT' else 'rear')
     elif len(p) == 2:
-      p[0] = ('F_' + p[1].lower())
+      p[0] = ('' + p[1].lower())
     else:
-      p[0] = ('F_substr', p[3], p[5])
+      p[0] = ('substr', p[3], p[5])
 
 def p_if_stmnt(p):
     '''if_stmnt : IF LPAREN condition RPAREN  BEGIN  statement_list END T'''
-    p[0] = ('if_statement',p[1],p[2], p[3],p[4],p[5],p[6],p[7],p[8])
+    p[0] = ('if_statement', p[3],p[6],p[8])
 
 def p_T(p):
     '''T :  ELIF LPAREN condition RPAREN BEGIN  statement_list END K
          |  empty'''
     if len(p) == 9:
-      p[0] = ('T_elif', p[1],p[2], p[3],p[4],p[5],p[6],p[7],p[8])
-    else:
-      p[0] = None
+      p[0] = ('elif_statement',  p[3],p[6],p[8])
 
 def p_K(p):
     '''K : ELSE BEGIN statement_list END 
          | empty'''
     if len(p) == 5:
-      p[0] = ('K_else', p[1],p[2],p[3],p[4])
-    else:
-      p[0] = None
+      p[0] = ('else_statement', p[3])
 
 def p_while_stmt(p):
     '''while_stmt : WHILE LPAREN condition RPAREN BEGIN statement_list END'''
-    p[0] = ('while_statement',p[1], p[2],p[3],p[4],p[5],p[6],p[7])
+    p[0] = ('while_statement',p[3],p[6])
 
 def p_function_call(p):
     '''function_call : FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN data SEMICOLON END'''
-    p[0] = ('function_call', p[1],p[2],p[3], p[4],p[5],p[6], p[7],p[8], p[9],p[10],p[11])
+    p[0] = ('function_call',('identifier',p[2]), p[4], p[7],p[8], p[9])
 
 def p_parameter_list(p):
   '''parameter_list : type ID optional_parameter_list
                     | empty'''
   if len(p) == 4:
-    p[0] = [(p[1], p[2])] + p[3]
-  else:
-    p[0] = None
+    p[0] = ('identifier',p[2]) , p[3]
+  
 
 def p_optional_parameter_list(p):
   '''optional_parameter_list : COMMA type ID optional_parameter_list
                               | empty'''
   if len(p) == 5:
-    p[0] = [(p[2], p[3])] + p[4]
-  else:
-    p[0] = []
+    p[0] = [(p[2], ('identifier',p[3]))] , p[4]
+  
 
 def p_condition(p):
     '''condition : expression  comparison_operator  expression'''
-    p[0] = (p[1],p[2],  p[3])
+    p[0] = ('condition',p[1],p[2],  p[3])
 
 def p_comparison_operator(p):
     '''comparison_operator : EQEQ 
@@ -304,16 +298,12 @@ def p_comparison_operator(p):
     p[0] = p[1]
 
 def p_expression(p):
-    '''expression : expression ZA 
-                  | factor'''
+    '''expression : expression binary_operator term
+                  | term'''
     if len(p) == 2:
         p[0] = p[1]
     else:
-        p[0] = ('expression', p[1], p[2])
-def p_ZA(p):
-  '''ZA : binary_operator factor
-        | unary_operator'''
-  p[0] = p[1]
+        p[0] = ('expression', p[1], p[2], p[3])
 def p_binary_operator(p):
     '''binary_operator : MINUS 
                        | MUL 
@@ -322,7 +312,13 @@ def p_binary_operator(p):
                        | REM '''
     p[0] = p[1]
 
-
+def p_term(p):
+    '''term : factor
+            | term unary_operator'''
+    if len(p) == 2:
+      p[0] = p[1]
+    else:
+     p[0] = p[1], p[2]
 
 
 def p_unary_operator(p):
@@ -339,18 +335,24 @@ def p_factor(p):
                | LPAREN expression RPAREN'''
     if len(p) == 4:
       p[0] = ('factor_expression', p[2])
+    elif p[1] == 'ID':
+      p[0] = ('identifier', p[1])
+    elif p[1] == 'NUMBER':
+      p[0] =('number',p[1])
+    elif p[1] == 'STRING':
+      p[0] = ('string', p[1])
     else:
       p[0] = p[1]
 
 def p_try_except(p):
     '''try_except : BEGIN TRY statement_list EXCEPT statement_list END'''
-    p[0] = ('try_except',p[1],p[2], p[3],p[4], p[5],p[6])
+    p[0] = ('try_except',p[2], p[3],p[4], p[5])
 
 
 
 def p_print(p):
     '''print : ZOUT LPAREN y RPAREN'''
-    p[0] = ('print', p[1],p[2], p[3],p[4])
+    p[0] = p[1], p[3]
 
 def p_y(p):
     '''y : expression
@@ -359,7 +361,6 @@ def p_y(p):
 
 def p_empty(p):
     '''empty : '''
-    p[0] = None
 
 def find_column(input, p):
     line_start = input.rfind('\n', 0, p.lexpos) + 1
