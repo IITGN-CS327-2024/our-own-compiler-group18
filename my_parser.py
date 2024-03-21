@@ -380,7 +380,7 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 try:
-        text = open("test_cases/test3.zeva","r").read()
+        text = open("test_cases/test14.zeva","r").read()
         p = parser.parse(text)
         pprint(p)
   
