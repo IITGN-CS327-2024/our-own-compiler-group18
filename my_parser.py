@@ -17,7 +17,6 @@ tokens = [
     'PLUS',
     'PLUSPLUS',
     'MINUS',
-    'MINUSMINUS',
     'MUL',
     'DIV',
     'REM',
@@ -27,6 +26,7 @@ tokens = [
     'LT',
     'SUBSTR',
     'GTEQ',
+    'MINUSMINUS',
     'LTEQ',
     'STRING',
     'VAR',
@@ -102,7 +102,7 @@ t_ASSIGN = r'='
 t_PLUS = r'\+'
 t_PLUSPLUS = r'\+\+'
 t_MINUS = r'-'
-t_MINUSMINUS = r'--'
+t_MINUSMINUS = r'\--'
 t_MUL = r'\*'
 t_DIV = r'/'
 t_REM = r'%'
@@ -140,34 +140,23 @@ def t_error(t):
 # Build the lexer
 lexer = lex.lex()
 
-'''
-text = open("test_cases/test4.zeva","r").read()
-lexer.input(text)
-for token in lexer:
-    print(token)'''
-
-
 precedence = (
     ('left','PLUS','MINUS'),
     ('left','MUL','DIV' ,'REM'),
-    ('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
+    #('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
     ('right','PLUSPLUS','MINUSMINUS')
     )
 
 #Grammar rules
 def p_start(p):
     'start : statement_list'
-    # Handle the start symbol here
-    p[0] = ('start',p[1])
+   
 
 def p_statement_list(p):
     '''statement_list : statement_list statement SEMICOLON
                       | empty'''
-    # Handle the list of statements here
-    if len(p) == 4:
-      p[0] = (p[1] ,[p[2]],p[3])
-    else:
-      p[0] = None
+    
+    
 
 def p_statement(p):
     '''statement : declaration
@@ -181,57 +170,50 @@ def p_statement(p):
                  | try_except
                  | print'''
 
-    p[0] = p[1]
+    
 
 def p_declaration(p):
     '''declaration : VAR type assignment'''
-    p[0] = ('declaration',p[1],p[2], p[3])
+    
 
 
 def p_assignment(p):
     '''assignment :  ID ASSIGN L'''
-    p[0] = ('assignment', p[1],p[2], p[3])
+    
 
 def p_L(p):
   '''L : statement
        | ID LPAREN data RPAREN'''
-  if len(p) == 5:
-    p[0] =  (p[1], p[3])
+ 
   else:
-    p[0] = p[1]
+    
   
 def p_type(p):
     '''type : INT
             | BOOL
             | STR'''
 
-    p[0] = p[1]
+  
 
 def p_compound_types(p):
     '''compound_types : A ID ASSIGN LPAREN data RPAREN'''
 
-    p[0] = ('compound_types', p[1], p[2],p[3],p[4], p[5],p[6])
+    
 
 def p_A(p):
     '''A : TUPLE
          | LIST'''
-    p[0] = p[1]
+    
 
 def p_data(p):
-    '''data : expression data
-            | COMMA data
-            | empty'''
-    if len(p) == 3:
-      p[0] = [p[1]] + p[2]
-    else:
-      p[0] = []
+  '''data : expression data
+          | COMMA data
+          | empty'''
+ 
 def p_compound_type_access(p):
     '''compound_type_access : ID DOT F 
                             | ID LSPAREN expression RSPAREN'''
-    if p[2] == '.':
-      p[0] = ('compound_type_access_dot', p[1],p[2], p[3])
-    else:
-      p[0] = ('compound_type_access_index', p[1], p[3])
+    
 
 
 
@@ -244,62 +226,43 @@ def p_F(p):
          | DELETE
          | SUBSTR LPAREN factor COMMA factor RPAREN
          | empty'''
-    if len(p) == 5:
-      p[0] = ('F_con_add', p[1],p[2],p[3],p[4])
-    elif len(p) == 3:
-      p[0] = ('F_front' if p[1] == 'FRONT' else 'F_rear')
-    elif len(p) == 2:
-      p[0] = ('F_' + p[1].lower())
-    else:
-      p[0] = ('F_substr', p[3], p[5])
+   
 
 def p_if_stmnt(p):
     '''if_stmnt : IF LPAREN condition RPAREN  BEGIN  statement_list END T'''
-    p[0] = ('if_statement',p[1],p[2], p[3],p[4],p[5],p[6],p[7],p[8])
-
+   
 def p_T(p):
     '''T :  ELIF LPAREN condition RPAREN BEGIN  statement_list END K
          |  empty'''
-    if len(p) == 9:
-      p[0] = ('T_elif', p[1],p[2], p[3],p[4],p[5],p[6],p[7],p[8])
-    else:
-      p[0] = None
+   
 
 def p_K(p):
     '''K : ELSE BEGIN statement_list END 
          | empty'''
-    if len(p) == 5:
-      p[0] = ('K_else', p[1],p[2],p[3],p[4])
-    else:
-      p[0] = None
+    
 
 def p_while_stmt(p):
     '''while_stmt : WHILE LPAREN condition RPAREN BEGIN statement_list END'''
-    p[0] = ('while_statement',p[1], p[2],p[3],p[4],p[5],p[6],p[7])
+    
 
 def p_function_call(p):
     '''function_call : FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN data SEMICOLON END'''
-    p[0] = ('function_call', p[1],p[2],p[3], p[4],p[5],p[6], p[7],p[8], p[9],p[10],p[11])
+    
 
 def p_parameter_list(p):
   '''parameter_list : type ID optional_parameter_list
                     | empty'''
-  if len(p) == 4:
-    p[0] = [(p[1], p[2])] + p[3]
-  else:
-    p[0] = None
+ 
+  
 
 def p_optional_parameter_list(p):
   '''optional_parameter_list : COMMA type ID optional_parameter_list
                               | empty'''
-  if len(p) == 5:
-    p[0] = [(p[2], p[3])] + p[4]
-  else:
-    p[0] = []
+  
 
 def p_condition(p):
     '''condition : expression  comparison_operator  expression'''
-    p[0] = (p[1],p[2],  p[3])
+ 
 
 def p_comparison_operator(p):
     '''comparison_operator : EQEQ 
@@ -308,32 +271,31 @@ def p_comparison_operator(p):
                            | GT 
                            | LTEQ 
                            | GTEQ '''
-    p[0] = p[1]
+  
 
 def p_expression(p):
-    '''expression : expression binary_operator expression
-                  | expression unary_operator
-                  | factor'''
-    if len(p) == 2:
-        p[0] = p[1]
-    elif len(p) == 3:
-        p[0] = ('expression_unop',p[1], p[2])
-    else:
-        p[0] = ('expression_binop', p[1], p[2], p[3])
-
-
+    '''expression : expression binary_operator term
+                  | term'''
+    
 def p_binary_operator(p):
-  '''binary_operator  : MINUS 
-                      | MUL 
-                      | PLUS
-                      | DIV 
-                      | REM '''
-  p[0] = p[1]
+    '''binary_operator : MINUS 
+                       | MUL 
+                       | PLUS
+                       | DIV 
+                       | REM '''
+   
+
+def p_term(p):
+    '''term : factor
+            | term unary_operator'''
+   
+    
+
 
 def p_unary_operator(p):
     ''' unary_operator : PLUSPLUS 
                        | MINUSMINUS '''
-    p[0] = p[1]
+    
 
 def p_factor(p):
     ''' factor :  ID 
@@ -342,27 +304,26 @@ def p_factor(p):
                | TRUE
                | FALSE 
                | LPAREN expression RPAREN'''
-    if len(p) == 4:
-      p[0] = ('factor_expression', p[2])
-    else:
-      p[0] = p[1]
+    
+        
 
 def p_try_except(p):
     '''try_except : BEGIN TRY statement_list EXCEPT statement_list END'''
-    p[0] = ('try_except',p[1],p[2], p[3],p[4], p[5],p[6])
+    
+
+
 
 def p_print(p):
     '''print : ZOUT LPAREN y RPAREN'''
-    p[0] = ('print', p[1],p[2], p[3],p[4])
+    
 
 def p_y(p):
     '''y : expression
          | compound_type_access'''
-    p[0] = p[1]
+   
 
 def p_empty(p):
     '''empty : '''
-    p[0] = None
 
 def find_column(input, p):
     line_start = input.rfind('\n', 0, p.lexpos) + 1
@@ -380,9 +341,9 @@ import ply.yacc as yacc
 parser = yacc.yacc()
 
 try:
-        text = open("test_cases/test14.zeva","r").read()
+        text = open("keerthi.txt","r").read()
         p = parser.parse(text)
-        pprint(p)
+        #pprint(p)
   
 
 except EOFError:
