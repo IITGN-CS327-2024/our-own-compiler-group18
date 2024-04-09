@@ -32,6 +32,7 @@ tokens = [
     'SUBSTR',
     'GTEQ',
     'MINUSMINUS',
+    'MINUSMINUS',
     'LTEQ',
     'STRING',
     'VAR',
@@ -220,7 +221,7 @@ def p_compound_types(p):
 def p_A(p):
     '''A : TUPLE
          | LIST'''
-    p[0] = p[1]
+    
 
 def p_data(p):
     '''data : expression data
