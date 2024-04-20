@@ -17,6 +17,7 @@ class Id(Node):
     id: str 
     def __hash__(self):
       return hash(self.id)
+    
 @dataclass
 class Bool(Node):
     value: bool
