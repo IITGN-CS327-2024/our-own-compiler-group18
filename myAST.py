@@ -1,6 +1,26 @@
 from dataclasses import dataclass
 from typing import Any, List, Tuple, Union
 
+class Node:
+    pass
+
+@dataclass
+class Number(Node):
+    value: int
+
+@dataclass
+class String(Node):
+    value: str
+
+@dataclass
+class Id(Node):
+    id: str 
+    def __hash__(self):
+      return hash(self.id)
+@dataclass
+class Bool(Node):
+    value: bool
+
 @dataclass
 class Start:
     statement_list: List[Any]
@@ -11,18 +31,23 @@ class StatementList:
 
 @dataclass
 class Declaration:
-    type_: str
-    assignment: Any
+    type: str
+    identifier: Id
+    assignment_operator: str
+    value: Any
+    def __post__init__(self):
+      if self.type == "int" and not isinstance(self.value, Number):
+          raise TypeError("Expected value of type Number for integer declaration")
+      elif self.type == "str" and not isinstance(self.value, String):
+          raise TypeError("Expected value of type String for string declaration")
+      
+
 
 @dataclass
 class Assignment:
-    identifier: str
+    identifier: Id
     assignment_operator: str
     value: Any
-
-@dataclass
-class Type:
-    type_: str
 
 @dataclass
 class CompoundTypes:
@@ -34,10 +59,15 @@ class CompoundTypes:
 @dataclass
 class CompoundTypeAccess:
     identifier: str
-    compound_type_access: Union[str, Tuple[str, Any]]
+    compound_type_access: Union[str, Tuple[str, Any], None]
+
+    def __hash__(self):
+        return hash((self.identifier, self.compound_type_access))
+
 
 @dataclass
 class FunctionDefinition:
+    type : str
     identifier: str
     parameter_list: Union[Tuple[Tuple[str, str], Any], None]
     statement_list: List[Any]
@@ -45,8 +75,9 @@ class FunctionDefinition:
 
 @dataclass
 class FunctionCall:
+  
     identifier: str
-    expression: Union[Tuple[Any, str, Any], Any]
+    expression: Union[Tuple[Tuple[str, str], Any], None]
 
 @dataclass
 class ParameterList:
@@ -67,7 +98,7 @@ class IfStatement:
     condition: Any
     if_statement: List[Any]
     elif_statement: List[Tuple[Any, List[Any]]]
-    else_statement: Union[List[Any]] 
+    else_statement: Union[List[Any]]
 
 @dataclass
 class WhileStatement:
@@ -81,7 +112,13 @@ class Pexpression:
 @dataclass
 class Expression:
     expression: Union[Tuple[Any, str, Any], Any]
+    def __eq__(self, other):
+      if isinstance(other, Expression):
+          return self.expression == other.expression
+      return False
 
+    def __hash__(self):
+      return hash(self.expression)
 @dataclass
 class BinaryOperator:
     operator: str
@@ -105,13 +142,8 @@ class TryExcept:
 
 @dataclass
 class Print:
-    print_statement: str
     value: Any
 
 @dataclass
 class Data:
     expressions: Tuple[Any]
-
-@dataclass
-class TrueFalse:
-    value: bool
