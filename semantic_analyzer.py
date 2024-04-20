@@ -698,11 +698,11 @@ class SemanticAnalyzer:
 parser = yacc.yacc()
 
 try:
-    text = open("keerthi.txt", "r").read()
+    text = open("test_cases/test1.zeva", "r").read()
     ast = parser.parse(text)
+    pprint(ast)
+
     semantic_analyzer = SemanticAnalyzer()
     semantic_analyzer.analyze(ast)
-    pprint(ast)
-    # Pass your AST root here
 except EOFError:
     print("File could not be opened!")
