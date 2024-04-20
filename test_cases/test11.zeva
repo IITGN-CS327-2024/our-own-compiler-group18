@@ -1,5 +1,5 @@
 
-func a(int a, int b)
+int f(int a, int b)
 begin
     return a + b;
 end;
