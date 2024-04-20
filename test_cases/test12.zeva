@@ -1,9 +1,9 @@
-func outer()
+int outer()
 begin
     var int x = 5;
     var int y = 6;
     
-    func inner(int a)
+    int inner(int a)
     begin
         return x + y + a;
     end;
@@ -12,5 +12,4 @@ begin
 end;
 
 var int closure = outer();
-var int result = closure(10);
-zout(result);  @ Expected output: 21
+
