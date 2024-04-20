@@ -16,7 +16,7 @@ Rule 10    statement -> compound_types
 Rule 11    statement -> compound_type_access
 Rule 12    statement -> try_except
 Rule 13    statement -> print
-Rule 14    declaration -> VAR type assignment
+Rule 14    declaration -> VAR type ID ASSIGN L
 Rule 15    assignment -> ID ASSIGN L
 Rule 16    L -> statement
 Rule 17    L -> ID LPAREN data RPAREN
@@ -26,144 +26,145 @@ Rule 20    type -> STR
 Rule 21    compound_types -> A ID ASSIGN LPAREN data RPAREN
 Rule 22    A -> TUPLE
 Rule 23    A -> LIST
-Rule 24    data -> expression data
-Rule 25    data -> COMMA data
-Rule 26    data -> <empty>
-Rule 27    compound_type_access -> ID DOT F
-Rule 28    compound_type_access -> ID LSPAREN expression RSPAREN
-Rule 29    F -> CON LPAREN factor RPAREN
-Rule 30    F -> FRONT
-Rule 31    F -> ADD LPAREN factor RPAREN
-Rule 32    F -> REAR
-Rule 33    F -> SIZE
-Rule 34    F -> DELETE
-Rule 35    F -> SUBSTR LPAREN data RPAREN
-Rule 36    F -> <empty>
-Rule 37    binary_operator -> MINUS
-Rule 38    binary_operator -> MUL
-Rule 39    binary_operator -> PLUS
-Rule 40    binary_operator -> DIV
-Rule 41    binary_operator -> REM
-Rule 42    unary_operator -> PLUSPLUS
-Rule 43    unary_operator -> MINUSMINUS
-Rule 44    term -> factor
-Rule 45    term -> term unary_operator
-Rule 46    if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list END T K
-Rule 47    comparison_operator -> EQEQ
-Rule 48    comparison_operator -> NOTEQ
-Rule 49    comparison_operator -> LT
-Rule 50    comparison_operator -> GT
-Rule 51    comparison_operator -> LTEQ
-Rule 52    comparison_operator -> GTEQ
-Rule 53    T -> ELIF LPAREN condition RPAREN BEGIN statement_list END T
-Rule 54    T -> <empty>
-Rule 55    K -> ELSE BEGIN statement_list END
-Rule 56    K -> <empty>
-Rule 57    while_stmt -> WHILE LPAREN condition RPAREN BEGIN statement_list END
-Rule 58    function_definition -> FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-Rule 59    parameter_list -> type ID optional_parameter_list
-Rule 60    parameter_list -> <empty>
-Rule 61    optional_parameter_list -> COMMA type ID optional_parameter_list
-Rule 62    optional_parameter_list -> <empty>
-Rule 63    condition -> expression comparison_operator expression
-Rule 64    expression -> expression binary_operator term
-Rule 65    expression -> term
-Rule 66    factor -> ID
-Rule 67    factor -> NUMBER
-Rule 68    factor -> STRING
-Rule 69    factor -> TRUE
-Rule 70    factor -> FALSE
-Rule 71    factor -> LPAREN expression RPAREN
-Rule 72    try_except -> BEGIN TRY statement_list EXCEPT statement_list END
-Rule 73    print -> ZOUT LPAREN y RPAREN
-Rule 74    y -> expression
-Rule 75    y -> compound_type_access
+Rule 24    data -> expression hi
+Rule 25    data -> <empty>
+Rule 26    hi -> COMMA data
+Rule 27    hi -> <empty>
+Rule 28    compound_type_access -> ID DOT F
+Rule 29    compound_type_access -> ID LSPAREN expression RSPAREN
+Rule 30    F -> CON LPAREN factor RPAREN
+Rule 31    F -> FRONT
+Rule 32    F -> ADD LPAREN factor RPAREN
+Rule 33    F -> REAR
+Rule 34    F -> SIZE
+Rule 35    F -> DELETE
+Rule 36    F -> SUBSTR LPAREN data RPAREN
+Rule 37    F -> <empty>
+Rule 38    binary_operator -> MINUS
+Rule 39    binary_operator -> MUL
+Rule 40    binary_operator -> PLUS
+Rule 41    binary_operator -> DIV
+Rule 42    binary_operator -> REM
+Rule 43    unary_operator -> PLUSPLUS
+Rule 44    unary_operator -> MINUSMINUS
+Rule 45    term -> factor
+Rule 46    term -> term unary_operator
+Rule 47    if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list END T K
+Rule 48    comparison_operator -> EQEQ
+Rule 49    comparison_operator -> NOTEQ
+Rule 50    comparison_operator -> LT
+Rule 51    comparison_operator -> GT
+Rule 52    comparison_operator -> LTEQ
+Rule 53    comparison_operator -> GTEQ
+Rule 54    T -> ELIF LPAREN condition RPAREN BEGIN statement_list END T
+Rule 55    T -> <empty>
+Rule 56    K -> ELSE BEGIN statement_list END
+Rule 57    K -> <empty>
+Rule 58    while_stmt -> WHILE LPAREN condition RPAREN BEGIN statement_list END
+Rule 59    function_definition -> type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+Rule 60    parameter_list -> type ID optional_parameter_list
+Rule 61    parameter_list -> <empty>
+Rule 62    optional_parameter_list -> COMMA type ID optional_parameter_list
+Rule 63    optional_parameter_list -> <empty>
+Rule 64    condition -> expression comparison_operator expression
+Rule 65    expression -> expression binary_operator term
+Rule 66    expression -> term
+Rule 67    factor -> ID
+Rule 68    factor -> NUMBER
+Rule 69    factor -> STRING
+Rule 70    factor -> TRUE
+Rule 71    factor -> FALSE
+Rule 72    factor -> LPAREN expression RPAREN
+Rule 73    try_except -> BEGIN TRY statement_list EXCEPT statement_list END
+Rule 74    print -> ZOUT LPAREN y RPAREN
+Rule 75    y -> expression
+Rule 76    y -> compound_type_access
 
 Terminals, with rules where they appear
 
-ADD                  : 31
-ASSIGN               : 15 21
-BEGIN                : 46 53 55 57 58 72
+ADD                  : 32
+ASSIGN               : 14 15 21
+BEGIN                : 47 54 56 58 59 73
 BOOL                 : 19
-COMMA                : 25 61
-CON                  : 29
-DELETE               : 34
-DIV                  : 40
-DOT                  : 27
-ELIF                 : 53
-ELSE                 : 55
-END                  : 46 53 55 57 58 72
-EQEQ                 : 47
-EXCEPT               : 72
-FALSE                : 70
-FRONT                : 30
-FUNC                 : 58
-GT                   : 50
-GTEQ                 : 52
-ID                   : 15 17 21 27 28 58 59 61 66
-IF                   : 46
+COMMA                : 26 62
+CON                  : 30
+DELETE               : 35
+DIV                  : 41
+DOT                  : 28
+ELIF                 : 54
+ELSE                 : 56
+END                  : 47 54 56 58 59 73
+EQEQ                 : 48
+EXCEPT               : 73
+FALSE                : 71
+FRONT                : 31
+GT                   : 51
+GTEQ                 : 53
+ID                   : 14 15 17 21 28 29 59 60 62 67
+IF                   : 47
 INT                  : 18
 LIST                 : 23
-LPAREN               : 17 21 29 31 35 46 53 57 58 71 73
-LSPAREN              : 28
-LT                   : 49
-LTEQ                 : 51
-MINUS                : 37
-MINUSMINUS           : 43
-MUL                  : 38
-NOTEQ                : 48
-NUMBER               : 67
-PLUS                 : 39
-PLUSPLUS             : 42
-REAR                 : 32
-REM                  : 41
-RETURN               : 58
-RPAREN               : 17 21 29 31 35 46 53 57 58 71 73
-RSPAREN              : 28
-SEMICOLON            : 2 58
-SIZE                 : 33
+LPAREN               : 17 21 30 32 36 47 54 58 59 72 74
+LSPAREN              : 29
+LT                   : 50
+LTEQ                 : 52
+MINUS                : 38
+MINUSMINUS           : 44
+MUL                  : 39
+NOTEQ                : 49
+NUMBER               : 68
+PLUS                 : 40
+PLUSPLUS             : 43
+REAR                 : 33
+REM                  : 42
+RETURN               : 59
+RPAREN               : 17 21 30 32 36 47 54 58 59 72 74
+RSPAREN              : 29
+SEMICOLON            : 2 59
+SIZE                 : 34
 STR                  : 20
-STRING               : 68
-SUBSTR               : 35
-TRUE                 : 69
-TRY                  : 72
+STRING               : 69
+SUBSTR               : 36
+TRUE                 : 70
+TRY                  : 73
 TUPLE                : 22
 VAR                  : 14
-WHILE                : 57
-ZOUT                 : 73
+WHILE                : 58
+ZOUT                 : 74
 error                : 
 
 Nonterminals, with rules where they appear
 
 A                    : 21
-F                    : 27
-K                    : 46
-L                    : 15
-T                    : 46 53
-assignment           : 5 14
-binary_operator      : 64
-comparison_operator  : 63
-compound_type_access : 11 75
+F                    : 28
+K                    : 47
+L                    : 14 15 59
+T                    : 47 54
+assignment           : 5
+binary_operator      : 65
+comparison_operator  : 64
+compound_type_access : 11 76
 compound_types       : 10
-condition            : 46 53 57
-data                 : 17 21 24 25 35 58
+condition            : 47 54 58
+data                 : 17 21 26 36
 declaration          : 4
-expression           : 9 24 28 63 63 64 71 74
-factor               : 29 31 44
+expression           : 9 24 29 64 64 65 72 75
+factor               : 30 32 45
 function_definition  : 8
+hi                   : 24
 if_stmnt             : 6
-optional_parameter_list : 59 61
-parameter_list       : 58
+optional_parameter_list : 60 62
+parameter_list       : 59
 print                : 13
 start                : 0
 statement            : 2 16
-statement_list       : 1 2 46 53 55 57 58 72 72
-term                 : 45 64 65
+statement_list       : 1 2 47 54 56 58 59 73 73
+term                 : 46 65 66
 try_except           : 12
-type                 : 14 59 61
-unary_operator       : 45
+type                 : 14 59 60 62
+unary_operator       : 46
 while_stmt           : 7
-y                    : 73
+y                    : 74
 
 Parsing method: LALR
 
@@ -178,9 +179,11 @@ state 0
     ID              reduce using rule 3 (statement_list -> .)
     IF              reduce using rule 3 (statement_list -> .)
     WHILE           reduce using rule 3 (statement_list -> .)
-    FUNC            reduce using rule 3 (statement_list -> .)
     BEGIN           reduce using rule 3 (statement_list -> .)
     ZOUT            reduce using rule 3 (statement_list -> .)
+    INT             reduce using rule 3 (statement_list -> .)
+    BOOL            reduce using rule 3 (statement_list -> .)
+    STR             reduce using rule 3 (statement_list -> .)
     TUPLE           reduce using rule 3 (statement_list -> .)
     LIST            reduce using rule 3 (statement_list -> .)
     NUMBER          reduce using rule 3 (statement_list -> .)
@@ -213,44 +216,49 @@ state 2
     (11) statement -> . compound_type_access
     (12) statement -> . try_except
     (13) statement -> . print
-    (14) declaration -> . VAR type assignment
+    (14) declaration -> . VAR type ID ASSIGN L
     (15) assignment -> . ID ASSIGN L
-    (46) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
-    (57) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
-    (58) function_definition -> . FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
+    (47) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
+    (58) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
+    (59) function_definition -> . type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
     (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
-    (27) compound_type_access -> . ID DOT F
-    (28) compound_type_access -> . ID LSPAREN expression RSPAREN
-    (72) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
-    (73) print -> . ZOUT LPAREN y RPAREN
-    (44) term -> . factor
-    (45) term -> . term unary_operator
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (73) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
+    (74) print -> . ZOUT LPAREN y RPAREN
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
+    (45) term -> . factor
+    (46) term -> . term unary_operator
     (22) A -> . TUPLE
     (23) A -> . LIST
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
     $end            reduce using rule 1 (start -> statement_list .)
     VAR             shift and go to state 14
-    ID              shift and go to state 15
-    IF              shift and go to state 16
-    WHILE           shift and go to state 19
-    FUNC            shift and go to state 20
-    BEGIN           shift and go to state 18
+    ID              shift and go to state 16
+    IF              shift and go to state 17
+    WHILE           shift and go to state 20
+    BEGIN           shift and go to state 19
     ZOUT            shift and go to state 23
-    TUPLE           shift and go to state 25
-    LIST            shift and go to state 26
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
+    TUPLE           shift and go to state 28
+    LIST            shift and go to state 29
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
     statement                      shift and go to state 3
     declaration                    shift and go to state 4
@@ -263,15 +271,16 @@ state 2
     compound_type_access           shift and go to state 11
     try_except                     shift and go to state 12
     print                          shift and go to state 13
+    type                           shift and go to state 15
     term                           shift and go to state 21
     A                              shift and go to state 22
-    factor                         shift and go to state 24
+    factor                         shift and go to state 27
 
 state 3
 
     (2) statement_list -> statement_list statement . SEMICOLON
 
-    SEMICOLON       shift and go to state 31
+    SEMICOLON       shift and go to state 34
 
 
 state 4
@@ -312,21 +321,21 @@ state 8
 state 9
 
     (9) statement -> expression .
-    (64) expression -> expression . binary_operator term
-    (37) binary_operator -> . MINUS
-    (38) binary_operator -> . MUL
-    (39) binary_operator -> . PLUS
-    (40) binary_operator -> . DIV
-    (41) binary_operator -> . REM
+    (65) expression -> expression . binary_operator term
+    (38) binary_operator -> . MINUS
+    (39) binary_operator -> . MUL
+    (40) binary_operator -> . PLUS
+    (41) binary_operator -> . DIV
+    (42) binary_operator -> . REM
 
     SEMICOLON       reduce using rule 9 (statement -> expression .)
-    MINUS           shift and go to state 33
-    MUL             shift and go to state 34
-    PLUS            shift and go to state 35
-    DIV             shift and go to state 36
-    REM             shift and go to state 37
+    MINUS           shift and go to state 36
+    MUL             shift and go to state 37
+    PLUS            shift and go to state 38
+    DIV             shift and go to state 39
+    REM             shift and go to state 40
 
-    binary_operator                shift and go to state 32
+    binary_operator                shift and go to state 35
 
 state 10
 
@@ -358,118 +367,112 @@ state 13
 
 state 14
 
-    (14) declaration -> VAR . type assignment
+    (14) declaration -> VAR . type ID ASSIGN L
     (18) type -> . INT
     (19) type -> . BOOL
     (20) type -> . STR
 
-    INT             shift and go to state 39
-    BOOL            shift and go to state 40
-    STR             shift and go to state 41
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
 
-    type                           shift and go to state 38
+    type                           shift and go to state 41
 
 state 15
 
-    (15) assignment -> ID . ASSIGN L
-    (27) compound_type_access -> ID . DOT F
-    (28) compound_type_access -> ID . LSPAREN expression RSPAREN
-    (66) factor -> ID .
+    (59) function_definition -> type . ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
 
-    ASSIGN          shift and go to state 42
-    DOT             shift and go to state 43
-    LSPAREN         shift and go to state 44
-    PLUSPLUS        reduce using rule 66 (factor -> ID .)
-    MINUSMINUS      reduce using rule 66 (factor -> ID .)
-    MINUS           reduce using rule 66 (factor -> ID .)
-    MUL             reduce using rule 66 (factor -> ID .)
-    PLUS            reduce using rule 66 (factor -> ID .)
-    DIV             reduce using rule 66 (factor -> ID .)
-    REM             reduce using rule 66 (factor -> ID .)
-    SEMICOLON       reduce using rule 66 (factor -> ID .)
+    ID              shift and go to state 42
 
 
 state 16
 
-    (46) if_stmnt -> IF . LPAREN condition RPAREN BEGIN statement_list END T K
+    (15) assignment -> ID . ASSIGN L
+    (28) compound_type_access -> ID . DOT F
+    (29) compound_type_access -> ID . LSPAREN expression RSPAREN
+    (67) factor -> ID .
 
-    LPAREN          shift and go to state 45
+    ASSIGN          shift and go to state 43
+    DOT             shift and go to state 44
+    LSPAREN         shift and go to state 45
+    PLUSPLUS        reduce using rule 67 (factor -> ID .)
+    MINUSMINUS      reduce using rule 67 (factor -> ID .)
+    MINUS           reduce using rule 67 (factor -> ID .)
+    MUL             reduce using rule 67 (factor -> ID .)
+    PLUS            reduce using rule 67 (factor -> ID .)
+    DIV             reduce using rule 67 (factor -> ID .)
+    REM             reduce using rule 67 (factor -> ID .)
+    SEMICOLON       reduce using rule 67 (factor -> ID .)
 
 
 state 17
 
-    (71) factor -> LPAREN . expression RPAREN
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (47) if_stmnt -> IF . LPAREN condition RPAREN BEGIN statement_list END T K
 
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    LPAREN          shift and go to state 46
 
-    expression                     shift and go to state 46
-    term                           shift and go to state 21
-    factor                         shift and go to state 24
 
 state 18
 
-    (72) try_except -> BEGIN . TRY statement_list EXCEPT statement_list END
+    (72) factor -> LPAREN . expression RPAREN
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    TRY             shift and go to state 48
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
+    expression                     shift and go to state 47
+    term                           shift and go to state 21
+    factor                         shift and go to state 27
 
 state 19
 
-    (57) while_stmt -> WHILE . LPAREN condition RPAREN BEGIN statement_list END
+    (73) try_except -> BEGIN . TRY statement_list EXCEPT statement_list END
 
-    LPAREN          shift and go to state 49
+    TRY             shift and go to state 49
 
 
 state 20
 
-    (58) function_definition -> FUNC . ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
+    (58) while_stmt -> WHILE . LPAREN condition RPAREN BEGIN statement_list END
 
-    ID              shift and go to state 50
+    LPAREN          shift and go to state 50
 
 
 state 21
 
-    (65) expression -> term .
-    (45) term -> term . unary_operator
-    (42) unary_operator -> . PLUSPLUS
-    (43) unary_operator -> . MINUSMINUS
+    (66) expression -> term .
+    (46) term -> term . unary_operator
+    (43) unary_operator -> . PLUSPLUS
+    (44) unary_operator -> . MINUSMINUS
 
-    MINUS           reduce using rule 65 (expression -> term .)
-    MUL             reduce using rule 65 (expression -> term .)
-    PLUS            reduce using rule 65 (expression -> term .)
-    DIV             reduce using rule 65 (expression -> term .)
-    REM             reduce using rule 65 (expression -> term .)
-    SEMICOLON       reduce using rule 65 (expression -> term .)
-    RPAREN          reduce using rule 65 (expression -> term .)
-    RSPAREN         reduce using rule 65 (expression -> term .)
-    EQEQ            reduce using rule 65 (expression -> term .)
-    NOTEQ           reduce using rule 65 (expression -> term .)
-    LT              reduce using rule 65 (expression -> term .)
-    GT              reduce using rule 65 (expression -> term .)
-    LTEQ            reduce using rule 65 (expression -> term .)
-    GTEQ            reduce using rule 65 (expression -> term .)
-    COMMA           reduce using rule 65 (expression -> term .)
-    ID              reduce using rule 65 (expression -> term .)
-    NUMBER          reduce using rule 65 (expression -> term .)
-    STRING          reduce using rule 65 (expression -> term .)
-    TRUE            reduce using rule 65 (expression -> term .)
-    FALSE           reduce using rule 65 (expression -> term .)
-    LPAREN          reduce using rule 65 (expression -> term .)
+    MINUS           reduce using rule 66 (expression -> term .)
+    MUL             reduce using rule 66 (expression -> term .)
+    PLUS            reduce using rule 66 (expression -> term .)
+    DIV             reduce using rule 66 (expression -> term .)
+    REM             reduce using rule 66 (expression -> term .)
+    SEMICOLON       reduce using rule 66 (expression -> term .)
+    RPAREN          reduce using rule 66 (expression -> term .)
+    RSPAREN         reduce using rule 66 (expression -> term .)
+    EQEQ            reduce using rule 66 (expression -> term .)
+    NOTEQ           reduce using rule 66 (expression -> term .)
+    LT              reduce using rule 66 (expression -> term .)
+    GT              reduce using rule 66 (expression -> term .)
+    LTEQ            reduce using rule 66 (expression -> term .)
+    GTEQ            reduce using rule 66 (expression -> term .)
+    COMMA           reduce using rule 66 (expression -> term .)
     PLUSPLUS        shift and go to state 52
     MINUSMINUS      shift and go to state 53
 
@@ -484,171 +487,162 @@ state 22
 
 state 23
 
-    (73) print -> ZOUT . LPAREN y RPAREN
+    (74) print -> ZOUT . LPAREN y RPAREN
 
     LPAREN          shift and go to state 55
 
 
 state 24
 
-    (44) term -> factor .
+    (18) type -> INT .
 
-    PLUSPLUS        reduce using rule 44 (term -> factor .)
-    MINUSMINUS      reduce using rule 44 (term -> factor .)
-    MINUS           reduce using rule 44 (term -> factor .)
-    MUL             reduce using rule 44 (term -> factor .)
-    PLUS            reduce using rule 44 (term -> factor .)
-    DIV             reduce using rule 44 (term -> factor .)
-    REM             reduce using rule 44 (term -> factor .)
-    SEMICOLON       reduce using rule 44 (term -> factor .)
-    RPAREN          reduce using rule 44 (term -> factor .)
-    RSPAREN         reduce using rule 44 (term -> factor .)
-    EQEQ            reduce using rule 44 (term -> factor .)
-    NOTEQ           reduce using rule 44 (term -> factor .)
-    LT              reduce using rule 44 (term -> factor .)
-    GT              reduce using rule 44 (term -> factor .)
-    LTEQ            reduce using rule 44 (term -> factor .)
-    GTEQ            reduce using rule 44 (term -> factor .)
-    COMMA           reduce using rule 44 (term -> factor .)
-    ID              reduce using rule 44 (term -> factor .)
-    NUMBER          reduce using rule 44 (term -> factor .)
-    STRING          reduce using rule 44 (term -> factor .)
-    TRUE            reduce using rule 44 (term -> factor .)
-    FALSE           reduce using rule 44 (term -> factor .)
-    LPAREN          reduce using rule 44 (term -> factor .)
+    ID              reduce using rule 18 (type -> INT .)
 
 
 state 25
+
+    (19) type -> BOOL .
+
+    ID              reduce using rule 19 (type -> BOOL .)
+
+
+state 26
+
+    (20) type -> STR .
+
+    ID              reduce using rule 20 (type -> STR .)
+
+
+state 27
+
+    (45) term -> factor .
+
+    PLUSPLUS        reduce using rule 45 (term -> factor .)
+    MINUSMINUS      reduce using rule 45 (term -> factor .)
+    MINUS           reduce using rule 45 (term -> factor .)
+    MUL             reduce using rule 45 (term -> factor .)
+    PLUS            reduce using rule 45 (term -> factor .)
+    DIV             reduce using rule 45 (term -> factor .)
+    REM             reduce using rule 45 (term -> factor .)
+    SEMICOLON       reduce using rule 45 (term -> factor .)
+    RPAREN          reduce using rule 45 (term -> factor .)
+    RSPAREN         reduce using rule 45 (term -> factor .)
+    EQEQ            reduce using rule 45 (term -> factor .)
+    NOTEQ           reduce using rule 45 (term -> factor .)
+    LT              reduce using rule 45 (term -> factor .)
+    GT              reduce using rule 45 (term -> factor .)
+    LTEQ            reduce using rule 45 (term -> factor .)
+    GTEQ            reduce using rule 45 (term -> factor .)
+    COMMA           reduce using rule 45 (term -> factor .)
+
+
+state 28
 
     (22) A -> TUPLE .
 
     ID              reduce using rule 22 (A -> TUPLE .)
 
 
-state 26
+state 29
 
     (23) A -> LIST .
 
     ID              reduce using rule 23 (A -> LIST .)
 
 
-state 27
-
-    (67) factor -> NUMBER .
-
-    PLUSPLUS        reduce using rule 67 (factor -> NUMBER .)
-    MINUSMINUS      reduce using rule 67 (factor -> NUMBER .)
-    MINUS           reduce using rule 67 (factor -> NUMBER .)
-    MUL             reduce using rule 67 (factor -> NUMBER .)
-    PLUS            reduce using rule 67 (factor -> NUMBER .)
-    DIV             reduce using rule 67 (factor -> NUMBER .)
-    REM             reduce using rule 67 (factor -> NUMBER .)
-    SEMICOLON       reduce using rule 67 (factor -> NUMBER .)
-    RPAREN          reduce using rule 67 (factor -> NUMBER .)
-    RSPAREN         reduce using rule 67 (factor -> NUMBER .)
-    EQEQ            reduce using rule 67 (factor -> NUMBER .)
-    NOTEQ           reduce using rule 67 (factor -> NUMBER .)
-    LT              reduce using rule 67 (factor -> NUMBER .)
-    GT              reduce using rule 67 (factor -> NUMBER .)
-    LTEQ            reduce using rule 67 (factor -> NUMBER .)
-    GTEQ            reduce using rule 67 (factor -> NUMBER .)
-    COMMA           reduce using rule 67 (factor -> NUMBER .)
-    ID              reduce using rule 67 (factor -> NUMBER .)
-    NUMBER          reduce using rule 67 (factor -> NUMBER .)
-    STRING          reduce using rule 67 (factor -> NUMBER .)
-    TRUE            reduce using rule 67 (factor -> NUMBER .)
-    FALSE           reduce using rule 67 (factor -> NUMBER .)
-    LPAREN          reduce using rule 67 (factor -> NUMBER .)
-
-
-state 28
-
-    (68) factor -> STRING .
-
-    PLUSPLUS        reduce using rule 68 (factor -> STRING .)
-    MINUSMINUS      reduce using rule 68 (factor -> STRING .)
-    MINUS           reduce using rule 68 (factor -> STRING .)
-    MUL             reduce using rule 68 (factor -> STRING .)
-    PLUS            reduce using rule 68 (factor -> STRING .)
-    DIV             reduce using rule 68 (factor -> STRING .)
-    REM             reduce using rule 68 (factor -> STRING .)
-    SEMICOLON       reduce using rule 68 (factor -> STRING .)
-    RPAREN          reduce using rule 68 (factor -> STRING .)
-    RSPAREN         reduce using rule 68 (factor -> STRING .)
-    EQEQ            reduce using rule 68 (factor -> STRING .)
-    NOTEQ           reduce using rule 68 (factor -> STRING .)
-    LT              reduce using rule 68 (factor -> STRING .)
-    GT              reduce using rule 68 (factor -> STRING .)
-    LTEQ            reduce using rule 68 (factor -> STRING .)
-    GTEQ            reduce using rule 68 (factor -> STRING .)
-    COMMA           reduce using rule 68 (factor -> STRING .)
-    ID              reduce using rule 68 (factor -> STRING .)
-    NUMBER          reduce using rule 68 (factor -> STRING .)
-    STRING          reduce using rule 68 (factor -> STRING .)
-    TRUE            reduce using rule 68 (factor -> STRING .)
-    FALSE           reduce using rule 68 (factor -> STRING .)
-    LPAREN          reduce using rule 68 (factor -> STRING .)
-
-
-state 29
-
-    (69) factor -> TRUE .
-
-    PLUSPLUS        reduce using rule 69 (factor -> TRUE .)
-    MINUSMINUS      reduce using rule 69 (factor -> TRUE .)
-    MINUS           reduce using rule 69 (factor -> TRUE .)
-    MUL             reduce using rule 69 (factor -> TRUE .)
-    PLUS            reduce using rule 69 (factor -> TRUE .)
-    DIV             reduce using rule 69 (factor -> TRUE .)
-    REM             reduce using rule 69 (factor -> TRUE .)
-    SEMICOLON       reduce using rule 69 (factor -> TRUE .)
-    RPAREN          reduce using rule 69 (factor -> TRUE .)
-    RSPAREN         reduce using rule 69 (factor -> TRUE .)
-    EQEQ            reduce using rule 69 (factor -> TRUE .)
-    NOTEQ           reduce using rule 69 (factor -> TRUE .)
-    LT              reduce using rule 69 (factor -> TRUE .)
-    GT              reduce using rule 69 (factor -> TRUE .)
-    LTEQ            reduce using rule 69 (factor -> TRUE .)
-    GTEQ            reduce using rule 69 (factor -> TRUE .)
-    COMMA           reduce using rule 69 (factor -> TRUE .)
-    ID              reduce using rule 69 (factor -> TRUE .)
-    NUMBER          reduce using rule 69 (factor -> TRUE .)
-    STRING          reduce using rule 69 (factor -> TRUE .)
-    TRUE            reduce using rule 69 (factor -> TRUE .)
-    FALSE           reduce using rule 69 (factor -> TRUE .)
-    LPAREN          reduce using rule 69 (factor -> TRUE .)
-
-
 state 30
 
-    (70) factor -> FALSE .
+    (68) factor -> NUMBER .
 
-    PLUSPLUS        reduce using rule 70 (factor -> FALSE .)
-    MINUSMINUS      reduce using rule 70 (factor -> FALSE .)
-    MINUS           reduce using rule 70 (factor -> FALSE .)
-    MUL             reduce using rule 70 (factor -> FALSE .)
-    PLUS            reduce using rule 70 (factor -> FALSE .)
-    DIV             reduce using rule 70 (factor -> FALSE .)
-    REM             reduce using rule 70 (factor -> FALSE .)
-    SEMICOLON       reduce using rule 70 (factor -> FALSE .)
-    RPAREN          reduce using rule 70 (factor -> FALSE .)
-    RSPAREN         reduce using rule 70 (factor -> FALSE .)
-    EQEQ            reduce using rule 70 (factor -> FALSE .)
-    NOTEQ           reduce using rule 70 (factor -> FALSE .)
-    LT              reduce using rule 70 (factor -> FALSE .)
-    GT              reduce using rule 70 (factor -> FALSE .)
-    LTEQ            reduce using rule 70 (factor -> FALSE .)
-    GTEQ            reduce using rule 70 (factor -> FALSE .)
-    COMMA           reduce using rule 70 (factor -> FALSE .)
-    ID              reduce using rule 70 (factor -> FALSE .)
-    NUMBER          reduce using rule 70 (factor -> FALSE .)
-    STRING          reduce using rule 70 (factor -> FALSE .)
-    TRUE            reduce using rule 70 (factor -> FALSE .)
-    FALSE           reduce using rule 70 (factor -> FALSE .)
-    LPAREN          reduce using rule 70 (factor -> FALSE .)
+    PLUSPLUS        reduce using rule 68 (factor -> NUMBER .)
+    MINUSMINUS      reduce using rule 68 (factor -> NUMBER .)
+    MINUS           reduce using rule 68 (factor -> NUMBER .)
+    MUL             reduce using rule 68 (factor -> NUMBER .)
+    PLUS            reduce using rule 68 (factor -> NUMBER .)
+    DIV             reduce using rule 68 (factor -> NUMBER .)
+    REM             reduce using rule 68 (factor -> NUMBER .)
+    SEMICOLON       reduce using rule 68 (factor -> NUMBER .)
+    RPAREN          reduce using rule 68 (factor -> NUMBER .)
+    RSPAREN         reduce using rule 68 (factor -> NUMBER .)
+    EQEQ            reduce using rule 68 (factor -> NUMBER .)
+    NOTEQ           reduce using rule 68 (factor -> NUMBER .)
+    LT              reduce using rule 68 (factor -> NUMBER .)
+    GT              reduce using rule 68 (factor -> NUMBER .)
+    LTEQ            reduce using rule 68 (factor -> NUMBER .)
+    GTEQ            reduce using rule 68 (factor -> NUMBER .)
+    COMMA           reduce using rule 68 (factor -> NUMBER .)
 
 
 state 31
+
+    (69) factor -> STRING .
+
+    PLUSPLUS        reduce using rule 69 (factor -> STRING .)
+    MINUSMINUS      reduce using rule 69 (factor -> STRING .)
+    MINUS           reduce using rule 69 (factor -> STRING .)
+    MUL             reduce using rule 69 (factor -> STRING .)
+    PLUS            reduce using rule 69 (factor -> STRING .)
+    DIV             reduce using rule 69 (factor -> STRING .)
+    REM             reduce using rule 69 (factor -> STRING .)
+    SEMICOLON       reduce using rule 69 (factor -> STRING .)
+    RPAREN          reduce using rule 69 (factor -> STRING .)
+    RSPAREN         reduce using rule 69 (factor -> STRING .)
+    EQEQ            reduce using rule 69 (factor -> STRING .)
+    NOTEQ           reduce using rule 69 (factor -> STRING .)
+    LT              reduce using rule 69 (factor -> STRING .)
+    GT              reduce using rule 69 (factor -> STRING .)
+    LTEQ            reduce using rule 69 (factor -> STRING .)
+    GTEQ            reduce using rule 69 (factor -> STRING .)
+    COMMA           reduce using rule 69 (factor -> STRING .)
+
+
+state 32
+
+    (70) factor -> TRUE .
+
+    PLUSPLUS        reduce using rule 70 (factor -> TRUE .)
+    MINUSMINUS      reduce using rule 70 (factor -> TRUE .)
+    MINUS           reduce using rule 70 (factor -> TRUE .)
+    MUL             reduce using rule 70 (factor -> TRUE .)
+    PLUS            reduce using rule 70 (factor -> TRUE .)
+    DIV             reduce using rule 70 (factor -> TRUE .)
+    REM             reduce using rule 70 (factor -> TRUE .)
+    SEMICOLON       reduce using rule 70 (factor -> TRUE .)
+    RPAREN          reduce using rule 70 (factor -> TRUE .)
+    RSPAREN         reduce using rule 70 (factor -> TRUE .)
+    EQEQ            reduce using rule 70 (factor -> TRUE .)
+    NOTEQ           reduce using rule 70 (factor -> TRUE .)
+    LT              reduce using rule 70 (factor -> TRUE .)
+    GT              reduce using rule 70 (factor -> TRUE .)
+    LTEQ            reduce using rule 70 (factor -> TRUE .)
+    GTEQ            reduce using rule 70 (factor -> TRUE .)
+    COMMA           reduce using rule 70 (factor -> TRUE .)
+
+
+state 33
+
+    (71) factor -> FALSE .
+
+    PLUSPLUS        reduce using rule 71 (factor -> FALSE .)
+    MINUSMINUS      reduce using rule 71 (factor -> FALSE .)
+    MINUS           reduce using rule 71 (factor -> FALSE .)
+    MUL             reduce using rule 71 (factor -> FALSE .)
+    PLUS            reduce using rule 71 (factor -> FALSE .)
+    DIV             reduce using rule 71 (factor -> FALSE .)
+    REM             reduce using rule 71 (factor -> FALSE .)
+    SEMICOLON       reduce using rule 71 (factor -> FALSE .)
+    RPAREN          reduce using rule 71 (factor -> FALSE .)
+    RSPAREN         reduce using rule 71 (factor -> FALSE .)
+    EQEQ            reduce using rule 71 (factor -> FALSE .)
+    NOTEQ           reduce using rule 71 (factor -> FALSE .)
+    LT              reduce using rule 71 (factor -> FALSE .)
+    GT              reduce using rule 71 (factor -> FALSE .)
+    LTEQ            reduce using rule 71 (factor -> FALSE .)
+    GTEQ            reduce using rule 71 (factor -> FALSE .)
+    COMMA           reduce using rule 71 (factor -> FALSE .)
+
+
+state 34
 
     (2) statement_list -> statement_list statement SEMICOLON .
 
@@ -656,9 +650,11 @@ state 31
     ID              reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
     IF              reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
     WHILE           reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
-    FUNC            reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
     BEGIN           reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
     ZOUT            reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
+    INT             reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
+    BOOL            reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
+    STR             reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
     TUPLE           reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
     LIST            reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
     NUMBER          reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
@@ -672,119 +668,103 @@ state 31
     RETURN          reduce using rule 2 (statement_list -> statement_list statement SEMICOLON .)
 
 
-state 32
-
-    (64) expression -> expression binary_operator . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    term                           shift and go to state 56
-    factor                         shift and go to state 24
-
-state 33
-
-    (37) binary_operator -> MINUS .
-
-    ID              reduce using rule 37 (binary_operator -> MINUS .)
-    NUMBER          reduce using rule 37 (binary_operator -> MINUS .)
-    STRING          reduce using rule 37 (binary_operator -> MINUS .)
-    TRUE            reduce using rule 37 (binary_operator -> MINUS .)
-    FALSE           reduce using rule 37 (binary_operator -> MINUS .)
-    LPAREN          reduce using rule 37 (binary_operator -> MINUS .)
-
-
-state 34
-
-    (38) binary_operator -> MUL .
-
-    ID              reduce using rule 38 (binary_operator -> MUL .)
-    NUMBER          reduce using rule 38 (binary_operator -> MUL .)
-    STRING          reduce using rule 38 (binary_operator -> MUL .)
-    TRUE            reduce using rule 38 (binary_operator -> MUL .)
-    FALSE           reduce using rule 38 (binary_operator -> MUL .)
-    LPAREN          reduce using rule 38 (binary_operator -> MUL .)
-
-
 state 35
 
-    (39) binary_operator -> PLUS .
+    (65) expression -> expression binary_operator . term
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    ID              reduce using rule 39 (binary_operator -> PLUS .)
-    NUMBER          reduce using rule 39 (binary_operator -> PLUS .)
-    STRING          reduce using rule 39 (binary_operator -> PLUS .)
-    TRUE            reduce using rule 39 (binary_operator -> PLUS .)
-    FALSE           reduce using rule 39 (binary_operator -> PLUS .)
-    LPAREN          reduce using rule 39 (binary_operator -> PLUS .)
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
+    term                           shift and go to state 56
+    factor                         shift and go to state 27
 
 state 36
 
-    (40) binary_operator -> DIV .
+    (38) binary_operator -> MINUS .
 
-    ID              reduce using rule 40 (binary_operator -> DIV .)
-    NUMBER          reduce using rule 40 (binary_operator -> DIV .)
-    STRING          reduce using rule 40 (binary_operator -> DIV .)
-    TRUE            reduce using rule 40 (binary_operator -> DIV .)
-    FALSE           reduce using rule 40 (binary_operator -> DIV .)
-    LPAREN          reduce using rule 40 (binary_operator -> DIV .)
+    ID              reduce using rule 38 (binary_operator -> MINUS .)
+    NUMBER          reduce using rule 38 (binary_operator -> MINUS .)
+    STRING          reduce using rule 38 (binary_operator -> MINUS .)
+    TRUE            reduce using rule 38 (binary_operator -> MINUS .)
+    FALSE           reduce using rule 38 (binary_operator -> MINUS .)
+    LPAREN          reduce using rule 38 (binary_operator -> MINUS .)
 
 
 state 37
 
-    (41) binary_operator -> REM .
+    (39) binary_operator -> MUL .
 
-    ID              reduce using rule 41 (binary_operator -> REM .)
-    NUMBER          reduce using rule 41 (binary_operator -> REM .)
-    STRING          reduce using rule 41 (binary_operator -> REM .)
-    TRUE            reduce using rule 41 (binary_operator -> REM .)
-    FALSE           reduce using rule 41 (binary_operator -> REM .)
-    LPAREN          reduce using rule 41 (binary_operator -> REM .)
+    ID              reduce using rule 39 (binary_operator -> MUL .)
+    NUMBER          reduce using rule 39 (binary_operator -> MUL .)
+    STRING          reduce using rule 39 (binary_operator -> MUL .)
+    TRUE            reduce using rule 39 (binary_operator -> MUL .)
+    FALSE           reduce using rule 39 (binary_operator -> MUL .)
+    LPAREN          reduce using rule 39 (binary_operator -> MUL .)
 
 
 state 38
 
-    (14) declaration -> VAR type . assignment
-    (15) assignment -> . ID ASSIGN L
+    (40) binary_operator -> PLUS .
 
-    ID              shift and go to state 58
+    ID              reduce using rule 40 (binary_operator -> PLUS .)
+    NUMBER          reduce using rule 40 (binary_operator -> PLUS .)
+    STRING          reduce using rule 40 (binary_operator -> PLUS .)
+    TRUE            reduce using rule 40 (binary_operator -> PLUS .)
+    FALSE           reduce using rule 40 (binary_operator -> PLUS .)
+    LPAREN          reduce using rule 40 (binary_operator -> PLUS .)
 
-    assignment                     shift and go to state 57
 
 state 39
 
-    (18) type -> INT .
+    (41) binary_operator -> DIV .
 
-    ID              reduce using rule 18 (type -> INT .)
+    ID              reduce using rule 41 (binary_operator -> DIV .)
+    NUMBER          reduce using rule 41 (binary_operator -> DIV .)
+    STRING          reduce using rule 41 (binary_operator -> DIV .)
+    TRUE            reduce using rule 41 (binary_operator -> DIV .)
+    FALSE           reduce using rule 41 (binary_operator -> DIV .)
+    LPAREN          reduce using rule 41 (binary_operator -> DIV .)
 
 
 state 40
 
-    (19) type -> BOOL .
+    (42) binary_operator -> REM .
 
-    ID              reduce using rule 19 (type -> BOOL .)
+    ID              reduce using rule 42 (binary_operator -> REM .)
+    NUMBER          reduce using rule 42 (binary_operator -> REM .)
+    STRING          reduce using rule 42 (binary_operator -> REM .)
+    TRUE            reduce using rule 42 (binary_operator -> REM .)
+    FALSE           reduce using rule 42 (binary_operator -> REM .)
+    LPAREN          reduce using rule 42 (binary_operator -> REM .)
 
 
 state 41
 
-    (20) type -> STR .
+    (14) declaration -> VAR type . ID ASSIGN L
 
-    ID              reduce using rule 20 (type -> STR .)
+    ID              shift and go to state 57
 
 
 state 42
+
+    (59) function_definition -> type ID . LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+
+    LPAREN          shift and go to state 58
+
+
+state 43
 
     (15) assignment -> ID ASSIGN . L
     (16) L -> . statement
@@ -799,43 +779,48 @@ state 42
     (11) statement -> . compound_type_access
     (12) statement -> . try_except
     (13) statement -> . print
-    (14) declaration -> . VAR type assignment
+    (14) declaration -> . VAR type ID ASSIGN L
     (15) assignment -> . ID ASSIGN L
-    (46) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
-    (57) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
-    (58) function_definition -> . FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
+    (47) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
+    (58) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
+    (59) function_definition -> . type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
     (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
-    (27) compound_type_access -> . ID DOT F
-    (28) compound_type_access -> . ID LSPAREN expression RSPAREN
-    (72) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
-    (73) print -> . ZOUT LPAREN y RPAREN
-    (44) term -> . factor
-    (45) term -> . term unary_operator
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (73) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
+    (74) print -> . ZOUT LPAREN y RPAREN
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
+    (45) term -> . factor
+    (46) term -> . term unary_operator
     (22) A -> . TUPLE
     (23) A -> . LIST
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
     ID              shift and go to state 59
     VAR             shift and go to state 14
-    IF              shift and go to state 16
-    WHILE           shift and go to state 19
-    FUNC            shift and go to state 20
-    BEGIN           shift and go to state 18
+    IF              shift and go to state 17
+    WHILE           shift and go to state 20
+    BEGIN           shift and go to state 19
     ZOUT            shift and go to state 23
-    TUPLE           shift and go to state 25
-    LIST            shift and go to state 26
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
+    TUPLE           shift and go to state 28
+    LIST            shift and go to state 29
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
     L                              shift and go to state 60
     statement                      shift and go to state 61
@@ -849,21 +834,22 @@ state 42
     compound_type_access           shift and go to state 11
     try_except                     shift and go to state 12
     print                          shift and go to state 13
+    type                           shift and go to state 15
     term                           shift and go to state 21
     A                              shift and go to state 22
-    factor                         shift and go to state 24
+    factor                         shift and go to state 27
 
-state 43
+state 44
 
-    (27) compound_type_access -> ID DOT . F
-    (29) F -> . CON LPAREN factor RPAREN
-    (30) F -> . FRONT
-    (31) F -> . ADD LPAREN factor RPAREN
-    (32) F -> . REAR
-    (33) F -> . SIZE
-    (34) F -> . DELETE
-    (35) F -> . SUBSTR LPAREN data RPAREN
-    (36) F -> .
+    (28) compound_type_access -> ID DOT . F
+    (30) F -> . CON LPAREN factor RPAREN
+    (31) F -> . FRONT
+    (32) F -> . ADD LPAREN factor RPAREN
+    (33) F -> . REAR
+    (34) F -> . SIZE
+    (35) F -> . DELETE
+    (36) F -> . SUBSTR LPAREN data RPAREN
+    (37) F -> .
 
     CON             shift and go to state 63
     FRONT           shift and go to state 64
@@ -872,114 +858,108 @@ state 43
     SIZE            shift and go to state 67
     DELETE          shift and go to state 68
     SUBSTR          shift and go to state 69
-    SEMICOLON       reduce using rule 36 (F -> .)
-    RPAREN          reduce using rule 36 (F -> .)
+    SEMICOLON       reduce using rule 37 (F -> .)
+    RPAREN          reduce using rule 37 (F -> .)
 
     F                              shift and go to state 62
 
-state 44
+state 45
 
-    (28) compound_type_access -> ID LSPAREN . expression RSPAREN
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (29) compound_type_access -> ID LSPAREN . expression RSPAREN
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
     expression                     shift and go to state 70
     term                           shift and go to state 21
-    factor                         shift and go to state 24
+    factor                         shift and go to state 27
 
-state 45
+state 46
 
-    (46) if_stmnt -> IF LPAREN . condition RPAREN BEGIN statement_list END T K
-    (63) condition -> . expression comparison_operator expression
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (47) if_stmnt -> IF LPAREN . condition RPAREN BEGIN statement_list END T K
+    (64) condition -> . expression comparison_operator expression
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
     condition                      shift and go to state 71
     expression                     shift and go to state 72
     term                           shift and go to state 21
-    factor                         shift and go to state 24
-
-state 46
-
-    (71) factor -> LPAREN expression . RPAREN
-    (64) expression -> expression . binary_operator term
-    (37) binary_operator -> . MINUS
-    (38) binary_operator -> . MUL
-    (39) binary_operator -> . PLUS
-    (40) binary_operator -> . DIV
-    (41) binary_operator -> . REM
-
-    RPAREN          shift and go to state 73
-    MINUS           shift and go to state 33
-    MUL             shift and go to state 34
-    PLUS            shift and go to state 35
-    DIV             shift and go to state 36
-    REM             shift and go to state 37
-
-    binary_operator                shift and go to state 32
+    factor                         shift and go to state 27
 
 state 47
 
-    (66) factor -> ID .
+    (72) factor -> LPAREN expression . RPAREN
+    (65) expression -> expression . binary_operator term
+    (38) binary_operator -> . MINUS
+    (39) binary_operator -> . MUL
+    (40) binary_operator -> . PLUS
+    (41) binary_operator -> . DIV
+    (42) binary_operator -> . REM
 
-    PLUSPLUS        reduce using rule 66 (factor -> ID .)
-    MINUSMINUS      reduce using rule 66 (factor -> ID .)
-    RPAREN          reduce using rule 66 (factor -> ID .)
-    MINUS           reduce using rule 66 (factor -> ID .)
-    MUL             reduce using rule 66 (factor -> ID .)
-    PLUS            reduce using rule 66 (factor -> ID .)
-    DIV             reduce using rule 66 (factor -> ID .)
-    REM             reduce using rule 66 (factor -> ID .)
-    SEMICOLON       reduce using rule 66 (factor -> ID .)
-    RSPAREN         reduce using rule 66 (factor -> ID .)
-    EQEQ            reduce using rule 66 (factor -> ID .)
-    NOTEQ           reduce using rule 66 (factor -> ID .)
-    LT              reduce using rule 66 (factor -> ID .)
-    GT              reduce using rule 66 (factor -> ID .)
-    LTEQ            reduce using rule 66 (factor -> ID .)
-    GTEQ            reduce using rule 66 (factor -> ID .)
-    COMMA           reduce using rule 66 (factor -> ID .)
-    ID              reduce using rule 66 (factor -> ID .)
-    NUMBER          reduce using rule 66 (factor -> ID .)
-    STRING          reduce using rule 66 (factor -> ID .)
-    TRUE            reduce using rule 66 (factor -> ID .)
-    FALSE           reduce using rule 66 (factor -> ID .)
-    LPAREN          reduce using rule 66 (factor -> ID .)
+    RPAREN          shift and go to state 73
+    MINUS           shift and go to state 36
+    MUL             shift and go to state 37
+    PLUS            shift and go to state 38
+    DIV             shift and go to state 39
+    REM             shift and go to state 40
 
+    binary_operator                shift and go to state 35
 
 state 48
 
-    (72) try_except -> BEGIN TRY . statement_list EXCEPT statement_list END
+    (67) factor -> ID .
+
+    PLUSPLUS        reduce using rule 67 (factor -> ID .)
+    MINUSMINUS      reduce using rule 67 (factor -> ID .)
+    RPAREN          reduce using rule 67 (factor -> ID .)
+    MINUS           reduce using rule 67 (factor -> ID .)
+    MUL             reduce using rule 67 (factor -> ID .)
+    PLUS            reduce using rule 67 (factor -> ID .)
+    DIV             reduce using rule 67 (factor -> ID .)
+    REM             reduce using rule 67 (factor -> ID .)
+    SEMICOLON       reduce using rule 67 (factor -> ID .)
+    RSPAREN         reduce using rule 67 (factor -> ID .)
+    EQEQ            reduce using rule 67 (factor -> ID .)
+    NOTEQ           reduce using rule 67 (factor -> ID .)
+    LT              reduce using rule 67 (factor -> ID .)
+    GT              reduce using rule 67 (factor -> ID .)
+    LTEQ            reduce using rule 67 (factor -> ID .)
+    GTEQ            reduce using rule 67 (factor -> ID .)
+    COMMA           reduce using rule 67 (factor -> ID .)
+
+
+state 49
+
+    (73) try_except -> BEGIN TRY . statement_list EXCEPT statement_list END
     (2) statement_list -> . statement_list statement SEMICOLON
     (3) statement_list -> .
 
@@ -988,9 +968,11 @@ state 48
     ID              reduce using rule 3 (statement_list -> .)
     IF              reduce using rule 3 (statement_list -> .)
     WHILE           reduce using rule 3 (statement_list -> .)
-    FUNC            reduce using rule 3 (statement_list -> .)
     BEGIN           reduce using rule 3 (statement_list -> .)
     ZOUT            reduce using rule 3 (statement_list -> .)
+    INT             reduce using rule 3 (statement_list -> .)
+    BOOL            reduce using rule 3 (statement_list -> .)
+    STR             reduce using rule 3 (statement_list -> .)
     TUPLE           reduce using rule 3 (statement_list -> .)
     LIST            reduce using rule 3 (statement_list -> .)
     NUMBER          reduce using rule 3 (statement_list -> .)
@@ -1001,193 +983,162 @@ state 48
 
     statement_list                 shift and go to state 74
 
-state 49
+state 50
 
-    (57) while_stmt -> WHILE LPAREN . condition RPAREN BEGIN statement_list END
-    (63) condition -> . expression comparison_operator expression
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (58) while_stmt -> WHILE LPAREN . condition RPAREN BEGIN statement_list END
+    (64) condition -> . expression comparison_operator expression
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
     condition                      shift and go to state 75
     expression                     shift and go to state 72
     term                           shift and go to state 21
-    factor                         shift and go to state 24
-
-state 50
-
-    (58) function_definition -> FUNC ID . LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-
-    LPAREN          shift and go to state 76
-
+    factor                         shift and go to state 27
 
 state 51
 
-    (45) term -> term unary_operator .
+    (46) term -> term unary_operator .
 
-    PLUSPLUS        reduce using rule 45 (term -> term unary_operator .)
-    MINUSMINUS      reduce using rule 45 (term -> term unary_operator .)
-    MINUS           reduce using rule 45 (term -> term unary_operator .)
-    MUL             reduce using rule 45 (term -> term unary_operator .)
-    PLUS            reduce using rule 45 (term -> term unary_operator .)
-    DIV             reduce using rule 45 (term -> term unary_operator .)
-    REM             reduce using rule 45 (term -> term unary_operator .)
-    SEMICOLON       reduce using rule 45 (term -> term unary_operator .)
-    RPAREN          reduce using rule 45 (term -> term unary_operator .)
-    RSPAREN         reduce using rule 45 (term -> term unary_operator .)
-    EQEQ            reduce using rule 45 (term -> term unary_operator .)
-    NOTEQ           reduce using rule 45 (term -> term unary_operator .)
-    LT              reduce using rule 45 (term -> term unary_operator .)
-    GT              reduce using rule 45 (term -> term unary_operator .)
-    LTEQ            reduce using rule 45 (term -> term unary_operator .)
-    GTEQ            reduce using rule 45 (term -> term unary_operator .)
-    COMMA           reduce using rule 45 (term -> term unary_operator .)
-    ID              reduce using rule 45 (term -> term unary_operator .)
-    NUMBER          reduce using rule 45 (term -> term unary_operator .)
-    STRING          reduce using rule 45 (term -> term unary_operator .)
-    TRUE            reduce using rule 45 (term -> term unary_operator .)
-    FALSE           reduce using rule 45 (term -> term unary_operator .)
-    LPAREN          reduce using rule 45 (term -> term unary_operator .)
+    PLUSPLUS        reduce using rule 46 (term -> term unary_operator .)
+    MINUSMINUS      reduce using rule 46 (term -> term unary_operator .)
+    MINUS           reduce using rule 46 (term -> term unary_operator .)
+    MUL             reduce using rule 46 (term -> term unary_operator .)
+    PLUS            reduce using rule 46 (term -> term unary_operator .)
+    DIV             reduce using rule 46 (term -> term unary_operator .)
+    REM             reduce using rule 46 (term -> term unary_operator .)
+    SEMICOLON       reduce using rule 46 (term -> term unary_operator .)
+    RPAREN          reduce using rule 46 (term -> term unary_operator .)
+    RSPAREN         reduce using rule 46 (term -> term unary_operator .)
+    EQEQ            reduce using rule 46 (term -> term unary_operator .)
+    NOTEQ           reduce using rule 46 (term -> term unary_operator .)
+    LT              reduce using rule 46 (term -> term unary_operator .)
+    GT              reduce using rule 46 (term -> term unary_operator .)
+    LTEQ            reduce using rule 46 (term -> term unary_operator .)
+    GTEQ            reduce using rule 46 (term -> term unary_operator .)
+    COMMA           reduce using rule 46 (term -> term unary_operator .)
 
 
 state 52
 
-    (42) unary_operator -> PLUSPLUS .
+    (43) unary_operator -> PLUSPLUS .
 
-    PLUSPLUS        reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    MINUSMINUS      reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    MINUS           reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    MUL             reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    PLUS            reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    DIV             reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    REM             reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    SEMICOLON       reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    RPAREN          reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    RSPAREN         reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    EQEQ            reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    NOTEQ           reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    LT              reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    GT              reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    LTEQ            reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    GTEQ            reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    COMMA           reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    ID              reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    NUMBER          reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    STRING          reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    TRUE            reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    FALSE           reduce using rule 42 (unary_operator -> PLUSPLUS .)
-    LPAREN          reduce using rule 42 (unary_operator -> PLUSPLUS .)
+    PLUSPLUS        reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    MINUSMINUS      reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    MINUS           reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    MUL             reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    PLUS            reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    DIV             reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    REM             reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    SEMICOLON       reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    RPAREN          reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    RSPAREN         reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    EQEQ            reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    NOTEQ           reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    LT              reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    GT              reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    LTEQ            reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    GTEQ            reduce using rule 43 (unary_operator -> PLUSPLUS .)
+    COMMA           reduce using rule 43 (unary_operator -> PLUSPLUS .)
 
 
 state 53
 
-    (43) unary_operator -> MINUSMINUS .
+    (44) unary_operator -> MINUSMINUS .
 
-    PLUSPLUS        reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    MINUSMINUS      reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    MINUS           reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    MUL             reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    PLUS            reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    DIV             reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    REM             reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    SEMICOLON       reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    RPAREN          reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    RSPAREN         reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    EQEQ            reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    NOTEQ           reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    LT              reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    GT              reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    LTEQ            reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    GTEQ            reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    COMMA           reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    ID              reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    NUMBER          reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    STRING          reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    TRUE            reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    FALSE           reduce using rule 43 (unary_operator -> MINUSMINUS .)
-    LPAREN          reduce using rule 43 (unary_operator -> MINUSMINUS .)
+    PLUSPLUS        reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    MINUSMINUS      reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    MINUS           reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    MUL             reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    PLUS            reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    DIV             reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    REM             reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    SEMICOLON       reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    RPAREN          reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    RSPAREN         reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    EQEQ            reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    NOTEQ           reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    LT              reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    GT              reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    LTEQ            reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    GTEQ            reduce using rule 44 (unary_operator -> MINUSMINUS .)
+    COMMA           reduce using rule 44 (unary_operator -> MINUSMINUS .)
 
 
 state 54
 
     (21) compound_types -> A ID . ASSIGN LPAREN data RPAREN
 
-    ASSIGN          shift and go to state 77
+    ASSIGN          shift and go to state 76
 
 
 state 55
 
-    (73) print -> ZOUT LPAREN . y RPAREN
-    (74) y -> . expression
-    (75) y -> . compound_type_access
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (27) compound_type_access -> . ID DOT F
-    (28) compound_type_access -> . ID LSPAREN expression RSPAREN
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (74) print -> ZOUT LPAREN . y RPAREN
+    (75) y -> . expression
+    (76) y -> . compound_type_access
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    ID              shift and go to state 81
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    ID              shift and go to state 80
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
-    y                              shift and go to state 78
-    expression                     shift and go to state 79
-    compound_type_access           shift and go to state 80
+    y                              shift and go to state 77
+    expression                     shift and go to state 78
+    compound_type_access           shift and go to state 79
     term                           shift and go to state 21
-    factor                         shift and go to state 24
+    factor                         shift and go to state 27
 
 state 56
 
-    (64) expression -> expression binary_operator term .
-    (45) term -> term . unary_operator
-    (42) unary_operator -> . PLUSPLUS
-    (43) unary_operator -> . MINUSMINUS
+    (65) expression -> expression binary_operator term .
+    (46) term -> term . unary_operator
+    (43) unary_operator -> . PLUSPLUS
+    (44) unary_operator -> . MINUSMINUS
 
-    MINUS           reduce using rule 64 (expression -> expression binary_operator term .)
-    MUL             reduce using rule 64 (expression -> expression binary_operator term .)
-    PLUS            reduce using rule 64 (expression -> expression binary_operator term .)
-    DIV             reduce using rule 64 (expression -> expression binary_operator term .)
-    REM             reduce using rule 64 (expression -> expression binary_operator term .)
-    SEMICOLON       reduce using rule 64 (expression -> expression binary_operator term .)
-    RPAREN          reduce using rule 64 (expression -> expression binary_operator term .)
-    RSPAREN         reduce using rule 64 (expression -> expression binary_operator term .)
-    EQEQ            reduce using rule 64 (expression -> expression binary_operator term .)
-    NOTEQ           reduce using rule 64 (expression -> expression binary_operator term .)
-    LT              reduce using rule 64 (expression -> expression binary_operator term .)
-    GT              reduce using rule 64 (expression -> expression binary_operator term .)
-    LTEQ            reduce using rule 64 (expression -> expression binary_operator term .)
-    GTEQ            reduce using rule 64 (expression -> expression binary_operator term .)
-    COMMA           reduce using rule 64 (expression -> expression binary_operator term .)
-    ID              reduce using rule 64 (expression -> expression binary_operator term .)
-    NUMBER          reduce using rule 64 (expression -> expression binary_operator term .)
-    STRING          reduce using rule 64 (expression -> expression binary_operator term .)
-    TRUE            reduce using rule 64 (expression -> expression binary_operator term .)
-    FALSE           reduce using rule 64 (expression -> expression binary_operator term .)
-    LPAREN          reduce using rule 64 (expression -> expression binary_operator term .)
+    MINUS           reduce using rule 65 (expression -> expression binary_operator term .)
+    MUL             reduce using rule 65 (expression -> expression binary_operator term .)
+    PLUS            reduce using rule 65 (expression -> expression binary_operator term .)
+    DIV             reduce using rule 65 (expression -> expression binary_operator term .)
+    REM             reduce using rule 65 (expression -> expression binary_operator term .)
+    SEMICOLON       reduce using rule 65 (expression -> expression binary_operator term .)
+    RPAREN          reduce using rule 65 (expression -> expression binary_operator term .)
+    RSPAREN         reduce using rule 65 (expression -> expression binary_operator term .)
+    EQEQ            reduce using rule 65 (expression -> expression binary_operator term .)
+    NOTEQ           reduce using rule 65 (expression -> expression binary_operator term .)
+    LT              reduce using rule 65 (expression -> expression binary_operator term .)
+    GT              reduce using rule 65 (expression -> expression binary_operator term .)
+    LTEQ            reduce using rule 65 (expression -> expression binary_operator term .)
+    GTEQ            reduce using rule 65 (expression -> expression binary_operator term .)
+    COMMA           reduce using rule 65 (expression -> expression binary_operator term .)
     PLUSPLUS        shift and go to state 52
     MINUSMINUS      shift and go to state 53
 
@@ -1195,38 +1146,48 @@ state 56
 
 state 57
 
-    (14) declaration -> VAR type assignment .
+    (14) declaration -> VAR type ID . ASSIGN L
 
-    SEMICOLON       reduce using rule 14 (declaration -> VAR type assignment .)
+    ASSIGN          shift and go to state 81
 
 
 state 58
 
-    (15) assignment -> ID . ASSIGN L
+    (59) function_definition -> type ID LPAREN . parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (60) parameter_list -> . type ID optional_parameter_list
+    (61) parameter_list -> .
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
 
-    ASSIGN          shift and go to state 42
+    RPAREN          reduce using rule 61 (parameter_list -> .)
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
 
+    type                           shift and go to state 82
+    parameter_list                 shift and go to state 83
 
 state 59
 
     (17) L -> ID . LPAREN data RPAREN
     (15) assignment -> ID . ASSIGN L
-    (27) compound_type_access -> ID . DOT F
-    (28) compound_type_access -> ID . LSPAREN expression RSPAREN
-    (66) factor -> ID .
+    (28) compound_type_access -> ID . DOT F
+    (29) compound_type_access -> ID . LSPAREN expression RSPAREN
+    (67) factor -> ID .
 
-    LPAREN          shift and go to state 82
-    ASSIGN          shift and go to state 42
-    DOT             shift and go to state 43
-    LSPAREN         shift and go to state 44
-    PLUSPLUS        reduce using rule 66 (factor -> ID .)
-    MINUSMINUS      reduce using rule 66 (factor -> ID .)
-    MINUS           reduce using rule 66 (factor -> ID .)
-    MUL             reduce using rule 66 (factor -> ID .)
-    PLUS            reduce using rule 66 (factor -> ID .)
-    DIV             reduce using rule 66 (factor -> ID .)
-    REM             reduce using rule 66 (factor -> ID .)
-    SEMICOLON       reduce using rule 66 (factor -> ID .)
+    LPAREN          shift and go to state 84
+    ASSIGN          shift and go to state 43
+    DOT             shift and go to state 44
+    LSPAREN         shift and go to state 45
+    PLUSPLUS        reduce using rule 67 (factor -> ID .)
+    MINUSMINUS      reduce using rule 67 (factor -> ID .)
+    MINUS           reduce using rule 67 (factor -> ID .)
+    MUL             reduce using rule 67 (factor -> ID .)
+    PLUS            reduce using rule 67 (factor -> ID .)
+    DIV             reduce using rule 67 (factor -> ID .)
+    REM             reduce using rule 67 (factor -> ID .)
+    SEMICOLON       reduce using rule 67 (factor -> ID .)
 
 
 state 60
@@ -1245,154 +1206,148 @@ state 61
 
 state 62
 
-    (27) compound_type_access -> ID DOT F .
+    (28) compound_type_access -> ID DOT F .
 
-    SEMICOLON       reduce using rule 27 (compound_type_access -> ID DOT F .)
-    RPAREN          reduce using rule 27 (compound_type_access -> ID DOT F .)
+    SEMICOLON       reduce using rule 28 (compound_type_access -> ID DOT F .)
+    RPAREN          reduce using rule 28 (compound_type_access -> ID DOT F .)
 
 
 state 63
 
-    (29) F -> CON . LPAREN factor RPAREN
-
-    LPAREN          shift and go to state 83
-
-
-state 64
-
-    (30) F -> FRONT .
-
-    SEMICOLON       reduce using rule 30 (F -> FRONT .)
-    RPAREN          reduce using rule 30 (F -> FRONT .)
-
-
-state 65
-
-    (31) F -> ADD . LPAREN factor RPAREN
-
-    LPAREN          shift and go to state 84
-
-
-state 66
-
-    (32) F -> REAR .
-
-    SEMICOLON       reduce using rule 32 (F -> REAR .)
-    RPAREN          reduce using rule 32 (F -> REAR .)
-
-
-state 67
-
-    (33) F -> SIZE .
-
-    SEMICOLON       reduce using rule 33 (F -> SIZE .)
-    RPAREN          reduce using rule 33 (F -> SIZE .)
-
-
-state 68
-
-    (34) F -> DELETE .
-
-    SEMICOLON       reduce using rule 34 (F -> DELETE .)
-    RPAREN          reduce using rule 34 (F -> DELETE .)
-
-
-state 69
-
-    (35) F -> SUBSTR . LPAREN data RPAREN
+    (30) F -> CON . LPAREN factor RPAREN
 
     LPAREN          shift and go to state 85
 
 
+state 64
+
+    (31) F -> FRONT .
+
+    SEMICOLON       reduce using rule 31 (F -> FRONT .)
+    RPAREN          reduce using rule 31 (F -> FRONT .)
+
+
+state 65
+
+    (32) F -> ADD . LPAREN factor RPAREN
+
+    LPAREN          shift and go to state 86
+
+
+state 66
+
+    (33) F -> REAR .
+
+    SEMICOLON       reduce using rule 33 (F -> REAR .)
+    RPAREN          reduce using rule 33 (F -> REAR .)
+
+
+state 67
+
+    (34) F -> SIZE .
+
+    SEMICOLON       reduce using rule 34 (F -> SIZE .)
+    RPAREN          reduce using rule 34 (F -> SIZE .)
+
+
+state 68
+
+    (35) F -> DELETE .
+
+    SEMICOLON       reduce using rule 35 (F -> DELETE .)
+    RPAREN          reduce using rule 35 (F -> DELETE .)
+
+
+state 69
+
+    (36) F -> SUBSTR . LPAREN data RPAREN
+
+    LPAREN          shift and go to state 87
+
+
 state 70
 
-    (28) compound_type_access -> ID LSPAREN expression . RSPAREN
-    (64) expression -> expression . binary_operator term
-    (37) binary_operator -> . MINUS
-    (38) binary_operator -> . MUL
-    (39) binary_operator -> . PLUS
-    (40) binary_operator -> . DIV
-    (41) binary_operator -> . REM
+    (29) compound_type_access -> ID LSPAREN expression . RSPAREN
+    (65) expression -> expression . binary_operator term
+    (38) binary_operator -> . MINUS
+    (39) binary_operator -> . MUL
+    (40) binary_operator -> . PLUS
+    (41) binary_operator -> . DIV
+    (42) binary_operator -> . REM
 
-    RSPAREN         shift and go to state 86
-    MINUS           shift and go to state 33
-    MUL             shift and go to state 34
-    PLUS            shift and go to state 35
-    DIV             shift and go to state 36
-    REM             shift and go to state 37
+    RSPAREN         shift and go to state 88
+    MINUS           shift and go to state 36
+    MUL             shift and go to state 37
+    PLUS            shift and go to state 38
+    DIV             shift and go to state 39
+    REM             shift and go to state 40
 
-    binary_operator                shift and go to state 32
+    binary_operator                shift and go to state 35
 
 state 71
 
-    (46) if_stmnt -> IF LPAREN condition . RPAREN BEGIN statement_list END T K
+    (47) if_stmnt -> IF LPAREN condition . RPAREN BEGIN statement_list END T K
 
-    RPAREN          shift and go to state 87
+    RPAREN          shift and go to state 89
 
 
 state 72
 
-    (63) condition -> expression . comparison_operator expression
-    (64) expression -> expression . binary_operator term
-    (47) comparison_operator -> . EQEQ
-    (48) comparison_operator -> . NOTEQ
-    (49) comparison_operator -> . LT
-    (50) comparison_operator -> . GT
-    (51) comparison_operator -> . LTEQ
-    (52) comparison_operator -> . GTEQ
-    (37) binary_operator -> . MINUS
-    (38) binary_operator -> . MUL
-    (39) binary_operator -> . PLUS
-    (40) binary_operator -> . DIV
-    (41) binary_operator -> . REM
+    (64) condition -> expression . comparison_operator expression
+    (65) expression -> expression . binary_operator term
+    (48) comparison_operator -> . EQEQ
+    (49) comparison_operator -> . NOTEQ
+    (50) comparison_operator -> . LT
+    (51) comparison_operator -> . GT
+    (52) comparison_operator -> . LTEQ
+    (53) comparison_operator -> . GTEQ
+    (38) binary_operator -> . MINUS
+    (39) binary_operator -> . MUL
+    (40) binary_operator -> . PLUS
+    (41) binary_operator -> . DIV
+    (42) binary_operator -> . REM
 
-    EQEQ            shift and go to state 89
-    NOTEQ           shift and go to state 90
-    LT              shift and go to state 91
-    GT              shift and go to state 92
-    LTEQ            shift and go to state 93
-    GTEQ            shift and go to state 94
-    MINUS           shift and go to state 33
-    MUL             shift and go to state 34
-    PLUS            shift and go to state 35
-    DIV             shift and go to state 36
-    REM             shift and go to state 37
+    EQEQ            shift and go to state 91
+    NOTEQ           shift and go to state 92
+    LT              shift and go to state 93
+    GT              shift and go to state 94
+    LTEQ            shift and go to state 95
+    GTEQ            shift and go to state 96
+    MINUS           shift and go to state 36
+    MUL             shift and go to state 37
+    PLUS            shift and go to state 38
+    DIV             shift and go to state 39
+    REM             shift and go to state 40
 
-    comparison_operator            shift and go to state 88
-    binary_operator                shift and go to state 32
+    comparison_operator            shift and go to state 90
+    binary_operator                shift and go to state 35
 
 state 73
 
-    (71) factor -> LPAREN expression RPAREN .
+    (72) factor -> LPAREN expression RPAREN .
 
-    PLUSPLUS        reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    MINUSMINUS      reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    MUL             reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    DIV             reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    REM             reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    SEMICOLON       reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    RSPAREN         reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    EQEQ            reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    NOTEQ           reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    LT              reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    GT              reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    LTEQ            reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    GTEQ            reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    COMMA           reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    ID              reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    NUMBER          reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    STRING          reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    TRUE            reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    FALSE           reduce using rule 71 (factor -> LPAREN expression RPAREN .)
-    LPAREN          reduce using rule 71 (factor -> LPAREN expression RPAREN .)
+    PLUSPLUS        reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    MINUSMINUS      reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    MUL             reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    DIV             reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    REM             reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    RSPAREN         reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    EQEQ            reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    NOTEQ           reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    LT              reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    GT              reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    LTEQ            reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    GTEQ            reduce using rule 72 (factor -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 72 (factor -> LPAREN expression RPAREN .)
 
 
 state 74
 
-    (72) try_except -> BEGIN TRY statement_list . EXCEPT statement_list END
+    (73) try_except -> BEGIN TRY statement_list . EXCEPT statement_list END
     (2) statement_list -> statement_list . statement SEMICOLON
     (4) statement -> . declaration
     (5) statement -> . assignment
@@ -1404,44 +1359,49 @@ state 74
     (11) statement -> . compound_type_access
     (12) statement -> . try_except
     (13) statement -> . print
-    (14) declaration -> . VAR type assignment
+    (14) declaration -> . VAR type ID ASSIGN L
     (15) assignment -> . ID ASSIGN L
-    (46) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
-    (57) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
-    (58) function_definition -> . FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
+    (47) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
+    (58) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
+    (59) function_definition -> . type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
     (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
-    (27) compound_type_access -> . ID DOT F
-    (28) compound_type_access -> . ID LSPAREN expression RSPAREN
-    (72) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
-    (73) print -> . ZOUT LPAREN y RPAREN
-    (44) term -> . factor
-    (45) term -> . term unary_operator
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (73) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
+    (74) print -> . ZOUT LPAREN y RPAREN
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
+    (45) term -> . factor
+    (46) term -> . term unary_operator
     (22) A -> . TUPLE
     (23) A -> . LIST
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    EXCEPT          shift and go to state 95
+    EXCEPT          shift and go to state 97
     VAR             shift and go to state 14
-    ID              shift and go to state 15
-    IF              shift and go to state 16
-    WHILE           shift and go to state 19
-    FUNC            shift and go to state 20
-    BEGIN           shift and go to state 18
+    ID              shift and go to state 16
+    IF              shift and go to state 17
+    WHILE           shift and go to state 20
+    BEGIN           shift and go to state 19
     ZOUT            shift and go to state 23
-    TUPLE           shift and go to state 25
-    LIST            shift and go to state 26
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
+    TUPLE           shift and go to state 28
+    LIST            shift and go to state 29
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
     statement                      shift and go to state 3
     declaration                    shift and go to state 4
@@ -1454,538 +1414,81 @@ state 74
     compound_type_access           shift and go to state 11
     try_except                     shift and go to state 12
     print                          shift and go to state 13
+    type                           shift and go to state 15
     term                           shift and go to state 21
     A                              shift and go to state 22
-    factor                         shift and go to state 24
+    factor                         shift and go to state 27
 
 state 75
 
-    (57) while_stmt -> WHILE LPAREN condition . RPAREN BEGIN statement_list END
+    (58) while_stmt -> WHILE LPAREN condition . RPAREN BEGIN statement_list END
 
-    RPAREN          shift and go to state 96
+    RPAREN          shift and go to state 98
 
 
 state 76
-
-    (58) function_definition -> FUNC ID LPAREN . parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-    (59) parameter_list -> . type ID optional_parameter_list
-    (60) parameter_list -> .
-    (18) type -> . INT
-    (19) type -> . BOOL
-    (20) type -> . STR
-
-    RPAREN          reduce using rule 60 (parameter_list -> .)
-    INT             shift and go to state 39
-    BOOL            shift and go to state 40
-    STR             shift and go to state 41
-
-    parameter_list                 shift and go to state 97
-    type                           shift and go to state 98
-
-state 77
 
     (21) compound_types -> A ID ASSIGN . LPAREN data RPAREN
 
     LPAREN          shift and go to state 99
 
 
-state 78
+state 77
 
-    (73) print -> ZOUT LPAREN y . RPAREN
+    (74) print -> ZOUT LPAREN y . RPAREN
 
     RPAREN          shift and go to state 100
 
 
+state 78
+
+    (75) y -> expression .
+    (65) expression -> expression . binary_operator term
+    (38) binary_operator -> . MINUS
+    (39) binary_operator -> . MUL
+    (40) binary_operator -> . PLUS
+    (41) binary_operator -> . DIV
+    (42) binary_operator -> . REM
+
+    RPAREN          reduce using rule 75 (y -> expression .)
+    MINUS           shift and go to state 36
+    MUL             shift and go to state 37
+    PLUS            shift and go to state 38
+    DIV             shift and go to state 39
+    REM             shift and go to state 40
+
+    binary_operator                shift and go to state 35
+
 state 79
 
-    (74) y -> expression .
-    (64) expression -> expression . binary_operator term
-    (37) binary_operator -> . MINUS
-    (38) binary_operator -> . MUL
-    (39) binary_operator -> . PLUS
-    (40) binary_operator -> . DIV
-    (41) binary_operator -> . REM
+    (76) y -> compound_type_access .
 
-    RPAREN          reduce using rule 74 (y -> expression .)
-    MINUS           shift and go to state 33
-    MUL             shift and go to state 34
-    PLUS            shift and go to state 35
-    DIV             shift and go to state 36
-    REM             shift and go to state 37
+    RPAREN          reduce using rule 76 (y -> compound_type_access .)
 
-    binary_operator                shift and go to state 32
 
 state 80
 
-    (75) y -> compound_type_access .
+    (28) compound_type_access -> ID . DOT F
+    (29) compound_type_access -> ID . LSPAREN expression RSPAREN
+    (67) factor -> ID .
 
-    RPAREN          reduce using rule 75 (y -> compound_type_access .)
+    DOT             shift and go to state 44
+    LSPAREN         shift and go to state 45
+    PLUSPLUS        reduce using rule 67 (factor -> ID .)
+    MINUSMINUS      reduce using rule 67 (factor -> ID .)
+    MINUS           reduce using rule 67 (factor -> ID .)
+    MUL             reduce using rule 67 (factor -> ID .)
+    PLUS            reduce using rule 67 (factor -> ID .)
+    DIV             reduce using rule 67 (factor -> ID .)
+    REM             reduce using rule 67 (factor -> ID .)
+    RPAREN          reduce using rule 67 (factor -> ID .)
 
 
 state 81
 
-    (27) compound_type_access -> ID . DOT F
-    (28) compound_type_access -> ID . LSPAREN expression RSPAREN
-    (66) factor -> ID .
-
-    DOT             shift and go to state 43
-    LSPAREN         shift and go to state 44
-    PLUSPLUS        reduce using rule 66 (factor -> ID .)
-    MINUSMINUS      reduce using rule 66 (factor -> ID .)
-    MINUS           reduce using rule 66 (factor -> ID .)
-    MUL             reduce using rule 66 (factor -> ID .)
-    PLUS            reduce using rule 66 (factor -> ID .)
-    DIV             reduce using rule 66 (factor -> ID .)
-    REM             reduce using rule 66 (factor -> ID .)
-    RPAREN          reduce using rule 66 (factor -> ID .)
-
-
-state 82
-
-    (17) L -> ID LPAREN . data RPAREN
-    (24) data -> . expression data
-    (25) data -> . COMMA data
-    (26) data -> .
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    COMMA           shift and go to state 103
-    RPAREN          reduce using rule 26 (data -> .)
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    data                           shift and go to state 101
-    expression                     shift and go to state 102
-    term                           shift and go to state 21
-    factor                         shift and go to state 24
-
-state 83
-
-    (29) F -> CON LPAREN . factor RPAREN
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    factor                         shift and go to state 104
-
-state 84
-
-    (31) F -> ADD LPAREN . factor RPAREN
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    factor                         shift and go to state 105
-
-state 85
-
-    (35) F -> SUBSTR LPAREN . data RPAREN
-    (24) data -> . expression data
-    (25) data -> . COMMA data
-    (26) data -> .
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    COMMA           shift and go to state 103
-    RPAREN          reduce using rule 26 (data -> .)
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    data                           shift and go to state 106
-    expression                     shift and go to state 102
-    term                           shift and go to state 21
-    factor                         shift and go to state 24
-
-state 86
-
-    (28) compound_type_access -> ID LSPAREN expression RSPAREN .
-
-    SEMICOLON       reduce using rule 28 (compound_type_access -> ID LSPAREN expression RSPAREN .)
-    RPAREN          reduce using rule 28 (compound_type_access -> ID LSPAREN expression RSPAREN .)
-
-
-state 87
-
-    (46) if_stmnt -> IF LPAREN condition RPAREN . BEGIN statement_list END T K
-
-    BEGIN           shift and go to state 107
-
-
-state 88
-
-    (63) condition -> expression comparison_operator . expression
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    expression                     shift and go to state 108
-    term                           shift and go to state 21
-    factor                         shift and go to state 24
-
-state 89
-
-    (47) comparison_operator -> EQEQ .
-
-    ID              reduce using rule 47 (comparison_operator -> EQEQ .)
-    NUMBER          reduce using rule 47 (comparison_operator -> EQEQ .)
-    STRING          reduce using rule 47 (comparison_operator -> EQEQ .)
-    TRUE            reduce using rule 47 (comparison_operator -> EQEQ .)
-    FALSE           reduce using rule 47 (comparison_operator -> EQEQ .)
-    LPAREN          reduce using rule 47 (comparison_operator -> EQEQ .)
-
-
-state 90
-
-    (48) comparison_operator -> NOTEQ .
-
-    ID              reduce using rule 48 (comparison_operator -> NOTEQ .)
-    NUMBER          reduce using rule 48 (comparison_operator -> NOTEQ .)
-    STRING          reduce using rule 48 (comparison_operator -> NOTEQ .)
-    TRUE            reduce using rule 48 (comparison_operator -> NOTEQ .)
-    FALSE           reduce using rule 48 (comparison_operator -> NOTEQ .)
-    LPAREN          reduce using rule 48 (comparison_operator -> NOTEQ .)
-
-
-state 91
-
-    (49) comparison_operator -> LT .
-
-    ID              reduce using rule 49 (comparison_operator -> LT .)
-    NUMBER          reduce using rule 49 (comparison_operator -> LT .)
-    STRING          reduce using rule 49 (comparison_operator -> LT .)
-    TRUE            reduce using rule 49 (comparison_operator -> LT .)
-    FALSE           reduce using rule 49 (comparison_operator -> LT .)
-    LPAREN          reduce using rule 49 (comparison_operator -> LT .)
-
-
-state 92
-
-    (50) comparison_operator -> GT .
-
-    ID              reduce using rule 50 (comparison_operator -> GT .)
-    NUMBER          reduce using rule 50 (comparison_operator -> GT .)
-    STRING          reduce using rule 50 (comparison_operator -> GT .)
-    TRUE            reduce using rule 50 (comparison_operator -> GT .)
-    FALSE           reduce using rule 50 (comparison_operator -> GT .)
-    LPAREN          reduce using rule 50 (comparison_operator -> GT .)
-
-
-state 93
-
-    (51) comparison_operator -> LTEQ .
-
-    ID              reduce using rule 51 (comparison_operator -> LTEQ .)
-    NUMBER          reduce using rule 51 (comparison_operator -> LTEQ .)
-    STRING          reduce using rule 51 (comparison_operator -> LTEQ .)
-    TRUE            reduce using rule 51 (comparison_operator -> LTEQ .)
-    FALSE           reduce using rule 51 (comparison_operator -> LTEQ .)
-    LPAREN          reduce using rule 51 (comparison_operator -> LTEQ .)
-
-
-state 94
-
-    (52) comparison_operator -> GTEQ .
-
-    ID              reduce using rule 52 (comparison_operator -> GTEQ .)
-    NUMBER          reduce using rule 52 (comparison_operator -> GTEQ .)
-    STRING          reduce using rule 52 (comparison_operator -> GTEQ .)
-    TRUE            reduce using rule 52 (comparison_operator -> GTEQ .)
-    FALSE           reduce using rule 52 (comparison_operator -> GTEQ .)
-    LPAREN          reduce using rule 52 (comparison_operator -> GTEQ .)
-
-
-state 95
-
-    (72) try_except -> BEGIN TRY statement_list EXCEPT . statement_list END
-    (2) statement_list -> . statement_list statement SEMICOLON
-    (3) statement_list -> .
-
-    END             reduce using rule 3 (statement_list -> .)
-    VAR             reduce using rule 3 (statement_list -> .)
-    ID              reduce using rule 3 (statement_list -> .)
-    IF              reduce using rule 3 (statement_list -> .)
-    WHILE           reduce using rule 3 (statement_list -> .)
-    FUNC            reduce using rule 3 (statement_list -> .)
-    BEGIN           reduce using rule 3 (statement_list -> .)
-    ZOUT            reduce using rule 3 (statement_list -> .)
-    TUPLE           reduce using rule 3 (statement_list -> .)
-    LIST            reduce using rule 3 (statement_list -> .)
-    NUMBER          reduce using rule 3 (statement_list -> .)
-    STRING          reduce using rule 3 (statement_list -> .)
-    TRUE            reduce using rule 3 (statement_list -> .)
-    FALSE           reduce using rule 3 (statement_list -> .)
-    LPAREN          reduce using rule 3 (statement_list -> .)
-
-    statement_list                 shift and go to state 109
-
-state 96
-
-    (57) while_stmt -> WHILE LPAREN condition RPAREN . BEGIN statement_list END
-
-    BEGIN           shift and go to state 110
-
-
-state 97
-
-    (58) function_definition -> FUNC ID LPAREN parameter_list . RPAREN BEGIN statement_list RETURN data SEMICOLON END
-
-    RPAREN          shift and go to state 111
-
-
-state 98
-
-    (59) parameter_list -> type . ID optional_parameter_list
-
-    ID              shift and go to state 112
-
-
-state 99
-
-    (21) compound_types -> A ID ASSIGN LPAREN . data RPAREN
-    (24) data -> . expression data
-    (25) data -> . COMMA data
-    (26) data -> .
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    COMMA           shift and go to state 103
-    RPAREN          reduce using rule 26 (data -> .)
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    data                           shift and go to state 113
-    expression                     shift and go to state 102
-    term                           shift and go to state 21
-    factor                         shift and go to state 24
-
-state 100
-
-    (73) print -> ZOUT LPAREN y RPAREN .
-
-    SEMICOLON       reduce using rule 73 (print -> ZOUT LPAREN y RPAREN .)
-
-
-state 101
-
-    (17) L -> ID LPAREN data . RPAREN
-
-    RPAREN          shift and go to state 114
-
-
-state 102
-
-    (24) data -> expression . data
-    (64) expression -> expression . binary_operator term
-    (24) data -> . expression data
-    (25) data -> . COMMA data
-    (26) data -> .
-    (37) binary_operator -> . MINUS
-    (38) binary_operator -> . MUL
-    (39) binary_operator -> . PLUS
-    (40) binary_operator -> . DIV
-    (41) binary_operator -> . REM
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    COMMA           shift and go to state 103
-    RPAREN          reduce using rule 26 (data -> .)
-    SEMICOLON       reduce using rule 26 (data -> .)
-    MINUS           shift and go to state 33
-    MUL             shift and go to state 34
-    PLUS            shift and go to state 35
-    DIV             shift and go to state 36
-    REM             shift and go to state 37
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    expression                     shift and go to state 102
-    data                           shift and go to state 115
-    binary_operator                shift and go to state 32
-    term                           shift and go to state 21
-    factor                         shift and go to state 24
-
-state 103
-
-    (25) data -> COMMA . data
-    (24) data -> . expression data
-    (25) data -> . COMMA data
-    (26) data -> .
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    COMMA           shift and go to state 103
-    RPAREN          reduce using rule 26 (data -> .)
-    SEMICOLON       reduce using rule 26 (data -> .)
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    data                           shift and go to state 116
-    expression                     shift and go to state 102
-    term                           shift and go to state 21
-    factor                         shift and go to state 24
-
-state 104
-
-    (29) F -> CON LPAREN factor . RPAREN
-
-    RPAREN          shift and go to state 117
-
-
-state 105
-
-    (31) F -> ADD LPAREN factor . RPAREN
-
-    RPAREN          shift and go to state 118
-
-
-state 106
-
-    (35) F -> SUBSTR LPAREN data . RPAREN
-
-    RPAREN          shift and go to state 119
-
-
-state 107
-
-    (46) if_stmnt -> IF LPAREN condition RPAREN BEGIN . statement_list END T K
-    (2) statement_list -> . statement_list statement SEMICOLON
-    (3) statement_list -> .
-
-    END             reduce using rule 3 (statement_list -> .)
-    VAR             reduce using rule 3 (statement_list -> .)
-    ID              reduce using rule 3 (statement_list -> .)
-    IF              reduce using rule 3 (statement_list -> .)
-    WHILE           reduce using rule 3 (statement_list -> .)
-    FUNC            reduce using rule 3 (statement_list -> .)
-    BEGIN           reduce using rule 3 (statement_list -> .)
-    ZOUT            reduce using rule 3 (statement_list -> .)
-    TUPLE           reduce using rule 3 (statement_list -> .)
-    LIST            reduce using rule 3 (statement_list -> .)
-    NUMBER          reduce using rule 3 (statement_list -> .)
-    STRING          reduce using rule 3 (statement_list -> .)
-    TRUE            reduce using rule 3 (statement_list -> .)
-    FALSE           reduce using rule 3 (statement_list -> .)
-    LPAREN          reduce using rule 3 (statement_list -> .)
-
-    statement_list                 shift and go to state 120
-
-state 108
-
-    (63) condition -> expression comparison_operator expression .
-    (64) expression -> expression . binary_operator term
-    (37) binary_operator -> . MINUS
-    (38) binary_operator -> . MUL
-    (39) binary_operator -> . PLUS
-    (40) binary_operator -> . DIV
-    (41) binary_operator -> . REM
-
-    RPAREN          reduce using rule 63 (condition -> expression comparison_operator expression .)
-    MINUS           shift and go to state 33
-    MUL             shift and go to state 34
-    PLUS            shift and go to state 35
-    DIV             shift and go to state 36
-    REM             shift and go to state 37
-
-    binary_operator                shift and go to state 32
-
-state 109
-
-    (72) try_except -> BEGIN TRY statement_list EXCEPT statement_list . END
-    (2) statement_list -> statement_list . statement SEMICOLON
+    (14) declaration -> VAR type ID ASSIGN . L
+    (16) L -> . statement
+    (17) L -> . ID LPAREN data RPAREN
     (4) statement -> . declaration
     (5) statement -> . assignment
     (6) statement -> . if_stmnt
@@ -1996,46 +1499,52 @@ state 109
     (11) statement -> . compound_type_access
     (12) statement -> . try_except
     (13) statement -> . print
-    (14) declaration -> . VAR type assignment
+    (14) declaration -> . VAR type ID ASSIGN L
     (15) assignment -> . ID ASSIGN L
-    (46) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
-    (57) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
-    (58) function_definition -> . FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
+    (47) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
+    (58) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
+    (59) function_definition -> . type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
     (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
-    (27) compound_type_access -> . ID DOT F
-    (28) compound_type_access -> . ID LSPAREN expression RSPAREN
-    (72) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
-    (73) print -> . ZOUT LPAREN y RPAREN
-    (44) term -> . factor
-    (45) term -> . term unary_operator
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (73) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
+    (74) print -> . ZOUT LPAREN y RPAREN
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
+    (45) term -> . factor
+    (46) term -> . term unary_operator
     (22) A -> . TUPLE
     (23) A -> . LIST
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    END             shift and go to state 121
+    ID              shift and go to state 59
     VAR             shift and go to state 14
-    ID              shift and go to state 15
-    IF              shift and go to state 16
-    WHILE           shift and go to state 19
-    FUNC            shift and go to state 20
-    BEGIN           shift and go to state 18
+    IF              shift and go to state 17
+    WHILE           shift and go to state 20
+    BEGIN           shift and go to state 19
     ZOUT            shift and go to state 23
-    TUPLE           shift and go to state 25
-    LIST            shift and go to state 26
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
+    TUPLE           shift and go to state 28
+    LIST            shift and go to state 29
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
-    statement                      shift and go to state 3
+    type                           shift and go to state 15
+    L                              shift and go to state 101
+    statement                      shift and go to state 61
     declaration                    shift and go to state 4
     assignment                     shift and go to state 5
     if_stmnt                       shift and go to state 6
@@ -2048,11 +1557,233 @@ state 109
     print                          shift and go to state 13
     term                           shift and go to state 21
     A                              shift and go to state 22
-    factor                         shift and go to state 24
+    factor                         shift and go to state 27
 
-state 110
+state 82
 
-    (57) while_stmt -> WHILE LPAREN condition RPAREN BEGIN . statement_list END
+    (60) parameter_list -> type . ID optional_parameter_list
+
+    ID              shift and go to state 102
+
+
+state 83
+
+    (59) function_definition -> type ID LPAREN parameter_list . RPAREN BEGIN statement_list RETURN L SEMICOLON END
+
+    RPAREN          shift and go to state 103
+
+
+state 84
+
+    (17) L -> ID LPAREN . data RPAREN
+    (24) data -> . expression hi
+    (25) data -> .
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
+
+    RPAREN          reduce using rule 25 (data -> .)
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
+
+    data                           shift and go to state 104
+    expression                     shift and go to state 105
+    term                           shift and go to state 21
+    factor                         shift and go to state 27
+
+state 85
+
+    (30) F -> CON LPAREN . factor RPAREN
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
+
+    factor                         shift and go to state 106
+
+state 86
+
+    (32) F -> ADD LPAREN . factor RPAREN
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
+
+    factor                         shift and go to state 107
+
+state 87
+
+    (36) F -> SUBSTR LPAREN . data RPAREN
+    (24) data -> . expression hi
+    (25) data -> .
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
+
+    RPAREN          reduce using rule 25 (data -> .)
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
+
+    data                           shift and go to state 108
+    expression                     shift and go to state 105
+    term                           shift and go to state 21
+    factor                         shift and go to state 27
+
+state 88
+
+    (29) compound_type_access -> ID LSPAREN expression RSPAREN .
+
+    SEMICOLON       reduce using rule 29 (compound_type_access -> ID LSPAREN expression RSPAREN .)
+    RPAREN          reduce using rule 29 (compound_type_access -> ID LSPAREN expression RSPAREN .)
+
+
+state 89
+
+    (47) if_stmnt -> IF LPAREN condition RPAREN . BEGIN statement_list END T K
+
+    BEGIN           shift and go to state 109
+
+
+state 90
+
+    (64) condition -> expression comparison_operator . expression
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
+
+    expression                     shift and go to state 110
+    term                           shift and go to state 21
+    factor                         shift and go to state 27
+
+state 91
+
+    (48) comparison_operator -> EQEQ .
+
+    ID              reduce using rule 48 (comparison_operator -> EQEQ .)
+    NUMBER          reduce using rule 48 (comparison_operator -> EQEQ .)
+    STRING          reduce using rule 48 (comparison_operator -> EQEQ .)
+    TRUE            reduce using rule 48 (comparison_operator -> EQEQ .)
+    FALSE           reduce using rule 48 (comparison_operator -> EQEQ .)
+    LPAREN          reduce using rule 48 (comparison_operator -> EQEQ .)
+
+
+state 92
+
+    (49) comparison_operator -> NOTEQ .
+
+    ID              reduce using rule 49 (comparison_operator -> NOTEQ .)
+    NUMBER          reduce using rule 49 (comparison_operator -> NOTEQ .)
+    STRING          reduce using rule 49 (comparison_operator -> NOTEQ .)
+    TRUE            reduce using rule 49 (comparison_operator -> NOTEQ .)
+    FALSE           reduce using rule 49 (comparison_operator -> NOTEQ .)
+    LPAREN          reduce using rule 49 (comparison_operator -> NOTEQ .)
+
+
+state 93
+
+    (50) comparison_operator -> LT .
+
+    ID              reduce using rule 50 (comparison_operator -> LT .)
+    NUMBER          reduce using rule 50 (comparison_operator -> LT .)
+    STRING          reduce using rule 50 (comparison_operator -> LT .)
+    TRUE            reduce using rule 50 (comparison_operator -> LT .)
+    FALSE           reduce using rule 50 (comparison_operator -> LT .)
+    LPAREN          reduce using rule 50 (comparison_operator -> LT .)
+
+
+state 94
+
+    (51) comparison_operator -> GT .
+
+    ID              reduce using rule 51 (comparison_operator -> GT .)
+    NUMBER          reduce using rule 51 (comparison_operator -> GT .)
+    STRING          reduce using rule 51 (comparison_operator -> GT .)
+    TRUE            reduce using rule 51 (comparison_operator -> GT .)
+    FALSE           reduce using rule 51 (comparison_operator -> GT .)
+    LPAREN          reduce using rule 51 (comparison_operator -> GT .)
+
+
+state 95
+
+    (52) comparison_operator -> LTEQ .
+
+    ID              reduce using rule 52 (comparison_operator -> LTEQ .)
+    NUMBER          reduce using rule 52 (comparison_operator -> LTEQ .)
+    STRING          reduce using rule 52 (comparison_operator -> LTEQ .)
+    TRUE            reduce using rule 52 (comparison_operator -> LTEQ .)
+    FALSE           reduce using rule 52 (comparison_operator -> LTEQ .)
+    LPAREN          reduce using rule 52 (comparison_operator -> LTEQ .)
+
+
+state 96
+
+    (53) comparison_operator -> GTEQ .
+
+    ID              reduce using rule 53 (comparison_operator -> GTEQ .)
+    NUMBER          reduce using rule 53 (comparison_operator -> GTEQ .)
+    STRING          reduce using rule 53 (comparison_operator -> GTEQ .)
+    TRUE            reduce using rule 53 (comparison_operator -> GTEQ .)
+    FALSE           reduce using rule 53 (comparison_operator -> GTEQ .)
+    LPAREN          reduce using rule 53 (comparison_operator -> GTEQ .)
+
+
+state 97
+
+    (73) try_except -> BEGIN TRY statement_list EXCEPT . statement_list END
     (2) statement_list -> . statement_list statement SEMICOLON
     (3) statement_list -> .
 
@@ -2061,9 +1792,11 @@ state 110
     ID              reduce using rule 3 (statement_list -> .)
     IF              reduce using rule 3 (statement_list -> .)
     WHILE           reduce using rule 3 (statement_list -> .)
-    FUNC            reduce using rule 3 (statement_list -> .)
     BEGIN           reduce using rule 3 (statement_list -> .)
     ZOUT            reduce using rule 3 (statement_list -> .)
+    INT             reduce using rule 3 (statement_list -> .)
+    BOOL            reduce using rule 3 (statement_list -> .)
+    STR             reduce using rule 3 (statement_list -> .)
     TUPLE           reduce using rule 3 (statement_list -> .)
     LIST            reduce using rule 3 (statement_list -> .)
     NUMBER          reduce using rule 3 (statement_list -> .)
@@ -2072,25 +1805,271 @@ state 110
     FALSE           reduce using rule 3 (statement_list -> .)
     LPAREN          reduce using rule 3 (statement_list -> .)
 
-    statement_list                 shift and go to state 122
+    statement_list                 shift and go to state 111
+
+state 98
+
+    (58) while_stmt -> WHILE LPAREN condition RPAREN . BEGIN statement_list END
+
+    BEGIN           shift and go to state 112
+
+
+state 99
+
+    (21) compound_types -> A ID ASSIGN LPAREN . data RPAREN
+    (24) data -> . expression hi
+    (25) data -> .
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
+
+    RPAREN          reduce using rule 25 (data -> .)
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
+
+    data                           shift and go to state 113
+    expression                     shift and go to state 105
+    term                           shift and go to state 21
+    factor                         shift and go to state 27
+
+state 100
+
+    (74) print -> ZOUT LPAREN y RPAREN .
+
+    SEMICOLON       reduce using rule 74 (print -> ZOUT LPAREN y RPAREN .)
+
+
+state 101
+
+    (14) declaration -> VAR type ID ASSIGN L .
+
+    SEMICOLON       reduce using rule 14 (declaration -> VAR type ID ASSIGN L .)
+
+
+state 102
+
+    (60) parameter_list -> type ID . optional_parameter_list
+    (62) optional_parameter_list -> . COMMA type ID optional_parameter_list
+    (63) optional_parameter_list -> .
+
+    COMMA           shift and go to state 115
+    RPAREN          reduce using rule 63 (optional_parameter_list -> .)
+
+    optional_parameter_list        shift and go to state 114
+
+state 103
+
+    (59) function_definition -> type ID LPAREN parameter_list RPAREN . BEGIN statement_list RETURN L SEMICOLON END
+
+    BEGIN           shift and go to state 116
+
+
+state 104
+
+    (17) L -> ID LPAREN data . RPAREN
+
+    RPAREN          shift and go to state 117
+
+
+state 105
+
+    (24) data -> expression . hi
+    (65) expression -> expression . binary_operator term
+    (26) hi -> . COMMA data
+    (27) hi -> .
+    (38) binary_operator -> . MINUS
+    (39) binary_operator -> . MUL
+    (40) binary_operator -> . PLUS
+    (41) binary_operator -> . DIV
+    (42) binary_operator -> . REM
+
+    COMMA           shift and go to state 119
+    RPAREN          reduce using rule 27 (hi -> .)
+    MINUS           shift and go to state 36
+    MUL             shift and go to state 37
+    PLUS            shift and go to state 38
+    DIV             shift and go to state 39
+    REM             shift and go to state 40
+
+    hi                             shift and go to state 118
+    binary_operator                shift and go to state 35
+
+state 106
+
+    (30) F -> CON LPAREN factor . RPAREN
+
+    RPAREN          shift and go to state 120
+
+
+state 107
+
+    (32) F -> ADD LPAREN factor . RPAREN
+
+    RPAREN          shift and go to state 121
+
+
+state 108
+
+    (36) F -> SUBSTR LPAREN data . RPAREN
+
+    RPAREN          shift and go to state 122
+
+
+state 109
+
+    (47) if_stmnt -> IF LPAREN condition RPAREN BEGIN . statement_list END T K
+    (2) statement_list -> . statement_list statement SEMICOLON
+    (3) statement_list -> .
+
+    END             reduce using rule 3 (statement_list -> .)
+    VAR             reduce using rule 3 (statement_list -> .)
+    ID              reduce using rule 3 (statement_list -> .)
+    IF              reduce using rule 3 (statement_list -> .)
+    WHILE           reduce using rule 3 (statement_list -> .)
+    BEGIN           reduce using rule 3 (statement_list -> .)
+    ZOUT            reduce using rule 3 (statement_list -> .)
+    INT             reduce using rule 3 (statement_list -> .)
+    BOOL            reduce using rule 3 (statement_list -> .)
+    STR             reduce using rule 3 (statement_list -> .)
+    TUPLE           reduce using rule 3 (statement_list -> .)
+    LIST            reduce using rule 3 (statement_list -> .)
+    NUMBER          reduce using rule 3 (statement_list -> .)
+    STRING          reduce using rule 3 (statement_list -> .)
+    TRUE            reduce using rule 3 (statement_list -> .)
+    FALSE           reduce using rule 3 (statement_list -> .)
+    LPAREN          reduce using rule 3 (statement_list -> .)
+
+    statement_list                 shift and go to state 123
+
+state 110
+
+    (64) condition -> expression comparison_operator expression .
+    (65) expression -> expression . binary_operator term
+    (38) binary_operator -> . MINUS
+    (39) binary_operator -> . MUL
+    (40) binary_operator -> . PLUS
+    (41) binary_operator -> . DIV
+    (42) binary_operator -> . REM
+
+    RPAREN          reduce using rule 64 (condition -> expression comparison_operator expression .)
+    MINUS           shift and go to state 36
+    MUL             shift and go to state 37
+    PLUS            shift and go to state 38
+    DIV             shift and go to state 39
+    REM             shift and go to state 40
+
+    binary_operator                shift and go to state 35
 
 state 111
 
-    (58) function_definition -> FUNC ID LPAREN parameter_list RPAREN . BEGIN statement_list RETURN data SEMICOLON END
+    (73) try_except -> BEGIN TRY statement_list EXCEPT statement_list . END
+    (2) statement_list -> statement_list . statement SEMICOLON
+    (4) statement -> . declaration
+    (5) statement -> . assignment
+    (6) statement -> . if_stmnt
+    (7) statement -> . while_stmt
+    (8) statement -> . function_definition
+    (9) statement -> . expression
+    (10) statement -> . compound_types
+    (11) statement -> . compound_type_access
+    (12) statement -> . try_except
+    (13) statement -> . print
+    (14) declaration -> . VAR type ID ASSIGN L
+    (15) assignment -> . ID ASSIGN L
+    (47) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
+    (58) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
+    (59) function_definition -> . type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (73) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
+    (74) print -> . ZOUT LPAREN y RPAREN
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (22) A -> . TUPLE
+    (23) A -> . LIST
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    BEGIN           shift and go to state 123
+    END             shift and go to state 124
+    VAR             shift and go to state 14
+    ID              shift and go to state 16
+    IF              shift and go to state 17
+    WHILE           shift and go to state 20
+    BEGIN           shift and go to state 19
+    ZOUT            shift and go to state 23
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
+    TUPLE           shift and go to state 28
+    LIST            shift and go to state 29
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
+    statement                      shift and go to state 3
+    declaration                    shift and go to state 4
+    assignment                     shift and go to state 5
+    if_stmnt                       shift and go to state 6
+    while_stmt                     shift and go to state 7
+    function_definition            shift and go to state 8
+    expression                     shift and go to state 9
+    compound_types                 shift and go to state 10
+    compound_type_access           shift and go to state 11
+    try_except                     shift and go to state 12
+    print                          shift and go to state 13
+    type                           shift and go to state 15
+    term                           shift and go to state 21
+    A                              shift and go to state 22
+    factor                         shift and go to state 27
 
 state 112
 
-    (59) parameter_list -> type ID . optional_parameter_list
-    (61) optional_parameter_list -> . COMMA type ID optional_parameter_list
-    (62) optional_parameter_list -> .
+    (58) while_stmt -> WHILE LPAREN condition RPAREN BEGIN . statement_list END
+    (2) statement_list -> . statement_list statement SEMICOLON
+    (3) statement_list -> .
 
-    COMMA           shift and go to state 125
-    RPAREN          reduce using rule 62 (optional_parameter_list -> .)
+    END             reduce using rule 3 (statement_list -> .)
+    VAR             reduce using rule 3 (statement_list -> .)
+    ID              reduce using rule 3 (statement_list -> .)
+    IF              reduce using rule 3 (statement_list -> .)
+    WHILE           reduce using rule 3 (statement_list -> .)
+    BEGIN           reduce using rule 3 (statement_list -> .)
+    ZOUT            reduce using rule 3 (statement_list -> .)
+    INT             reduce using rule 3 (statement_list -> .)
+    BOOL            reduce using rule 3 (statement_list -> .)
+    STR             reduce using rule 3 (statement_list -> .)
+    TUPLE           reduce using rule 3 (statement_list -> .)
+    LIST            reduce using rule 3 (statement_list -> .)
+    NUMBER          reduce using rule 3 (statement_list -> .)
+    STRING          reduce using rule 3 (statement_list -> .)
+    TRUE            reduce using rule 3 (statement_list -> .)
+    FALSE           reduce using rule 3 (statement_list -> .)
+    LPAREN          reduce using rule 3 (statement_list -> .)
 
-    optional_parameter_list        shift and go to state 124
+    statement_list                 shift and go to state 125
 
 state 113
 
@@ -2101,197 +2080,27 @@ state 113
 
 state 114
 
-    (17) L -> ID LPAREN data RPAREN .
+    (60) parameter_list -> type ID optional_parameter_list .
 
-    SEMICOLON       reduce using rule 17 (L -> ID LPAREN data RPAREN .)
+    RPAREN          reduce using rule 60 (parameter_list -> type ID optional_parameter_list .)
 
 
 state 115
 
-    (24) data -> expression data .
+    (62) optional_parameter_list -> COMMA . type ID optional_parameter_list
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
 
-    RPAREN          reduce using rule 24 (data -> expression data .)
-    SEMICOLON       reduce using rule 24 (data -> expression data .)
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
 
+    type                           shift and go to state 127
 
 state 116
 
-    (25) data -> COMMA data .
-
-    RPAREN          reduce using rule 25 (data -> COMMA data .)
-    SEMICOLON       reduce using rule 25 (data -> COMMA data .)
-
-
-state 117
-
-    (29) F -> CON LPAREN factor RPAREN .
-
-    SEMICOLON       reduce using rule 29 (F -> CON LPAREN factor RPAREN .)
-    RPAREN          reduce using rule 29 (F -> CON LPAREN factor RPAREN .)
-
-
-state 118
-
-    (31) F -> ADD LPAREN factor RPAREN .
-
-    SEMICOLON       reduce using rule 31 (F -> ADD LPAREN factor RPAREN .)
-    RPAREN          reduce using rule 31 (F -> ADD LPAREN factor RPAREN .)
-
-
-state 119
-
-    (35) F -> SUBSTR LPAREN data RPAREN .
-
-    SEMICOLON       reduce using rule 35 (F -> SUBSTR LPAREN data RPAREN .)
-    RPAREN          reduce using rule 35 (F -> SUBSTR LPAREN data RPAREN .)
-
-
-state 120
-
-    (46) if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list . END T K
-    (2) statement_list -> statement_list . statement SEMICOLON
-    (4) statement -> . declaration
-    (5) statement -> . assignment
-    (6) statement -> . if_stmnt
-    (7) statement -> . while_stmt
-    (8) statement -> . function_definition
-    (9) statement -> . expression
-    (10) statement -> . compound_types
-    (11) statement -> . compound_type_access
-    (12) statement -> . try_except
-    (13) statement -> . print
-    (14) declaration -> . VAR type assignment
-    (15) assignment -> . ID ASSIGN L
-    (46) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
-    (57) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
-    (58) function_definition -> . FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
-    (27) compound_type_access -> . ID DOT F
-    (28) compound_type_access -> . ID LSPAREN expression RSPAREN
-    (72) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
-    (73) print -> . ZOUT LPAREN y RPAREN
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (22) A -> . TUPLE
-    (23) A -> . LIST
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    END             shift and go to state 127
-    VAR             shift and go to state 14
-    ID              shift and go to state 15
-    IF              shift and go to state 16
-    WHILE           shift and go to state 19
-    FUNC            shift and go to state 20
-    BEGIN           shift and go to state 18
-    ZOUT            shift and go to state 23
-    TUPLE           shift and go to state 25
-    LIST            shift and go to state 26
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    statement                      shift and go to state 3
-    declaration                    shift and go to state 4
-    assignment                     shift and go to state 5
-    if_stmnt                       shift and go to state 6
-    while_stmt                     shift and go to state 7
-    function_definition            shift and go to state 8
-    expression                     shift and go to state 9
-    compound_types                 shift and go to state 10
-    compound_type_access           shift and go to state 11
-    try_except                     shift and go to state 12
-    print                          shift and go to state 13
-    term                           shift and go to state 21
-    A                              shift and go to state 22
-    factor                         shift and go to state 24
-
-state 121
-
-    (72) try_except -> BEGIN TRY statement_list EXCEPT statement_list END .
-
-    SEMICOLON       reduce using rule 72 (try_except -> BEGIN TRY statement_list EXCEPT statement_list END .)
-
-
-state 122
-
-    (57) while_stmt -> WHILE LPAREN condition RPAREN BEGIN statement_list . END
-    (2) statement_list -> statement_list . statement SEMICOLON
-    (4) statement -> . declaration
-    (5) statement -> . assignment
-    (6) statement -> . if_stmnt
-    (7) statement -> . while_stmt
-    (8) statement -> . function_definition
-    (9) statement -> . expression
-    (10) statement -> . compound_types
-    (11) statement -> . compound_type_access
-    (12) statement -> . try_except
-    (13) statement -> . print
-    (14) declaration -> . VAR type assignment
-    (15) assignment -> . ID ASSIGN L
-    (46) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
-    (57) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
-    (58) function_definition -> . FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
-    (27) compound_type_access -> . ID DOT F
-    (28) compound_type_access -> . ID LSPAREN expression RSPAREN
-    (72) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
-    (73) print -> . ZOUT LPAREN y RPAREN
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (22) A -> . TUPLE
-    (23) A -> . LIST
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    END             shift and go to state 128
-    VAR             shift and go to state 14
-    ID              shift and go to state 15
-    IF              shift and go to state 16
-    WHILE           shift and go to state 19
-    FUNC            shift and go to state 20
-    BEGIN           shift and go to state 18
-    ZOUT            shift and go to state 23
-    TUPLE           shift and go to state 25
-    LIST            shift and go to state 26
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    statement                      shift and go to state 3
-    declaration                    shift and go to state 4
-    assignment                     shift and go to state 5
-    if_stmnt                       shift and go to state 6
-    while_stmt                     shift and go to state 7
-    function_definition            shift and go to state 8
-    expression                     shift and go to state 9
-    compound_types                 shift and go to state 10
-    compound_type_access           shift and go to state 11
-    try_except                     shift and go to state 12
-    print                          shift and go to state 13
-    term                           shift and go to state 21
-    A                              shift and go to state 22
-    factor                         shift and go to state 24
-
-state 123
-
-    (58) function_definition -> FUNC ID LPAREN parameter_list RPAREN BEGIN . statement_list RETURN data SEMICOLON END
+    (59) function_definition -> type ID LPAREN parameter_list RPAREN BEGIN . statement_list RETURN L SEMICOLON END
     (2) statement_list -> . statement_list statement SEMICOLON
     (3) statement_list -> .
 
@@ -2300,9 +2109,11 @@ state 123
     ID              reduce using rule 3 (statement_list -> .)
     IF              reduce using rule 3 (statement_list -> .)
     WHILE           reduce using rule 3 (statement_list -> .)
-    FUNC            reduce using rule 3 (statement_list -> .)
     BEGIN           reduce using rule 3 (statement_list -> .)
     ZOUT            reduce using rule 3 (statement_list -> .)
+    INT             reduce using rule 3 (statement_list -> .)
+    BOOL            reduce using rule 3 (statement_list -> .)
+    STR             reduce using rule 3 (statement_list -> .)
     TUPLE           reduce using rule 3 (statement_list -> .)
     LIST            reduce using rule 3 (statement_list -> .)
     NUMBER          reduce using rule 3 (statement_list -> .)
@@ -2311,27 +2122,229 @@ state 123
     FALSE           reduce using rule 3 (statement_list -> .)
     LPAREN          reduce using rule 3 (statement_list -> .)
 
-    statement_list                 shift and go to state 129
+    statement_list                 shift and go to state 128
+
+state 117
+
+    (17) L -> ID LPAREN data RPAREN .
+
+    SEMICOLON       reduce using rule 17 (L -> ID LPAREN data RPAREN .)
+
+
+state 118
+
+    (24) data -> expression hi .
+
+    RPAREN          reduce using rule 24 (data -> expression hi .)
+
+
+state 119
+
+    (26) hi -> COMMA . data
+    (24) data -> . expression hi
+    (25) data -> .
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
+
+    RPAREN          reduce using rule 25 (data -> .)
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
+
+    data                           shift and go to state 129
+    expression                     shift and go to state 105
+    term                           shift and go to state 21
+    factor                         shift and go to state 27
+
+state 120
+
+    (30) F -> CON LPAREN factor RPAREN .
+
+    SEMICOLON       reduce using rule 30 (F -> CON LPAREN factor RPAREN .)
+    RPAREN          reduce using rule 30 (F -> CON LPAREN factor RPAREN .)
+
+
+state 121
+
+    (32) F -> ADD LPAREN factor RPAREN .
+
+    SEMICOLON       reduce using rule 32 (F -> ADD LPAREN factor RPAREN .)
+    RPAREN          reduce using rule 32 (F -> ADD LPAREN factor RPAREN .)
+
+
+state 122
+
+    (36) F -> SUBSTR LPAREN data RPAREN .
+
+    SEMICOLON       reduce using rule 36 (F -> SUBSTR LPAREN data RPAREN .)
+    RPAREN          reduce using rule 36 (F -> SUBSTR LPAREN data RPAREN .)
+
+
+state 123
+
+    (47) if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list . END T K
+    (2) statement_list -> statement_list . statement SEMICOLON
+    (4) statement -> . declaration
+    (5) statement -> . assignment
+    (6) statement -> . if_stmnt
+    (7) statement -> . while_stmt
+    (8) statement -> . function_definition
+    (9) statement -> . expression
+    (10) statement -> . compound_types
+    (11) statement -> . compound_type_access
+    (12) statement -> . try_except
+    (13) statement -> . print
+    (14) declaration -> . VAR type ID ASSIGN L
+    (15) assignment -> . ID ASSIGN L
+    (47) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
+    (58) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
+    (59) function_definition -> . type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (73) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
+    (74) print -> . ZOUT LPAREN y RPAREN
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (22) A -> . TUPLE
+    (23) A -> . LIST
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
+
+    END             shift and go to state 130
+    VAR             shift and go to state 14
+    ID              shift and go to state 16
+    IF              shift and go to state 17
+    WHILE           shift and go to state 20
+    BEGIN           shift and go to state 19
+    ZOUT            shift and go to state 23
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
+    TUPLE           shift and go to state 28
+    LIST            shift and go to state 29
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
+
+    statement                      shift and go to state 3
+    declaration                    shift and go to state 4
+    assignment                     shift and go to state 5
+    if_stmnt                       shift and go to state 6
+    while_stmt                     shift and go to state 7
+    function_definition            shift and go to state 8
+    expression                     shift and go to state 9
+    compound_types                 shift and go to state 10
+    compound_type_access           shift and go to state 11
+    try_except                     shift and go to state 12
+    print                          shift and go to state 13
+    type                           shift and go to state 15
+    term                           shift and go to state 21
+    A                              shift and go to state 22
+    factor                         shift and go to state 27
 
 state 124
 
-    (59) parameter_list -> type ID optional_parameter_list .
+    (73) try_except -> BEGIN TRY statement_list EXCEPT statement_list END .
 
-    RPAREN          reduce using rule 59 (parameter_list -> type ID optional_parameter_list .)
+    SEMICOLON       reduce using rule 73 (try_except -> BEGIN TRY statement_list EXCEPT statement_list END .)
 
 
 state 125
 
-    (61) optional_parameter_list -> COMMA . type ID optional_parameter_list
+    (58) while_stmt -> WHILE LPAREN condition RPAREN BEGIN statement_list . END
+    (2) statement_list -> statement_list . statement SEMICOLON
+    (4) statement -> . declaration
+    (5) statement -> . assignment
+    (6) statement -> . if_stmnt
+    (7) statement -> . while_stmt
+    (8) statement -> . function_definition
+    (9) statement -> . expression
+    (10) statement -> . compound_types
+    (11) statement -> . compound_type_access
+    (12) statement -> . try_except
+    (13) statement -> . print
+    (14) declaration -> . VAR type ID ASSIGN L
+    (15) assignment -> . ID ASSIGN L
+    (47) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
+    (58) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
+    (59) function_definition -> . type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (73) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
+    (74) print -> . ZOUT LPAREN y RPAREN
     (18) type -> . INT
     (19) type -> . BOOL
     (20) type -> . STR
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (22) A -> . TUPLE
+    (23) A -> . LIST
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    INT             shift and go to state 39
-    BOOL            shift and go to state 40
-    STR             shift and go to state 41
+    END             shift and go to state 131
+    VAR             shift and go to state 14
+    ID              shift and go to state 16
+    IF              shift and go to state 17
+    WHILE           shift and go to state 20
+    BEGIN           shift and go to state 19
+    ZOUT            shift and go to state 23
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
+    TUPLE           shift and go to state 28
+    LIST            shift and go to state 29
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
-    type                           shift and go to state 130
+    statement                      shift and go to state 3
+    declaration                    shift and go to state 4
+    assignment                     shift and go to state 5
+    if_stmnt                       shift and go to state 6
+    while_stmt                     shift and go to state 7
+    function_definition            shift and go to state 8
+    expression                     shift and go to state 9
+    compound_types                 shift and go to state 10
+    compound_type_access           shift and go to state 11
+    try_except                     shift and go to state 12
+    print                          shift and go to state 13
+    type                           shift and go to state 15
+    term                           shift and go to state 21
+    A                              shift and go to state 22
+    factor                         shift and go to state 27
 
 state 126
 
@@ -2342,26 +2355,14 @@ state 126
 
 state 127
 
-    (46) if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list END . T K
-    (53) T -> . ELIF LPAREN condition RPAREN BEGIN statement_list END T
-    (54) T -> .
+    (62) optional_parameter_list -> COMMA type . ID optional_parameter_list
 
-    ELIF            shift and go to state 132
-    ELSE            reduce using rule 54 (T -> .)
-    SEMICOLON       reduce using rule 54 (T -> .)
+    ID              shift and go to state 132
 
-    T                              shift and go to state 131
 
 state 128
 
-    (57) while_stmt -> WHILE LPAREN condition RPAREN BEGIN statement_list END .
-
-    SEMICOLON       reduce using rule 57 (while_stmt -> WHILE LPAREN condition RPAREN BEGIN statement_list END .)
-
-
-state 129
-
-    (58) function_definition -> FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list . RETURN data SEMICOLON END
+    (59) function_definition -> type ID LPAREN parameter_list RPAREN BEGIN statement_list . RETURN L SEMICOLON END
     (2) statement_list -> statement_list . statement SEMICOLON
     (4) statement -> . declaration
     (5) statement -> . assignment
@@ -2373,45 +2374,51 @@ state 129
     (11) statement -> . compound_type_access
     (12) statement -> . try_except
     (13) statement -> . print
-    (14) declaration -> . VAR type assignment
+    (14) declaration -> . VAR type ID ASSIGN L
     (15) assignment -> . ID ASSIGN L
-    (46) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
-    (57) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
-    (58) function_definition -> . FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
+    (47) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
+    (58) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
+    (59) function_definition -> . type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
     (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
-    (27) compound_type_access -> . ID DOT F
-    (28) compound_type_access -> . ID LSPAREN expression RSPAREN
-    (72) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
-    (73) print -> . ZOUT LPAREN y RPAREN
-    (44) term -> . factor
-    (45) term -> . term unary_operator
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (73) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
+    (74) print -> . ZOUT LPAREN y RPAREN
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
+    (45) term -> . factor
+    (46) term -> . term unary_operator
     (22) A -> . TUPLE
     (23) A -> . LIST
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
     RETURN          shift and go to state 133
     VAR             shift and go to state 14
-    ID              shift and go to state 15
-    IF              shift and go to state 16
-    WHILE           shift and go to state 19
-    FUNC            shift and go to state 20
-    BEGIN           shift and go to state 18
+    ID              shift and go to state 16
+    IF              shift and go to state 17
+    WHILE           shift and go to state 20
+    BEGIN           shift and go to state 19
     ZOUT            shift and go to state 23
-    TUPLE           shift and go to state 25
-    LIST            shift and go to state 26
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
+    TUPLE           shift and go to state 28
+    LIST            shift and go to state 29
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
+    type                           shift and go to state 15
     statement                      shift and go to state 3
     declaration                    shift and go to state 4
     assignment                     shift and go to state 5
@@ -2425,260 +2432,203 @@ state 129
     print                          shift and go to state 13
     term                           shift and go to state 21
     A                              shift and go to state 22
-    factor                         shift and go to state 24
+    factor                         shift and go to state 27
+
+state 129
+
+    (26) hi -> COMMA data .
+
+    RPAREN          reduce using rule 26 (hi -> COMMA data .)
+
 
 state 130
 
-    (61) optional_parameter_list -> COMMA type . ID optional_parameter_list
+    (47) if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list END . T K
+    (54) T -> . ELIF LPAREN condition RPAREN BEGIN statement_list END T
+    (55) T -> .
 
-    ID              shift and go to state 134
+    ELIF            shift and go to state 135
+    ELSE            reduce using rule 55 (T -> .)
+    SEMICOLON       reduce using rule 55 (T -> .)
 
+    T                              shift and go to state 134
 
 state 131
 
-    (46) if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list END T . K
-    (55) K -> . ELSE BEGIN statement_list END
-    (56) K -> .
+    (58) while_stmt -> WHILE LPAREN condition RPAREN BEGIN statement_list END .
 
-    ELSE            shift and go to state 136
-    SEMICOLON       reduce using rule 56 (K -> .)
+    SEMICOLON       reduce using rule 58 (while_stmt -> WHILE LPAREN condition RPAREN BEGIN statement_list END .)
 
-    K                              shift and go to state 135
 
 state 132
 
-    (53) T -> ELIF . LPAREN condition RPAREN BEGIN statement_list END T
+    (62) optional_parameter_list -> COMMA type ID . optional_parameter_list
+    (62) optional_parameter_list -> . COMMA type ID optional_parameter_list
+    (63) optional_parameter_list -> .
 
-    LPAREN          shift and go to state 137
+    COMMA           shift and go to state 115
+    RPAREN          reduce using rule 63 (optional_parameter_list -> .)
 
+    optional_parameter_list        shift and go to state 136
 
 state 133
 
-    (58) function_definition -> FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN . data SEMICOLON END
-    (24) data -> . expression data
-    (25) data -> . COMMA data
-    (26) data -> .
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (59) function_definition -> type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN . L SEMICOLON END
+    (16) L -> . statement
+    (17) L -> . ID LPAREN data RPAREN
+    (4) statement -> . declaration
+    (5) statement -> . assignment
+    (6) statement -> . if_stmnt
+    (7) statement -> . while_stmt
+    (8) statement -> . function_definition
+    (9) statement -> . expression
+    (10) statement -> . compound_types
+    (11) statement -> . compound_type_access
+    (12) statement -> . try_except
+    (13) statement -> . print
+    (14) declaration -> . VAR type ID ASSIGN L
+    (15) assignment -> . ID ASSIGN L
+    (47) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
+    (58) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
+    (59) function_definition -> . type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (73) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
+    (74) print -> . ZOUT LPAREN y RPAREN
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (22) A -> . TUPLE
+    (23) A -> . LIST
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    COMMA           shift and go to state 103
-    SEMICOLON       reduce using rule 26 (data -> .)
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    ID              shift and go to state 59
+    VAR             shift and go to state 14
+    IF              shift and go to state 17
+    WHILE           shift and go to state 20
+    BEGIN           shift and go to state 19
+    ZOUT            shift and go to state 23
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
+    TUPLE           shift and go to state 28
+    LIST            shift and go to state 29
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
-    data                           shift and go to state 138
-    expression                     shift and go to state 102
+    type                           shift and go to state 15
+    L                              shift and go to state 137
+    statement                      shift and go to state 61
+    declaration                    shift and go to state 4
+    assignment                     shift and go to state 5
+    if_stmnt                       shift and go to state 6
+    while_stmt                     shift and go to state 7
+    function_definition            shift and go to state 8
+    expression                     shift and go to state 9
+    compound_types                 shift and go to state 10
+    compound_type_access           shift and go to state 11
+    try_except                     shift and go to state 12
+    print                          shift and go to state 13
     term                           shift and go to state 21
-    factor                         shift and go to state 24
+    A                              shift and go to state 22
+    factor                         shift and go to state 27
 
 state 134
 
-    (61) optional_parameter_list -> COMMA type ID . optional_parameter_list
-    (61) optional_parameter_list -> . COMMA type ID optional_parameter_list
-    (62) optional_parameter_list -> .
+    (47) if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list END T . K
+    (56) K -> . ELSE BEGIN statement_list END
+    (57) K -> .
 
-    COMMA           shift and go to state 125
-    RPAREN          reduce using rule 62 (optional_parameter_list -> .)
+    ELSE            shift and go to state 139
+    SEMICOLON       reduce using rule 57 (K -> .)
 
-    optional_parameter_list        shift and go to state 139
+    K                              shift and go to state 138
 
 state 135
 
-    (46) if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list END T K .
+    (54) T -> ELIF . LPAREN condition RPAREN BEGIN statement_list END T
 
-    SEMICOLON       reduce using rule 46 (if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list END T K .)
+    LPAREN          shift and go to state 140
 
 
 state 136
 
-    (55) K -> ELSE . BEGIN statement_list END
+    (62) optional_parameter_list -> COMMA type ID optional_parameter_list .
 
-    BEGIN           shift and go to state 140
+    RPAREN          reduce using rule 62 (optional_parameter_list -> COMMA type ID optional_parameter_list .)
 
 
 state 137
 
-    (53) T -> ELIF LPAREN . condition RPAREN BEGIN statement_list END T
-    (63) condition -> . expression comparison_operator expression
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (59) function_definition -> type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L . SEMICOLON END
 
-    ID              shift and go to state 47
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    SEMICOLON       shift and go to state 141
 
-    condition                      shift and go to state 141
-    expression                     shift and go to state 72
-    term                           shift and go to state 21
-    factor                         shift and go to state 24
 
 state 138
 
-    (58) function_definition -> FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data . SEMICOLON END
+    (47) if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list END T K .
 
-    SEMICOLON       shift and go to state 142
+    SEMICOLON       reduce using rule 47 (if_stmnt -> IF LPAREN condition RPAREN BEGIN statement_list END T K .)
 
 
 state 139
 
-    (61) optional_parameter_list -> COMMA type ID optional_parameter_list .
+    (56) K -> ELSE . BEGIN statement_list END
 
-    RPAREN          reduce using rule 61 (optional_parameter_list -> COMMA type ID optional_parameter_list .)
+    BEGIN           shift and go to state 142
 
 
 state 140
 
-    (55) K -> ELSE BEGIN . statement_list END
-    (2) statement_list -> . statement_list statement SEMICOLON
-    (3) statement_list -> .
+    (54) T -> ELIF LPAREN . condition RPAREN BEGIN statement_list END T
+    (64) condition -> . expression comparison_operator expression
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    END             reduce using rule 3 (statement_list -> .)
-    VAR             reduce using rule 3 (statement_list -> .)
-    ID              reduce using rule 3 (statement_list -> .)
-    IF              reduce using rule 3 (statement_list -> .)
-    WHILE           reduce using rule 3 (statement_list -> .)
-    FUNC            reduce using rule 3 (statement_list -> .)
-    BEGIN           reduce using rule 3 (statement_list -> .)
-    ZOUT            reduce using rule 3 (statement_list -> .)
-    TUPLE           reduce using rule 3 (statement_list -> .)
-    LIST            reduce using rule 3 (statement_list -> .)
-    NUMBER          reduce using rule 3 (statement_list -> .)
-    STRING          reduce using rule 3 (statement_list -> .)
-    TRUE            reduce using rule 3 (statement_list -> .)
-    FALSE           reduce using rule 3 (statement_list -> .)
-    LPAREN          reduce using rule 3 (statement_list -> .)
+    ID              shift and go to state 48
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
-    statement_list                 shift and go to state 143
+    condition                      shift and go to state 143
+    expression                     shift and go to state 72
+    term                           shift and go to state 21
+    factor                         shift and go to state 27
 
 state 141
 
-    (53) T -> ELIF LPAREN condition . RPAREN BEGIN statement_list END T
+    (59) function_definition -> type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON . END
 
-    RPAREN          shift and go to state 144
+    END             shift and go to state 144
 
 
 state 142
 
-    (58) function_definition -> FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON . END
-
-    END             shift and go to state 145
-
-
-state 143
-
-    (55) K -> ELSE BEGIN statement_list . END
-    (2) statement_list -> statement_list . statement SEMICOLON
-    (4) statement -> . declaration
-    (5) statement -> . assignment
-    (6) statement -> . if_stmnt
-    (7) statement -> . while_stmt
-    (8) statement -> . function_definition
-    (9) statement -> . expression
-    (10) statement -> . compound_types
-    (11) statement -> . compound_type_access
-    (12) statement -> . try_except
-    (13) statement -> . print
-    (14) declaration -> . VAR type assignment
-    (15) assignment -> . ID ASSIGN L
-    (46) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
-    (57) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
-    (58) function_definition -> . FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
-    (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
-    (27) compound_type_access -> . ID DOT F
-    (28) compound_type_access -> . ID LSPAREN expression RSPAREN
-    (72) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
-    (73) print -> . ZOUT LPAREN y RPAREN
-    (44) term -> . factor
-    (45) term -> . term unary_operator
-    (22) A -> . TUPLE
-    (23) A -> . LIST
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
-
-    END             shift and go to state 146
-    VAR             shift and go to state 14
-    ID              shift and go to state 15
-    IF              shift and go to state 16
-    WHILE           shift and go to state 19
-    FUNC            shift and go to state 20
-    BEGIN           shift and go to state 18
-    ZOUT            shift and go to state 23
-    TUPLE           shift and go to state 25
-    LIST            shift and go to state 26
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
-
-    statement                      shift and go to state 3
-    declaration                    shift and go to state 4
-    assignment                     shift and go to state 5
-    if_stmnt                       shift and go to state 6
-    while_stmt                     shift and go to state 7
-    function_definition            shift and go to state 8
-    expression                     shift and go to state 9
-    compound_types                 shift and go to state 10
-    compound_type_access           shift and go to state 11
-    try_except                     shift and go to state 12
-    print                          shift and go to state 13
-    term                           shift and go to state 21
-    A                              shift and go to state 22
-    factor                         shift and go to state 24
-
-state 144
-
-    (53) T -> ELIF LPAREN condition RPAREN . BEGIN statement_list END T
-
-    BEGIN           shift and go to state 147
-
-
-state 145
-
-    (58) function_definition -> FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END .
-
-    SEMICOLON       reduce using rule 58 (function_definition -> FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END .)
-
-
-state 146
-
-    (55) K -> ELSE BEGIN statement_list END .
-
-    SEMICOLON       reduce using rule 55 (K -> ELSE BEGIN statement_list END .)
-
-
-state 147
-
-    (53) T -> ELIF LPAREN condition RPAREN BEGIN . statement_list END T
+    (56) K -> ELSE BEGIN . statement_list END
     (2) statement_list -> . statement_list statement SEMICOLON
     (3) statement_list -> .
 
@@ -2687,9 +2637,11 @@ state 147
     ID              reduce using rule 3 (statement_list -> .)
     IF              reduce using rule 3 (statement_list -> .)
     WHILE           reduce using rule 3 (statement_list -> .)
-    FUNC            reduce using rule 3 (statement_list -> .)
     BEGIN           reduce using rule 3 (statement_list -> .)
     ZOUT            reduce using rule 3 (statement_list -> .)
+    INT             reduce using rule 3 (statement_list -> .)
+    BOOL            reduce using rule 3 (statement_list -> .)
+    STR             reduce using rule 3 (statement_list -> .)
     TUPLE           reduce using rule 3 (statement_list -> .)
     LIST            reduce using rule 3 (statement_list -> .)
     NUMBER          reduce using rule 3 (statement_list -> .)
@@ -2698,11 +2650,25 @@ state 147
     FALSE           reduce using rule 3 (statement_list -> .)
     LPAREN          reduce using rule 3 (statement_list -> .)
 
-    statement_list                 shift and go to state 148
+    statement_list                 shift and go to state 145
 
-state 148
+state 143
 
-    (53) T -> ELIF LPAREN condition RPAREN BEGIN statement_list . END T
+    (54) T -> ELIF LPAREN condition . RPAREN BEGIN statement_list END T
+
+    RPAREN          shift and go to state 146
+
+
+state 144
+
+    (59) function_definition -> type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END .
+
+    SEMICOLON       reduce using rule 59 (function_definition -> type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END .)
+
+
+state 145
+
+    (56) K -> ELSE BEGIN statement_list . END
     (2) statement_list -> statement_list . statement SEMICOLON
     (4) statement -> . declaration
     (5) statement -> . assignment
@@ -2714,44 +2680,49 @@ state 148
     (11) statement -> . compound_type_access
     (12) statement -> . try_except
     (13) statement -> . print
-    (14) declaration -> . VAR type assignment
+    (14) declaration -> . VAR type ID ASSIGN L
     (15) assignment -> . ID ASSIGN L
-    (46) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
-    (57) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
-    (58) function_definition -> . FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN data SEMICOLON END
-    (64) expression -> . expression binary_operator term
-    (65) expression -> . term
+    (47) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
+    (58) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
+    (59) function_definition -> . type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
     (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
-    (27) compound_type_access -> . ID DOT F
-    (28) compound_type_access -> . ID LSPAREN expression RSPAREN
-    (72) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
-    (73) print -> . ZOUT LPAREN y RPAREN
-    (44) term -> . factor
-    (45) term -> . term unary_operator
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (73) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
+    (74) print -> . ZOUT LPAREN y RPAREN
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
+    (45) term -> . factor
+    (46) term -> . term unary_operator
     (22) A -> . TUPLE
     (23) A -> . LIST
-    (66) factor -> . ID
-    (67) factor -> . NUMBER
-    (68) factor -> . STRING
-    (69) factor -> . TRUE
-    (70) factor -> . FALSE
-    (71) factor -> . LPAREN expression RPAREN
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    END             shift and go to state 149
+    END             shift and go to state 147
     VAR             shift and go to state 14
-    ID              shift and go to state 15
-    IF              shift and go to state 16
-    WHILE           shift and go to state 19
-    FUNC            shift and go to state 20
-    BEGIN           shift and go to state 18
+    ID              shift and go to state 16
+    IF              shift and go to state 17
+    WHILE           shift and go to state 20
+    BEGIN           shift and go to state 19
     ZOUT            shift and go to state 23
-    TUPLE           shift and go to state 25
-    LIST            shift and go to state 26
-    NUMBER          shift and go to state 27
-    STRING          shift and go to state 28
-    TRUE            shift and go to state 29
-    FALSE           shift and go to state 30
-    LPAREN          shift and go to state 17
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
+    TUPLE           shift and go to state 28
+    LIST            shift and go to state 29
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
     statement                      shift and go to state 3
     declaration                    shift and go to state 4
@@ -2764,26 +2735,141 @@ state 148
     compound_type_access           shift and go to state 11
     try_except                     shift and go to state 12
     print                          shift and go to state 13
+    type                           shift and go to state 15
     term                           shift and go to state 21
     A                              shift and go to state 22
-    factor                         shift and go to state 24
+    factor                         shift and go to state 27
+
+state 146
+
+    (54) T -> ELIF LPAREN condition RPAREN . BEGIN statement_list END T
+
+    BEGIN           shift and go to state 148
+
+
+state 147
+
+    (56) K -> ELSE BEGIN statement_list END .
+
+    SEMICOLON       reduce using rule 56 (K -> ELSE BEGIN statement_list END .)
+
+
+state 148
+
+    (54) T -> ELIF LPAREN condition RPAREN BEGIN . statement_list END T
+    (2) statement_list -> . statement_list statement SEMICOLON
+    (3) statement_list -> .
+
+    END             reduce using rule 3 (statement_list -> .)
+    VAR             reduce using rule 3 (statement_list -> .)
+    ID              reduce using rule 3 (statement_list -> .)
+    IF              reduce using rule 3 (statement_list -> .)
+    WHILE           reduce using rule 3 (statement_list -> .)
+    BEGIN           reduce using rule 3 (statement_list -> .)
+    ZOUT            reduce using rule 3 (statement_list -> .)
+    INT             reduce using rule 3 (statement_list -> .)
+    BOOL            reduce using rule 3 (statement_list -> .)
+    STR             reduce using rule 3 (statement_list -> .)
+    TUPLE           reduce using rule 3 (statement_list -> .)
+    LIST            reduce using rule 3 (statement_list -> .)
+    NUMBER          reduce using rule 3 (statement_list -> .)
+    STRING          reduce using rule 3 (statement_list -> .)
+    TRUE            reduce using rule 3 (statement_list -> .)
+    FALSE           reduce using rule 3 (statement_list -> .)
+    LPAREN          reduce using rule 3 (statement_list -> .)
+
+    statement_list                 shift and go to state 149
 
 state 149
 
-    (53) T -> ELIF LPAREN condition RPAREN BEGIN statement_list END . T
-    (53) T -> . ELIF LPAREN condition RPAREN BEGIN statement_list END T
-    (54) T -> .
+    (54) T -> ELIF LPAREN condition RPAREN BEGIN statement_list . END T
+    (2) statement_list -> statement_list . statement SEMICOLON
+    (4) statement -> . declaration
+    (5) statement -> . assignment
+    (6) statement -> . if_stmnt
+    (7) statement -> . while_stmt
+    (8) statement -> . function_definition
+    (9) statement -> . expression
+    (10) statement -> . compound_types
+    (11) statement -> . compound_type_access
+    (12) statement -> . try_except
+    (13) statement -> . print
+    (14) declaration -> . VAR type ID ASSIGN L
+    (15) assignment -> . ID ASSIGN L
+    (47) if_stmnt -> . IF LPAREN condition RPAREN BEGIN statement_list END T K
+    (58) while_stmt -> . WHILE LPAREN condition RPAREN BEGIN statement_list END
+    (59) function_definition -> . type ID LPAREN parameter_list RPAREN BEGIN statement_list RETURN L SEMICOLON END
+    (65) expression -> . expression binary_operator term
+    (66) expression -> . term
+    (21) compound_types -> . A ID ASSIGN LPAREN data RPAREN
+    (28) compound_type_access -> . ID DOT F
+    (29) compound_type_access -> . ID LSPAREN expression RSPAREN
+    (73) try_except -> . BEGIN TRY statement_list EXCEPT statement_list END
+    (74) print -> . ZOUT LPAREN y RPAREN
+    (18) type -> . INT
+    (19) type -> . BOOL
+    (20) type -> . STR
+    (45) term -> . factor
+    (46) term -> . term unary_operator
+    (22) A -> . TUPLE
+    (23) A -> . LIST
+    (67) factor -> . ID
+    (68) factor -> . NUMBER
+    (69) factor -> . STRING
+    (70) factor -> . TRUE
+    (71) factor -> . FALSE
+    (72) factor -> . LPAREN expression RPAREN
 
-    ELIF            shift and go to state 132
-    ELSE            reduce using rule 54 (T -> .)
-    SEMICOLON       reduce using rule 54 (T -> .)
+    END             shift and go to state 150
+    VAR             shift and go to state 14
+    ID              shift and go to state 16
+    IF              shift and go to state 17
+    WHILE           shift and go to state 20
+    BEGIN           shift and go to state 19
+    ZOUT            shift and go to state 23
+    INT             shift and go to state 24
+    BOOL            shift and go to state 25
+    STR             shift and go to state 26
+    TUPLE           shift and go to state 28
+    LIST            shift and go to state 29
+    NUMBER          shift and go to state 30
+    STRING          shift and go to state 31
+    TRUE            shift and go to state 32
+    FALSE           shift and go to state 33
+    LPAREN          shift and go to state 18
 
-    T                              shift and go to state 150
+    statement                      shift and go to state 3
+    declaration                    shift and go to state 4
+    assignment                     shift and go to state 5
+    if_stmnt                       shift and go to state 6
+    while_stmt                     shift and go to state 7
+    function_definition            shift and go to state 8
+    expression                     shift and go to state 9
+    compound_types                 shift and go to state 10
+    compound_type_access           shift and go to state 11
+    try_except                     shift and go to state 12
+    print                          shift and go to state 13
+    type                           shift and go to state 15
+    term                           shift and go to state 21
+    A                              shift and go to state 22
+    factor                         shift and go to state 27
 
 state 150
 
-    (53) T -> ELIF LPAREN condition RPAREN BEGIN statement_list END T .
+    (54) T -> ELIF LPAREN condition RPAREN BEGIN statement_list END . T
+    (54) T -> . ELIF LPAREN condition RPAREN BEGIN statement_list END T
+    (55) T -> .
 
-    ELSE            reduce using rule 53 (T -> ELIF LPAREN condition RPAREN BEGIN statement_list END T .)
-    SEMICOLON       reduce using rule 53 (T -> ELIF LPAREN condition RPAREN BEGIN statement_list END T .)
+    ELIF            shift and go to state 135
+    ELSE            reduce using rule 55 (T -> .)
+    SEMICOLON       reduce using rule 55 (T -> .)
+
+    T                              shift and go to state 151
+
+state 151
+
+    (54) T -> ELIF LPAREN condition RPAREN BEGIN statement_list END T .
+
+    ELSE            reduce using rule 54 (T -> ELIF LPAREN condition RPAREN BEGIN statement_list END T .)
+    SEMICOLON       reduce using rule 54 (T -> ELIF LPAREN condition RPAREN BEGIN statement_list END T .)
 
