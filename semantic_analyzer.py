@@ -146,7 +146,7 @@ lexer = lex.lex()
 precedence = (
     ('left','PLUS','MINUS'),
     ('left','MUL','DIV' ,'REM'),
-    #('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
+    ('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
     ('right','PLUSPLUS','MINUSMINUS')
     )
 # Import the AST classes
@@ -508,6 +508,9 @@ class SemanticAnalyzer:
     def visit_Assignment(self, node):
       identifier = node.identifier  # Extract the identifier from the node
       symbol = self.symbol_table.lookup(identifier)
+      value=self.visit(node.value)
+      if value.type!=symbol.type:
+        raise Exception(f"type not matching")
       if symbol is None:
         raise Exception(f"Variable '{identifier}' not found in symbol table")
       symbol = VariableSymbol(identifier, self.visit(identifier).type)  # Create a VariableSymbol instance
@@ -518,17 +521,18 @@ class SemanticAnalyzer:
     def visit_FunctionDefinition(self, node):
       name = node.identifier
       type_ = node.type
+      self.current_scope = self.current_scope.push_scope()
       parameters=None
       if node.parameter_list!=None:
         parameters = node.parameter_list.parameters
         for param_type, param_name in parameters:
           self.symbol_table.add_symbol(param_name, VariableSymbol(param_name, param_type))
       # Push a new scope for the function
-      self.current_scope = self.current_scope.push_scope()
+      
 
       # Add function parameters to the symbol table
       
-
+      self.symbol_table.add_symbol(name, FunctionSymbol(name, type_, parameters))
       # Visit the function body
       self.visit(node.statement_list)
       self.visit(node.return_data)
@@ -547,7 +551,7 @@ class SemanticAnalyzer:
       self.current_scope = self.current_scope.pop_scope()
 
       # Add the function symbol to the symbol table
-      self.symbol_table.add_symbol(name, FunctionSymbol(name, type_, parameters))
+      #self.symbol_table.add_symbol(name, FunctionSymbol(name, type_, parameters))
 
     def visit_FunctionCall(self, node):
       name = node.identifier
@@ -657,6 +661,7 @@ class SemanticAnalyzer:
             raise Exception("Type mismatch in condition: Left and right operands must have the same type")
 
     def visit_IfStatement(self, node):
+      #################
         self.visit(node.condition)
         self.visit(node.if_statement)
         for condition, statement_list in node.elif_statement:
@@ -666,6 +671,7 @@ class SemanticAnalyzer:
             self.visit(node.else_statement)
 
     def visit_WhileStatement(self, node):
+      #####################
         self.visit(node.condition)
         self.visit(node.statement_list)
 
@@ -698,11 +704,11 @@ class SemanticAnalyzer:
 parser = yacc.yacc()
 
 try:
-    text = open("test_cases/test1.zeva", "r").read()
+    text = open("keerthi.txt", "r").read()
     ast = parser.parse(text)
-    pprint(ast)
-
     semantic_analyzer = SemanticAnalyzer()
     semantic_analyzer.analyze(ast)
+    pprint(ast)
+    # Pass your AST root here
 except EOFError:
     print("File could not be opened!")
