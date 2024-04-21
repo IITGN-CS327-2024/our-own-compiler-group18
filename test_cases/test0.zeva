@@ -1,0 +1,12 @@
+int f(int a, int b)
+begin
+    var int k = 6;
+    return k;
+end;
+var int m=1;
+var int n=2;
+var int q=m+n - 6*7;
+ 
+ zout(k);
+
+  @ Expected output: 8
