@@ -498,8 +498,9 @@ class SemanticAnalyzer:
             raise Exception(f"function type not matching")
         #self.visit(node.value)
         kieee=self.visit(node.value)
-        if type!=kieee.type:
-          raise Exception(f" type not matching")
+        if kieee is not None:
+          if type!=kieee.type:
+           raise Exception(f" type not matching")
         
 
     def visit_Id(self, node):
