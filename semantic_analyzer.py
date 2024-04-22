@@ -496,7 +496,10 @@ class SemanticAnalyzer:
           lier=self.symbol_table.lookup(node.value.identifier)
           if lier.type!=type:
             raise Exception(f"function type not matching")
-        self.visit(node.value)
+        #self.visit(node.value)
+        kieee=self.visit(node.value)
+        if type!=kieee.type:
+          raise Exception(f" type not matching")
         
 
     def visit_Id(self, node):
@@ -508,12 +511,12 @@ class SemanticAnalyzer:
     def visit_Assignment(self, node):
       identifier = node.identifier  # Extract the identifier from the node
       symbol = self.symbol_table.lookup(identifier)
-      value=self.visit(node.value)
-      if value.type!=symbol.type:
-        raise Exception(f"type not matching")
       if symbol is None:
         raise Exception(f"Variable '{identifier}' not found in symbol table")
       symbol = VariableSymbol(identifier, self.visit(identifier).type)  # Create a VariableSymbol instance
+      value=self.visit(node.value)
+      if value.type!=symbol.type:
+        raise Exception(f"type not matching")
       self.current_scope.put(identifier, symbol)  # Add the symbol to the current scope
       self.visit(node.value)  # Visit the assignment value
 
@@ -548,6 +551,9 @@ class SemanticAnalyzer:
          if hier.type!=type_:
            raise Exception(f"return type and the function type not matching")
       # Pop the function scope
+      if parameters is not None:
+        for i in parameters:
+            self.symbol_table.symbols.pop(i[1], None)
       self.current_scope = self.current_scope.pop_scope()
 
       # Add the function symbol to the symbol table
