@@ -543,7 +543,11 @@ class SemanticAnalyzer:
       # Visit the function body
       self.visit(node.statement_list)
       self.visit(node.return_data)
-      if isinstance(node.return_data,FunctionCall):
+      if node.return_data == None:
+       if type_!='void':
+        raise Exception(f"return type and the function type not matching")
+       
+      elif isinstance(node.return_data,FunctionCall):
         kier=self.symbol_table.lookup(node.return_data.identifier)
         if kier.type!=type_:
            raise Exception(f"return type and the function type not matching")

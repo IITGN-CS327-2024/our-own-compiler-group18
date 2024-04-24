@@ -44,6 +44,7 @@ tokens = [
     'WHILE',
     'ZOUT',
     'STR',
+    'VOID',
     'RETURN',
     'CON',
     'TUPLE',
@@ -85,7 +86,8 @@ keywords = {
     'try': 'TRY',
     'except': 'EXCEPT',
     'true': 'TRUE',
-    'false': 'FALSE'
+    'false': 'FALSE',
+    'void' : 'VOID'
 }
 
 # Tokens with associated regular expressions
@@ -198,16 +200,20 @@ def p_assignment(p):
 
 def p_L(p):
     '''L : statement
-         | ID LPAREN data RPAREN'''
+         | ID LPAREN data RPAREN
+         | '''
     if len(p) == 5:
         p[0] = FunctionCall(p[1], p[3])
-    else:
+    elif len(p) == 2:
         p[0] = p[1]
+    else :
+        p[0] = None
 
 def p_type(p):
     '''type : INT
             | BOOL
-            | STR'''
+            | STR
+            | VOID'''
     p[0] = p[1]
 
 def p_compound_types(p):
@@ -324,7 +330,7 @@ def p_while_stmt(p):
     p[0] = WhileStatement(p[3], p[6])
 
 def p_function_definition(p):
-    '''function_definition : type ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN statement END'''
+    '''function_definition : type ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN L SEMICOLON END'''
     p[0] = FunctionDefinition(p[1],p[2], p[4], p[7], p[9])
 
 def p_parameter_list(p):
