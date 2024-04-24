@@ -4,7 +4,6 @@ import ply.yacc as yacc
 from pprint import pprint
 from ply import lex
 import sys
-from pprint import pprint
 
 
 # Define tokens
@@ -32,7 +31,6 @@ tokens = [
     'SUBSTR',
     'GTEQ',
     'MINUSMINUS',
-    'MINUSMINUS',
     'LTEQ',
     'STRING',
     'VAR',
@@ -46,7 +44,6 @@ tokens = [
     'WHILE',
     'ZOUT',
     'STR',
-    'FUNC',
     'RETURN',
     'CON',
     'TUPLE',
@@ -59,7 +56,7 @@ tokens = [
     'EXCEPT',
     'TRUE',
     'FALSE',
-    'ADD',
+    'ADDD',
 ]
 
 # Define keywords and reserved words
@@ -75,7 +72,6 @@ keywords = {
     'while': 'WHILE',
     'zout': 'ZOUT',
     'str': 'STR',
-    'func': 'FUNC',
     'return': 'RETURN',
     'con': 'CON',
     'tuple': 'TUPLE',
@@ -84,7 +80,7 @@ keywords = {
     'size': 'SIZE',
     'delete': 'DELETE',
     'front': 'FRONT',
-    'add'  : 'ADD',
+    'addd'  : 'ADDD',
     'rear': 'REAR',
     'try': 'TRY',
     'except': 'EXCEPT',
@@ -154,9 +150,9 @@ precedence = (
     )
 # Import the AST classes
 from myAST import (
-    Start, StatementList, Declaration, Assignment, Type, CompoundTypes, CompoundTypeAccess,
+    Number, String, Bool, Start, StatementList, Declaration, Id, Assignment, CompoundTypes, CompoundTypeAccess,
     FunctionDefinition, FunctionCall, ParameterList, OptionalParameterList, Condition, IfStatement, WhileStatement,
-    Expression, Pexpression, BinaryOperator, Term, UnaryOperator, Factor, TryExcept, Print, Data, TrueFalse
+    Expression, Pexpression, BinaryOperator, Term, UnaryOperator, TryExcept, Print, Data
 )
 
 # Tokens definition and other lexer rules...
@@ -192,8 +188,8 @@ def p_statement(p):
     p[0] = p[1]
 
 def p_declaration(p):
-    '''declaration : VAR type assignment'''
-    p[0] = Declaration(p[2], p[3])
+    '''declaration : VAR type ID ASSIGN L'''
+    p[0] = Declaration(p[2], p[3],p[4],p[5])
 
 def p_assignment(p):
     '''assignment :  ID ASSIGN L'''
@@ -212,7 +208,7 @@ def p_type(p):
     '''type : INT
             | BOOL
             | STR'''
-    p[0] = Type(p[1])
+    p[0] = p[1]
 
 def p_compound_types(p):
     '''compound_types : A ID ASSIGN LPAREN data RPAREN'''
@@ -221,37 +217,39 @@ def p_compound_types(p):
 def p_A(p):
     '''A : TUPLE
          | LIST'''
-    
+
 
 def p_data(p):
-    '''data : expression data
-            | COMMA data
-            |  '''
-    if len(p) > 1:
-        if p[1] == ',':
-            p[0] = p[2]
-        else:
-            if isinstance(p[1], tuple) and isinstance(p[2], tuple):
-                p[0] = (p[1],) + p[2]  # Concatenate as tuples
-            else:
-                p[0] = (p[1], p[2])  # Create a tuple if either p[1] or p[2] is not a tuple
-    else:
-        p[0] = ()
+    '''data : expression hi
+            | '''
+    
+    if(len(p)>1):
+        p[0] = p[1], p[2]
+    else :
+        p[0]=None
 
-
+def p_hi(p):
+    '''hi : COMMA data
+          | '''
+    if(len(p)>1):
+      if p[1] == ',':
+        p[0] = p[2]
+    else :
+        p[0]=None
 def p_compound_type_access(p):
     '''compound_type_access : ID DOT F 
                             | ID LSPAREN expression RSPAREN'''
     if p[2] == '.':
         p[0] = CompoundTypeAccess(p[1], p[3])
     else:
-        p[0] = CompoundTypeAccess(p[1], ('identifier', p[3]))
+        p[0] = CompoundTypeAccess(p[1], p[3])
 
 # Other grammar rules with actions constructing AST nodes
 def p_F(p):
   '''F : CON LPAREN factor RPAREN
        | FRONT
-       | ADD LPAREN factor RPAREN
+       | ADDD
+       | LPAREN factor RPAREN
        | REAR
        | SIZE
        | DELETE
@@ -260,7 +258,7 @@ def p_F(p):
   if len(p) == 5:
       if p[1] == 'con':
           p[0] = p[1], p[3]
-      elif p[1] == 'add':
+      elif p[1] == 'addd':
           p[0] = p[1], p[3]
       else:
           p[0] = p[1]
@@ -326,14 +324,16 @@ def p_while_stmt(p):
     p[0] = WhileStatement(p[3], p[6])
 
 def p_function_definition(p):
-    '''function_definition : FUNC ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN data SEMICOLON END'''
-    p[0] = FunctionDefinition(p[2], p[4], p[7], p[9])
+    '''function_definition : type ID LPAREN parameter_list RPAREN BEGIN statement_list  RETURN statement END'''
+    p[0] = FunctionDefinition(p[1],p[2], p[4], p[7], p[9])
 
 def p_parameter_list(p):
     '''parameter_list : type ID optional_parameter_list
                       |  '''
     if len(p) == 4:
         p[0] = ParameterList([(p[1], p[2])] + p[3])
+    else :
+      p[0]=None
 
 def p_optional_parameter_list(p):
     '''optional_parameter_list : COMMA type ID optional_parameter_list
@@ -351,9 +351,10 @@ def p_expression(p):
   '''expression : expression binary_operator term
                 | term'''
   if len(p) == 4:
-      p[0] = Expression((p[1], p[2], p[3]))
+      p[0] = Expression((p[1], BinaryOperator(p[2]), p[3]))
   else:
       p[0] = p[1]
+
 
 def p_factor(p):
     ''' factor :  ID 
@@ -363,15 +364,15 @@ def p_factor(p):
                | FALSE 
                | LPAREN expression RPAREN'''
     if len(p) == 4:
-        p[0] = Factor(p[2])
+        p[0] = p[2]
     elif p.slice[1].type == 'ID':
-        p[0] = Factor(('identifier', p[1]))
+        p[0] = Id(p[1])
     elif p.slice[1].type == 'NUMBER':
-        p[0] = Factor(('number', p[1]))
+        p[0] = Number(p[1])
     elif p.slice[1].type == 'STRING':
-        p[0] = Factor(('string', p[1]))
+        p[0] = String(p[1])
     else:
-        p[0] = p[1]
+        p[0] = Bool(p[1])
 
 
 def p_try_except(p):
@@ -380,16 +381,20 @@ def p_try_except(p):
 
 def p_print(p):
     '''print : ZOUT LPAREN y RPAREN'''
-    p[0] = Print(p[1], p[3])
+    p[0] = Print(p[3])
 
-def p_y(p):
-    '''y : expression
-         | compound_type_access'''
-    p[0] = Data((p[1]))
+def p_y_expression(p):
+    '''y : expression'''
+    p[0]=Expression(p[1])
+
+def p_y_compound(p):
+    '''y : compound_type_access'''
+    p[0] = CompoundTypeAccess(p[1],None)
 
 def find_column(input, p):
     line_start = input.rfind('\n', 0, p.lexpos) + 1
     return (p.lexpos - line_start) + 1
+
 
 def p_error(p):
   if p is not None:
@@ -401,9 +406,11 @@ def p_error(p):
 # Build the parser
 parser = yacc.yacc()
 
+
 try:
-    text = open("test_cases/test14.zeva", "r").read()
-    ast = parser.parse(text)
-    pprint(ast.__dict__)
+    text = open("test_cases/test2.zeva", "r").read()
+    #ast = parser.parse(text)
+    #pprint(ast.__dict__)
 except EOFError:
     print("File could not be opened!")
+    

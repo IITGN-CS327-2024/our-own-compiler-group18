@@ -1,0 +1,29 @@
+
+int add(int a, int b)begin
+
+    return a + b;
+    
+end;
+
+int sub(int a, int b)begin
+
+    return a - b;
+end;
+
+int mul(int a, int b)begin
+
+    return a * b;
+    
+end;
+
+int div(int a, int b)begin
+
+    return a / b;
+    
+end;
+
+int mod(int a, int b)begin
+
+    return a % b;
+
+end;

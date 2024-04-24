@@ -33,6 +33,7 @@ class StatementList:
 @dataclass
 class Declaration:
     type: str
+    
     identifier: Id
     assignment_operator: str
     value: Any
@@ -112,7 +113,8 @@ class Pexpression:
 
 @dataclass
 class Expression:
-    expression: Union[Tuple[Any, str, Any], Any]
+    expression: Union[Tuple[Any, str, Any]]
+
     def __eq__(self, other):
       if isinstance(other, Expression):
           return self.expression == other.expression
