@@ -151,7 +151,7 @@ precedence = (
     )
 # Import the AST classes
 from myAST import (
-    Number, String, Start, StatementList, Declaration, Id, Assignment, CompoundTypes, CompoundTypeAccess,
+    Number, String, Bool, Start, StatementList, Declaration, Id, Assignment, CompoundTypes, CompoundTypeAccess,
     FunctionDefinition, FunctionCall, ParameterList, OptionalParameterList, Condition, IfStatement, WhileStatement,
     Expression, Pexpression, BinaryOperator, Term, UnaryOperator, TryExcept, Print, Data
 )
@@ -288,7 +288,7 @@ def p_term(p):
   if len(p) == 2:
     p[0] = p[1]
   else:
-   p[0] = p[1], p[2]
+   p[0] = p[1], UnaryOperator(p[2])
 
 def p_if_stmnt(p):
     '''if_stmnt : IF LPAREN condition RPAREN  BEGIN  statement_list END T K'''
@@ -351,7 +351,7 @@ def p_expression(p):
   '''expression : expression binary_operator term
                 | term'''
   if len(p) == 4:
-      p[0] = Expression((p[1], p[2], p[3]))
+      p[0] = Expression((p[1], BinaryOperator(p[2]), p[3]))
   else:
       p[0] = p[1]
 
@@ -470,6 +470,9 @@ class SemanticAnalyzer:
     def visit_bool(self,node):
       return VariableSymbol(None, "bool")
 
+    def visit_BinaryOperator(self, node):
+       pass
+
     def analyze(self, ast):
         self.visit(ast)
 
@@ -580,7 +583,7 @@ class SemanticAnalyzer:
           #print(right.type)
           if not isinstance(left, VariableSymbol) or not isinstance(right, VariableSymbol):
             pass
-          if operator in {'+', '-', '*', '/', '%'}:
+          if operator.operator in {'+', '-', '*', '/', '%'}:
               if left.type !='int' or right.type!='int':
                 raise Exception(f"Operands of arithmetic operator '{operator}' must be of type 'int'")
             # Assign the result type of the arithmetic expression as 'int'
@@ -608,6 +611,8 @@ class SemanticAnalyzer:
             return self.visit_Number(node.expression)
          elif isinstance(node.expression, String):
             return self.visit_String(node.expression)
+         elif isinstance(node.expression, BinaryOperator):
+            return self.visit_BinaryOperator(node.expression)
          else :
            return self.visit(node.expression)
     def visit_tuple(self, node):
@@ -648,7 +653,7 @@ class SemanticAnalyzer:
       # In this example, we'll simply return 'str' as the type of the string node
       return VariableSymbol(None, 'str')
 
-  
+
     def visit_Condition(self, node):
         left_type = self.visit(node.left).type
         right_type = self.visit(node.right).type
@@ -698,7 +703,7 @@ class SemanticAnalyzer:
 parser = yacc.yacc()
 
 try:
-    text = open("test_cases/test1.zeva", "r").read()
+    text = open("test_cases/test0.zeva", "r").read()
     ast = parser.parse(text)
     pprint(ast)
 
