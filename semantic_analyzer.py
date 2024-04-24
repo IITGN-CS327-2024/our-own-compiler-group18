@@ -146,7 +146,7 @@ lexer = lex.lex()
 precedence = (
     ('left','PLUS','MINUS'),
     ('left','MUL','DIV' ,'REM'),
-    #('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
+    ('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
     ('right','PLUSPLUS','MINUSMINUS')
     )
 # Import the AST classes
@@ -499,7 +499,11 @@ class SemanticAnalyzer:
           lier=self.symbol_table.lookup(node.value.identifier)
           if lier.type!=type:
             raise Exception(f"function type not matching")
-        self.visit(node.value)
+        #self.visit(node.value)
+        kieee=self.visit(node.value)
+        if kieee is not None:
+          if type!=kieee.type:
+           raise Exception(f" type not matching")
         
 
     def visit_Id(self, node):
@@ -514,6 +518,9 @@ class SemanticAnalyzer:
       if symbol is None:
         raise Exception(f"Variable '{identifier}' not found in symbol table")
       symbol = VariableSymbol(identifier, self.visit(identifier).type)  # Create a VariableSymbol instance
+      value=self.visit(node.value)
+      if value.type!=symbol.type:
+        raise Exception(f"type not matching")
       self.current_scope.put(identifier, symbol)  # Add the symbol to the current scope
       self.visit(node.value)  # Visit the assignment value
 
@@ -521,17 +528,18 @@ class SemanticAnalyzer:
     def visit_FunctionDefinition(self, node):
       name = node.identifier
       type_ = node.type
+      self.current_scope = self.current_scope.push_scope()
       parameters=None
       if node.parameter_list!=None:
         parameters = node.parameter_list.parameters
         for param_type, param_name in parameters:
           self.symbol_table.add_symbol(param_name, VariableSymbol(param_name, param_type))
       # Push a new scope for the function
-      self.current_scope = self.current_scope.push_scope()
+      
 
       # Add function parameters to the symbol table
       
-
+      self.symbol_table.add_symbol(name, FunctionSymbol(name, type_, parameters))
       # Visit the function body
       self.visit(node.statement_list)
       self.visit(node.return_data)
@@ -547,10 +555,13 @@ class SemanticAnalyzer:
          if hier.type!=type_:
            raise Exception(f"return type and the function type not matching")
       # Pop the function scope
+      if parameters is not None:
+        for i in parameters:
+            self.symbol_table.symbols.pop(i[1], None)
       self.current_scope = self.current_scope.pop_scope()
 
       # Add the function symbol to the symbol table
-      self.symbol_table.add_symbol(name, FunctionSymbol(name, type_, parameters))
+      #self.symbol_table.add_symbol(name, FunctionSymbol(name, type_, parameters))
 
     def visit_FunctionCall(self, node):
       name = node.identifier
