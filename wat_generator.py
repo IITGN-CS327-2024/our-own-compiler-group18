@@ -48,7 +48,7 @@ if __name__ == "__main__":
     compiler = MyLanguageCompiler()
 
     # Compile source code to WAT
-    source_code = open("test_cases/test_sort.zeva", "r").read()
+    source_code = open("test_cases/test_arthimetic.zeva", "r").read()
     compiler.compile_to_wat(source_code)
 
     # Output WAT code to file
