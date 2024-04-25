@@ -194,7 +194,8 @@ def p_declaration(p):
     p[0] = Declaration(p[2], p[3],p[4],p[5])
 
 def p_assignment(p):
-    '''assignment :  ID ASSIGN L'''
+    '''assignment :  ID ASSIGN L
+                  |  compound_type_access ASSIGN L'''
     p[0] = Assignment(p[1], p[2], p[3])
 
 
@@ -356,7 +357,8 @@ def p_optional_parameter_list(p):
         p[0] = []
 
 def p_condition(p):
-    '''condition : expression  comparison_operator  expression'''
+    '''condition : expression  comparison_operator  expression
+                 | compound_type_access comparison_operator compound_type_access'''
     p[0] = Condition(p[1], p[2], p[3])
 
 def p_expression(p):

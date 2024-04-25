@@ -1,1 +1,1 @@
-compound
+compound_type_access

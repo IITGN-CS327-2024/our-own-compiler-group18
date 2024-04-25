@@ -1,0 +1,18 @@
+void sort(list[int] arr[], int length) begin
+    @ Bubble sort implementation with while loops
+    var int i = 0;
+    while (i < length - 1) begin
+        var int j = 0;
+        while (j < length - i - 1) begin
+            if (arr[j] > arr[j+1]) begin
+                @Swap arr[j] and arr[j+1]
+                var int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            end;
+            j=j+1;
+        end;
+        i=i+1;
+    end;
+    return;
+end;
