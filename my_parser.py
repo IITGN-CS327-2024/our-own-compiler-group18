@@ -335,17 +335,23 @@ def p_function_definition(p):
 
 def p_parameter_list(p):
     '''parameter_list : type ID optional_parameter_list
+                      | A LSPAREN type RSPAREN ID LSPAREN RSPAREN optional_parameter_list 
                       |  '''
     if len(p) == 4:
         p[0] = ParameterList([(p[1], p[2])] + p[3])
+    elif len(p) == 9:
+        p[0] = ParameterList([(p[3], p[5])] + p[8])
     else :
-      p[0]=None
+      p[0] = None
 
 def p_optional_parameter_list(p):
     '''optional_parameter_list : COMMA type ID optional_parameter_list
+                               | COMMA A LSPAREN type RSPAREN ID LSPAREN RSPAREN optional_parameter_list 
                                |  '''
     if len(p) == 5:
         p[0] = [(p[2], p[3])] + p[4]
+    elif len(p) == 9:
+        p[0] = [(p[4], p[6])] + p[9]
     else:
         p[0] = []
 

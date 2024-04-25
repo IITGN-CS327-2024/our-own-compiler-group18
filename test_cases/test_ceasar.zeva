@@ -1,19 +1,21 @@
-void caesarEncrypt(int32_t plaintext[], int32_t plaintextLength, int32_t key) {
-    int i = 0;
-    while (i < plaintextLength) {
-        plaintext[i] = (plaintext[i] + key) % 26;
-        i++;
-    }
+void caesarEncrypt(list[int] plaintext[], int plaintextLength, int key) begin
+    var int i = 0;
+    while (i < plaintextLength) begin
+        var int result1 = plaintext[i];
+        result1 = (result1 + key) % 26;
+        i=i+1;
+    end;
 
     return;
-}
+end;
 
-void caesarDecrypt(int32_t plaintext[], int32_t plaintextLength, int32_t key) {
-    int i = 0;
-    while (i < plaintextLength) {
-        plaintext[i] = (plaintext[i] - key + 26) % 26;
-        i++;
-    }
+void caesarDecrypt(list[int] plaintext[], int plaintextLength, int key) begin
+    var int i = 0;
+    while (i < plaintextLength) begin
+        var int result2 = plaintext[i];
+        result1 = (result1 - key + 26) % 26;
+        i=i+1;
+    end;
 
     return;
-}
+end;
