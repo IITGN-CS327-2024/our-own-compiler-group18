@@ -1,8 +1,9 @@
 void caesarEncrypt(list[int] plaintext[], int plaintextLength, int key) begin
     var int i = 0;
     while (i < plaintextLength) begin
-        var int result1 = plaintext[i];
+        var int result1 = (plaintext[i]);
         result1 = (result1 + key) % 26;
+        plaintext[i] = result1;
         i=i+1;
     end;
 
@@ -12,8 +13,9 @@ end;
 void caesarDecrypt(list[int] plaintext[], int plaintextLength, int key) begin
     var int i = 0;
     while (i < plaintextLength) begin
-        var int result2 = plaintext[i];
+        var int result2 = (plaintext[i]);
         result1 = (result1 - key + 26) % 26;
+        plaintext[i] = result2;
         i=i+1;
     end;
 

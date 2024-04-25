@@ -60,6 +60,7 @@ class CompoundTypes:
 
 @dataclass
 class CompoundTypeAccess:
+    
     identifier: str
     compound_type_access: Union[str, Tuple[str, Any], None]
 
@@ -80,6 +81,11 @@ class FunctionCall:
   
     identifier: str
     expression: Union[Tuple[Tuple[str, str], Any], None]
+
+@dataclass
+class ContainerAccess:
+    identifier :str
+    index: Any
 
 @dataclass
 class ParameterList:

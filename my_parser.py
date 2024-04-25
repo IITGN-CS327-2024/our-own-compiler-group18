@@ -148,11 +148,13 @@ precedence = (
     ('left','PLUS','MINUS'),
     ('left','MUL','DIV' ,'REM'),
     #('nonassoc','EQEQ','NOTEQ','GT','LT','GTEQ','LTEQ'),
-    ('right','PLUSPLUS','MINUSMINUS')
+    ('right','PLUSPLUS','MINUSMINUS'),
+    ('left', 'ID'),
+    ('left', 'LPAREN', 'LSPAREN')
     )
 # Import the AST classes
 from myAST import (
-    Number, String, Bool, Start, StatementList, Declaration, Id, Assignment, CompoundTypes, CompoundTypeAccess,
+    Number, String, Bool, Start, StatementList, Declaration, Id, Assignment, ContainerAccess, CompoundTypes, CompoundTypeAccess,
     FunctionDefinition, FunctionCall, ParameterList, OptionalParameterList, Condition, IfStatement, WhileStatement,
     Expression, Pexpression, BinaryOperator, Term, UnaryOperator, TryExcept, Print, Data
 )
@@ -196,19 +198,29 @@ def p_declaration(p):
 def p_assignment(p):
     '''assignment :  ID ASSIGN L
                   |  compound_type_access ASSIGN L'''
-    p[0] = Assignment(p[1], p[2], p[3])
-
+    if (p[1] == 'ID'):
+        p[0] = Assignment(p[1], p[2], p[3])
+    else :
+        p[0] = Assignment(p[1], p[2], p[3])
 
 def p_L(p):
     '''L : statement
-         | ID LPAREN data RPAREN
+         | function_call
+         | container_access
          | '''
-    if len(p) == 5:
-        p[0] = FunctionCall(p[1], p[3])
-    elif len(p) == 2:
+    if len(p) == 2:
         p[0] = p[1]
-    else :
+    else:
         p[0] = None
+
+def p_function_call(p):
+    'function_call : ID LPAREN data RPAREN'
+    p[0] = FunctionCall(p[1], p[3])
+
+def p_container_access(p):
+    'container_access : LPAREN ID LSPAREN factor RSPAREN RPAREN'
+    p[0] = ContainerAccess(p[2], p[4])
+
 
 def p_type(p):
     '''type : INT
@@ -422,9 +434,9 @@ parser = yacc.yacc()
 
 
 try:
-    text = open("test_cases/test2.zeva", "r").read()
-    #ast = parser.parse(text)
-    #pprint(ast.__dict__)
+    text = open("test_cases/test_ceasar.zeva", "r").read()
+    ast = parser.parse(text)
+    pprint(ast.__dict__)
 except EOFError:
     print("File could not be opened!")
     

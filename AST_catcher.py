@@ -1,4 +1,4 @@
-from myAST import Node, Id, Number, String, BinaryOperator
+from myAST import Node, Id, Number, String, BinaryOperator, ContainerAccess, CompoundTypeAccess
 
 
 class NodeAnalyzer:
@@ -56,19 +56,31 @@ class NodeAnalyzer:
         self.wat_code.append(f'{self.indent_str()};; Declaration')
         self.indent += 1
         self.visit(node.identifier)
-        self.visit(node.value)
-        self.wat_code.append(f"(local ${node.identifier} {node.type})")
+        self.wat_code.append(f"{self.indent_str()}(local ${node.identifier} {node.type})")
         if node.assignment_operator == '=':
             self.visit(node.value)
-            self.wat_code.append(f"(set_local ${node.identifier})")
+            self.wat_code.append(f"{self.indent_str()}(local.set ${node.identifier})")
         self.indent -= 1
 
     def visit_Assignment(self, node):
         self.wat_code.append(f'{self.indent_str()};; Assignment')
         self.indent += 1
         self.visit(node.identifier)
+        print(node.identifier)
         self.visit(node.value)
         self.indent -= 1  
+
+    def visit_ContainerAccess(self, node):
+        self.wat_code.append(f'{self.indent_str()};; Assignment')
+        self.indent += 1
+        self.wat_code.append(f"{self.indent_str()}(i32.load8_u (i32.add local.get (${node.identifier}) local.get (${node.index.id})))")
+        self.indent -= 1
+
+    def visit_CompoundTypeAccess(self, node):
+        self.wat_code.append(f'{self.indent_str()};; Compound_type_access')
+        self.indent += 1
+        self.wat_code.append(f"{self.indent_str()}(i32.store8 (i32.add local.get (${node.identifier}) local.get (${node.compound_type_access.id})))")
+        self.indent -= 1
 
     def visit_FunctionDefinition(self, node):
         type_ = node.type
@@ -77,7 +89,11 @@ class NodeAnalyzer:
         params = ""
         for param_type, param_id in node.parameter_list.parameters:
             params += f"(param ${param_id} {self.get_wat_type(param_type)}) "
-        self.wat_code.append(f'(func ${node.identifier} {params}(result {self.get_wat_type(type_)})')
+        if type_ != "void":
+            self.wat_code.append(f'(func ${node.identifier} {params}(result {self.get_wat_type(type_)})')
+        else:
+            self.wat_code.append(f'(func ${node.identifier} {params}')
+
         self.visit(node.statement_list)
         self.visit(node.return_data)
         self.wat_code.append(f'{self.indent_str()}return')  # Add return instruction
@@ -156,8 +172,35 @@ class NodeAnalyzer:
     def visit_WhileStatement(self, node):
         self.wat_code.append(f'{self.indent_str()};; While Statement')
         self.indent += 1
+
+        # Start of the loop block
+        self.wat_code.append(f'{self.indent_str()}(block $encryptLoop')
+        self.indent += 1
+
+        # Loop body
+        self.wat_code.append(f'{self.indent_str()}(loop $encryptLoopBody')
+        self.indent += 1
+
+        # Condition check
         self.visit(node.condition)
+        self.wat_code.append(f'{self.indent_str()}i32.eqz')
+        self.wat_code.append(f'{self.indent_str()}br_if $encryptLoopEnd')
+
+        # Loop body statements
         self.visit(node.statement_list)
+
+        # End of loop body
+        self.indent -= 1
+        self.wat_code.append(f'{self.indent_str()}')
+        self.wat_code.append(f'{self.indent_str()}(br $encryptLoop)')
+        self.indent -= 1
+        self.wat_code.append(f'{self.indent_str()}')
+
+        # End of loop block
+        self.indent -= 1
+        self.wat_code.append(f'{self.indent_str()}')
+        self.wat_code.append(f'{self.indent_str()}(br $encryptLoop)')
+        self.wat_code.append(f'{self.indent_str()}')
         self.indent -= 1
 
     def visit_TryExcept(self, node):
